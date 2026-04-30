@@ -57,6 +57,7 @@ export function AppLayout() {
           Sair
         </button>
       </aside>
+      {open && <button className="sidebar-backdrop mobile-only" type="button" onClick={() => setOpen(false)} aria-label="Fechar menu" />}
       <main className="main">
         <header className="topbar">
           <button className="icon-button mobile-only" onClick={() => setOpen((value) => !value)} aria-label="Menu">
@@ -76,6 +77,14 @@ export function AppLayout() {
         </header>
         <Outlet />
       </main>
+      <nav className="bottom-nav mobile-only" aria-label="Navegacao principal">
+        {links.slice(0, 5).map((item) => (
+          <NavLink key={item.to} to={item.to} end={item.to === '/'}>
+            <item.icon size={19} />
+            <span>{item.label}</span>
+          </NavLink>
+        ))}
+      </nav>
     </div>
   );
 }

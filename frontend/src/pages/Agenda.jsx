@@ -112,7 +112,7 @@ export function Agenda() {
       <style>{`
         .agenda-page {
           min-height: 100%;
-          padding: 28px;
+          padding: 28px 0 0;
           display: grid;
           gap: 24px;
           background:
@@ -479,6 +479,8 @@ export function Agenda() {
           background: linear-gradient(180deg, rgba(248,251,255,0.9) 0%, rgba(255,255,255,0.95) 100%);
           border: 1px solid #f2d6dc;
           padding: 14px;
+          overflow-x: auto;
+          -webkit-overflow-scrolling: touch;
         }
 
         .agenda-loading {
@@ -511,11 +513,14 @@ export function Agenda() {
 
         @media (max-width: 720px) {
           .agenda-page {
-            padding: 18px;
+            padding: 0;
+            gap: 16px;
           }
 
           .agenda-toolbar {
             align-items: stretch;
+            padding: 14px;
+            border-radius: 20px;
           }
 
           .agenda-toolbar-left,
@@ -542,10 +547,52 @@ export function Agenda() {
           .agenda-side-card,
           .agenda-calendar-shell {
             border-radius: 22px;
+            padding: 20px;
           }
 
           .agenda-hero-card h1 {
-            font-size: 34px;
+            font-size: 31px;
+          }
+
+          .agenda-calendar-body {
+            padding: 10px;
+          }
+
+          .agenda-calendar-title h2 {
+            font-size: 1.15rem;
+          }
+        }
+
+        @media (max-width: 520px) {
+          .agenda-hero-card p,
+          .agenda-side-text {
+            font-size: 14px;
+            line-height: 1.55;
+          }
+
+          .agenda-side-title {
+            font-size: 21px;
+          }
+
+          .agenda-toolbar-left,
+          .agenda-toolbar-right,
+          .agenda-mode-switch,
+          .agenda-today-button {
+            width: 100%;
+          }
+
+          .agenda-mode-button {
+            flex: 1;
+          }
+
+          .agenda-stat-card {
+            min-height: 108px;
+            padding: 18px;
+            border-radius: 20px;
+          }
+
+          .agenda-stat-value {
+            font-size: 29px;
           }
         }
       `}</style>

@@ -61,10 +61,10 @@ export function Clients() {
               <tbody>
                 {clients.map((client) => (
                   <tr key={client._id}>
-                    <td>{client.name}</td>
-                    <td>{client.phone}</td>
-                    <td>{client.email}</td>
-                    <td>
+                    <td data-label="Nome">{client.name}</td>
+                    <td data-label="Telefone">{client.phone}</td>
+                    <td data-label="Email">{client.email}</td>
+                    <td data-label="Acoes">
                       <div className="table-actions">
                         <button className="icon-button" type="button" onClick={() => editClient(client)} aria-label="Editar cliente">
                           <Edit size={16} />
