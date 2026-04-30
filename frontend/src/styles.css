@@ -2334,4 +2334,57 @@ button.clickable-card {
     height: 48px;
     font-size: 9px;
   }
+
+  .agenda-calendar-body {
+    overflow-x: visible !important;
+  }
+
+  .calendar-grid {
+    width: 100%;
+    min-width: 0;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+
+  .calendar-head {
+    display: grid;
+    place-items: center;
+    padding: 9px 2px;
+    font-size: 10px;
+    letter-spacing: 0;
+  }
+
+  .calendar-day {
+    min-height: 66px;
+    padding: 6px 3px;
+    gap: 4px;
+    border-radius: 0;
+  }
+
+  .calendar-grid.week .calendar-day {
+    min-height: 94px;
+  }
+
+  .calendar-day span {
+    font-size: 13px;
+    text-align: center;
+  }
+
+  .calendar-day small {
+    width: 100%;
+    min-height: 7px;
+    padding: 0;
+    border-left: 0;
+    border-radius: 999px;
+    font-size: 0;
+    color: transparent;
+    background: var(--primary);
+  }
+
+  .calendar-day small.blocked {
+    background: var(--warning);
+  }
+
+  .calendar-day small:nth-of-type(n + 3) {
+    display: none;
+  }
 }
