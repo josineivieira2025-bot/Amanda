@@ -1,7 +1,8 @@
 import { CalendarDays, Check, Clock3, MapPin, MessageCircle, PartyPopper, Sparkles, UserRound } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { api } from '../api/client.js';
-import { quoteFormDefaults } from '../data/publicSite.js';
+import { getServiceContent, quoteFormDefaults } from '../data/publicSite.js';
 
 function formatMoney(value) {
   return Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -12,6 +13,8 @@ function buildInitialState(initialServiceSlug) {
 }
 
 export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact = false }) {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [form, setForm] = useState(buildInitialState(initialServiceSlug));
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(null);
@@ -53,6 +56,22 @@ export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact 
     setDone(null);
     setError('');
     setForm((current) => ({ ...current, [field]: value }));
+  }
+
+  function chooseService(slug) {
+    const targetRoute = getServiceContent(slug)?.route;
+    setDone(null);
+    setError('');
+    setForm((current) => ({
+      ...current,
+      serviceSlug: slug,
+      packageId: '',
+      extraIds: []
+    }));
+
+    if (targetRoute && location.pathname !== targetRoute) {
+      navigate(targetRoute);
+    }
   }
 
   function toggleExtra(extraId) {
@@ -134,7 +153,7 @@ export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact 
                   key={item.slug}
                   className={item.slug === service?.slug ? 'service-tile active' : 'service-tile'}
                   type="button"
-                  onClick={() => updateField('serviceSlug', item.slug)}
+                  onClick={() => chooseService(item.slug)}
                 >
                   <strong>{item.name}</strong>
                   <span>{item.summary}</span>

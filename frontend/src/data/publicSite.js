@@ -287,6 +287,23 @@ export const homeCollections = [
   }
 ];
 
+export const publicNavLinks = [
+  { to: '/', label: 'Inicio' },
+  { to: '/servicos/casamento', label: 'Casamentos' },
+  { to: '/servicos/gestante', label: 'Gestante' },
+  { to: '/servicos/casal', label: 'Casal' },
+  { to: '/servicos/evento-infantil', label: 'Eventos infantis' },
+  { to: '/servicos/aniversario-15', label: '15 anos' },
+  { to: '/servicos/aniversario-adulto', label: 'Aniversario adulto' },
+  { to: '/servicos/cha-revelacao', label: 'Cha revelacao' },
+  { to: '/servicos/cha-de-panela', label: 'Cha de panela' },
+  { to: '/servicos/newborn', label: 'Newborn' },
+  { to: '/servicos/ensaio-familia', label: 'Familia' },
+  { to: '/servicos/corporativo', label: 'Corporativo' },
+  { to: '/servicos/smash-the-cake', label: 'Smash the Cake' },
+  { to: '/servicos/formatura', label: 'Formatura' }
+];
+
 export const quoteFormDefaults = {
   name: '',
   email: '',

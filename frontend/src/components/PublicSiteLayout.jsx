@@ -1,16 +1,7 @@
 import { Menu, MessageCircle } from 'lucide-react';
 import { useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
-
-const links = [
-  { to: '/', label: 'Inicio' },
-  { to: '/servicos/casamento', label: 'Casamentos' },
-  { to: '/servicos/gestante', label: 'Gestante' },
-  { to: '/servicos/casal', label: 'Casal' },
-  { to: '/servicos/evento-infantil', label: 'Eventos' },
-  { to: '/servicos/aniversario-15', label: '15 anos' },
-  { to: '/servicos/newborn', label: 'Newborn' }
-];
+import { publicNavLinks } from '../data/publicSite.js';
 
 function whatsappHref() {
   const phone = (import.meta.env.VITE_PUBLIC_WHATSAPP || '').replace(/\D/g, '');
@@ -39,7 +30,7 @@ export function PublicSiteLayout() {
           </button>
 
           <nav className={`site-nav ${open ? 'is-open' : ''}`}>
-            {links.map((link) => (
+            {publicNavLinks.map((link) => (
               <NavLink key={link.to} to={link.to} end={link.to === '/'} onClick={() => setOpen(false)}>
                 {link.label}
               </NavLink>
@@ -64,7 +55,7 @@ export function PublicSiteLayout() {
             </p>
           </div>
           <div className="site-footer-links">
-            {links.map((link) => (
+            {publicNavLinks.map((link) => (
               <Link key={link.to} to={link.to}>{link.label}</Link>
             ))}
             <a href={whatsappHref()} target="_blank" rel="noreferrer">

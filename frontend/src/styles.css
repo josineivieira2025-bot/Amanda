@@ -2421,11 +2421,15 @@ button.clickable-card {
 .package-card {
   width: 100%;
   padding: 16px;
+  display: grid;
+  align-content: start;
+  gap: 8px;
   text-align: left;
   border: 1px solid rgba(131, 86, 60, 0.12);
   border-radius: 18px;
   background: #fff;
   transition: all 0.2s ease;
+  overflow: hidden;
 }
 
 .service-tile strong,
@@ -2439,6 +2443,8 @@ button.clickable-card {
   color: #2f221b;
   font-size: 16px;
   font-weight: 800;
+  line-height: 1.28;
+  overflow-wrap: anywhere;
 }
 
 .service-tile span {
@@ -2449,10 +2455,19 @@ button.clickable-card {
 
 .package-card strong {
   display: block;
-  margin: 12px 0 8px;
+  margin: 2px 0 0;
   color: #8b543f;
   font-family: "Fraunces", Georgia, serif;
   font-size: 28px;
+  line-height: 1.02;
+  overflow-wrap: anywhere;
+}
+
+.package-card small {
+  display: block;
+  color: #7b6558;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 
 .package-features {
@@ -3240,6 +3255,14 @@ button.clickable-card {
     scroll-snap-type: none;
   }
 
+  .service-picker {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .package-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .service-tile,
   .package-card {
     min-width: 0;
@@ -3583,6 +3606,11 @@ button.clickable-card {
     border-radius: 16px;
   }
 
+  .service-picker,
+  .package-grid {
+    grid-template-columns: 1fr;
+  }
+
   .package-card {
     min-width: 0;
     padding: 15px;
@@ -3590,7 +3618,11 @@ button.clickable-card {
   }
 
   .package-card strong {
-    font-size: 24px;
+    font-size: clamp(1.8rem, 8vw, 2.15rem);
+  }
+
+  .package-card small {
+    font-size: 14px;
   }
 
   .extra-chip {
