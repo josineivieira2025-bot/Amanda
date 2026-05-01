@@ -25,20 +25,20 @@ export function Register() {
       <section className="auth-wrap">
         <div className="auth-visual">
           <div className="auth-brand">
-            <span className="brand-mark"><Camera size={22} /></span>
-            <strong>Amanda Fotografia</strong>
+            <span className="brand-mark"><img src="/vida-em-foco-logo.jpeg" alt="Vida em Foco" /></span>
+            <strong>Vida em Foco</strong>
           </div>
           <div className="auth-quote">
             <Sparkles size={20} />
-            <p>Um ERP pensado para fotografas que cuidam da experiencia do primeiro contato a entrega final.</p>
+            <p>Um sistema pensado para transformar cada contato, orcamento e entrega em uma experiencia bonita e organizada.</p>
           </div>
         </div>
         <form className="auth-card" onSubmit={submit}>
           <div className="auth-heading">
-            <span className="brand-mark soft"><Camera size={24} /></span>
+            <span className="brand-mark soft"><img src="/vida-em-foco-logo.jpeg" alt="Vida em Foco" /></span>
             <div>
               <p>Comece seu painel</p>
-              <h1>Crie seu perfil</h1>
+              <h1>Crie seu acesso Vida em Foco</h1>
             </div>
           </div>
           {error && <p className="error">{error}</p>}
@@ -75,3 +75,4 @@ export function Register() {
     </div>
   );
 }
+

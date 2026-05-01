@@ -32,16 +32,16 @@ export function AppLayout() {
       <aside className={`sidebar ${open ? 'is-open' : ''}`}>
         <Link className="brand" to="/configuracoes" onClick={() => setOpen(false)}>
           <span className="brand-icon">
-            {user?.avatarUrl ? <img src={user.avatarUrl} alt={user.name || 'Perfil'} /> : <Camera size={24} />}
+            {user?.avatarUrl ? <img src={user.avatarUrl} alt={user.name || 'Perfil'} /> : <img src="/vida-em-foco-logo.jpeg" alt="Vida em Foco" />}
           </span>
           <div>
-            <strong>{user?.studioName || 'Photo ERP'}</strong>
-            <span>{user?.name || 'Estudio fotografico'}</span>
+            <strong>{user?.studioName || 'Vida em Foco'}</strong>
+            <span>{user?.name || 'Eternizando seus melhores momentos'}</span>
           </div>
         </Link>
         <div className="sidebar-note">
           <Sparkles size={15} />
-          <span>Painel da fotografa</span>
+          <span>Painel Vida em Foco</span>
         </div>
         <nav>
           <span className="nav-label">Menu principal</span>
@@ -64,9 +64,9 @@ export function AppLayout() {
             <Menu size={20} />
           </button>
           <div className="topbar-copy">
-            <span className="eyebrow">Amanda Fotografia</span>
-            <strong>Gestao fotografica</strong>
-            <span>Agenda, clientes, fotos e financeiro em um so lugar.</span>
+            <span className="eyebrow">Vida em Foco</span>
+            <strong>Gestao fotografica Vida em Foco</strong>
+            <span>Agenda, clientes, orcamentos e memorias em um so lugar.</span>
           </div>
           <div className="topbar-actions">
             <span className="status-pill">Online</span>
@@ -88,3 +88,4 @@ export function AppLayout() {
     </div>
   );
 }
+

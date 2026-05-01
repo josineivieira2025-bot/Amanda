@@ -25,20 +25,20 @@ export function Login() {
       <section className="auth-wrap">
         <div className="auth-visual">
           <div className="auth-brand">
-            <span className="brand-mark"><Camera size={22} /></span>
-            <strong>Amanda Fotografia</strong>
+            <span className="brand-mark"><img src="/vida-em-foco-logo.jpeg" alt="Vida em Foco" /></span>
+            <strong>Vida em Foco</strong>
           </div>
           <div className="auth-quote">
             <Sparkles size={20} />
-            <p>Organize ensaios, casamentos, galerias e pagamentos com a delicadeza que o seu trabalho merece.</p>
+            <p>Organize ensaios, eventos, orcamentos e entregas com a identidade da Vida em Foco.</p>
           </div>
         </div>
         <form className="auth-card" onSubmit={submit}>
           <div className="auth-heading">
-            <span className="brand-mark soft"><Camera size={24} /></span>
+            <span className="brand-mark soft"><img src="/vida-em-foco-logo.jpeg" alt="Vida em Foco" /></span>
             <div>
               <p>Bem-vinda de volta</p>
-              <h1>Entre no seu estudio</h1>
+              <h1>Entre na Vida em Foco</h1>
             </div>
           </div>
           {error && <p className="error">{error}</p>}
@@ -63,3 +63,4 @@ export function Login() {
     </div>
   );
 }
+

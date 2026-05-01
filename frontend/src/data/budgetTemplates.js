@@ -45,7 +45,7 @@ const paymentText = `Formas de pagamento:
 * Parcelamento no cartao de credito conforme condicoes combinadas`;
 
 const signature = `Atenciosamente,
-Mel Sabino Fotografia`;
+Vida em Foco`;
 
 const templates = {
   casamento(data) {
@@ -302,3 +302,4 @@ export function buildBudgetTemplateText(data, client, labels = {}) {
     signature
   ].join('\n');
 }
+

@@ -476,7 +476,7 @@ function buildBudgetCardData(data, client, user) {
   const endDate = data.endDate ? new Date(data.endDate) : null;
 
   return {
-    studioName: user?.studioName || 'Amanda Fotografia',
+    studioName: user?.studioName || 'Vida em Foco',
     clientName: client?.name || 'Cliente',
     type: labels[data.type] || 'Servico fotografico',
     date: startDate ? format(startDate, 'dd/MM/yyyy') : 'A confirmar',
@@ -534,4 +534,5 @@ function buildBudgetCardSvg(data) {
   <text x="130" y="1200" font-family="Arial, sans-serif" font-size="22" fill="#8b7280">Validade e detalhes podem ser alinhados pelo atendimento.</text>
 </svg>`;
 }
+
 
