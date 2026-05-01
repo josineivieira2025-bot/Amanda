@@ -456,7 +456,23 @@ function findCatalogItem(serviceSlug) {
 }
 
 async function findPublicPhotographer() {
-  const photographer = await User.findOne().sort({ createdAt: 1 });
+  const configuredEmail = String(process.env.PUBLIC_SITE_USER_EMAIL || '').trim().toLowerCase();
+  const configuredId = String(process.env.PUBLIC_SITE_USER_ID || '').trim();
+
+  let photographer = null;
+
+  if (configuredId) {
+    photographer = await User.findById(configuredId);
+  }
+
+  if (!photographer && configuredEmail) {
+    photographer = await User.findOne({ email: configuredEmail });
+  }
+
+  if (!photographer) {
+    photographer = await User.findOne().sort({ createdAt: 1 });
+  }
+
   if (!photographer) {
     const error = new Error('Nenhum fotografo configurado para receber simulacoes.');
     error.statusCode = 503;

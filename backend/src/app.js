@@ -14,7 +14,31 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({ origin: process.env.CLIENT_URL || '*', credentials: true }));
+function parseAllowedOrigins() {
+  return [
+    process.env.CLIENT_URL,
+    process.env.PUBLIC_SITE_URL,
+    process.env.ALLOWED_ORIGINS
+  ]
+    .filter(Boolean)
+    .flatMap((value) => value.split(','))
+    .map((value) => value.trim())
+    .filter(Boolean);
+}
+
+const allowedOrigins = parseAllowedOrigins();
+
+app.use(cors({
+  origin(origin, callback) {
+    if (!origin || !allowedOrigins.length || allowedOrigins.includes(origin)) {
+      callback(null, true);
+      return;
+    }
+
+    callback(new Error('Origem nao permitida pelo CORS.'));
+  },
+  credentials: true
+}));
 app.use(express.json({ limit: '15mb' }));
 app.use(morgan('dev'));
 
