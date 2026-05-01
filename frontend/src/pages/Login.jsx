@@ -14,7 +14,7 @@ export function Login() {
     event.preventDefault();
     try {
       await login(form);
-      navigate('/');
+      navigate('/painel');
     } catch (err) {
       setError(err.message);
     }

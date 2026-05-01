@@ -15,12 +15,12 @@ import { Link, NavLink, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 
 const links = [
-  { to: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/agenda', label: 'Agenda', icon: CalendarDays },
-  { to: '/clientes', label: 'Clientes', icon: Users },
-  { to: '/eventos', label: 'Eventos', icon: PartyPopper },
-  { to: '/galeria', label: 'Galeria', icon: Camera },
-  { to: '/financeiro', label: 'Financeiro', icon: CreditCard }
+  { to: '/painel', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/painel/agenda', label: 'Agenda', icon: CalendarDays },
+  { to: '/painel/clientes', label: 'Clientes', icon: Users },
+  { to: '/painel/eventos', label: 'Eventos', icon: PartyPopper },
+  { to: '/painel/galeria', label: 'Galeria', icon: Camera },
+  { to: '/painel/financeiro', label: 'Financeiro', icon: CreditCard }
 ];
 
 export function AppLayout() {
@@ -30,7 +30,7 @@ export function AppLayout() {
   return (
     <div className="shell">
       <aside className={`sidebar ${open ? 'is-open' : ''}`}>
-        <Link className="brand" to="/configuracoes" onClick={() => setOpen(false)}>
+        <Link className="brand" to="/painel/configuracoes" onClick={() => setOpen(false)}>
           <span className="brand-icon">
             {user?.avatarUrl ? <img src={user.avatarUrl} alt={user.name || 'Perfil'} /> : <img src="/vida-em-foco-logo.jpeg" alt="Vida em Foco" />}
           </span>
@@ -46,7 +46,7 @@ export function AppLayout() {
         <nav>
           <span className="nav-label">Menu principal</span>
           {links.map((item) => (
-            <NavLink key={item.to} to={item.to} end={item.to === '/'} onClick={() => setOpen(false)}>
+            <NavLink key={item.to} to={item.to} end={item.to === '/painel'} onClick={() => setOpen(false)}>
               <item.icon size={18} />
               <span>{item.label}</span>
             </NavLink>
@@ -79,7 +79,7 @@ export function AppLayout() {
       </main>
       <nav className="bottom-nav mobile-only" aria-label="Navegacao principal">
         {links.slice(0, 5).map((item) => (
-          <NavLink key={item.to} to={item.to} end={item.to === '/'}>
+          <NavLink key={item.to} to={item.to} end={item.to === '/painel'}>
             <item.icon size={19} />
             <span>{item.label}</span>
           </NavLink>

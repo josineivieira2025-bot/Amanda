@@ -14,7 +14,7 @@ export function Register() {
     event.preventDefault();
     try {
       await register(form);
-      navigate('/');
+      navigate('/painel');
     } catch (err) {
       setError(err.message);
     }
