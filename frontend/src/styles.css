@@ -3051,6 +3051,11 @@ button.clickable-card {
     width: min(100%, calc(100% - 24px));
   }
 
+  .site-header-inner {
+    padding: 12px 14px;
+    border-radius: 22px;
+  }
+
   .site-mobile-only {
     display: inline-flex;
   }
@@ -3070,9 +3075,11 @@ button.clickable-card {
   .site-nav {
     position: fixed;
     z-index: 100;
-    inset: 82px 12px auto;
+    inset: 74px 12px auto;
+    max-height: min(72vh, 560px);
+    overflow: auto;
     padding: 12px;
-    border-radius: 22px;
+    border-radius: 24px;
     background: #fff9f4;
     border: 1px solid rgba(131, 86, 60, 0.10);
     box-shadow: 0 18px 36px rgba(100, 67, 49, 0.16);
@@ -3115,7 +3122,7 @@ button.clickable-card {
 
   .site-hero-copy h1,
   .site-page-hero h1 {
-    font-size: 2.7rem;
+    font-size: 2.55rem;
   }
 
   .site-hero-card,
@@ -3133,11 +3140,115 @@ button.clickable-card {
     justify-content: flex-start;
   }
 
+  .site-kicker {
+    padding: 7px 11px;
+    font-size: 11px;
+  }
+
+  .site-hero-copy p,
+  .site-page-hero p,
+  .site-heading p {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .site-badge-row {
+    margin: 18px 0 22px;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .site-badge {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 16px;
+    padding: 10px 14px;
+  }
+
+  .site-hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .site-hero-card-image {
+    aspect-ratio: 4 / 3.5;
+  }
+
+  .site-hero-card-body strong,
+  .site-side-panel strong {
+    font-size: 22px;
+  }
+
+  .site-service-card,
+  .site-proof-card,
+  .site-inline-steps div,
+  .quote-section,
+  .quote-summary,
+  .quote-price-card {
+    box-shadow: 0 14px 28px rgba(100, 67, 49, 0.10);
+  }
+
+  .site-service-card a,
+  .site-service-nav-links a {
+    min-height: 44px;
+    align-items: center;
+  }
+
+  .site-inline-steps {
+    gap: 14px;
+  }
+
+  .site-inline-steps div {
+    padding: 18px;
+  }
+
+  .site-inline-steps strong {
+    font-size: 21px;
+  }
+
+  .quote-header {
+    gap: 14px;
+  }
+
+  .quote-header h2 {
+    font-size: 2.1rem;
+  }
+
+  .quote-price-card {
+    position: sticky;
+    top: 82px;
+    z-index: 8;
+  }
+
+  .service-picker,
+  .package-grid {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scroll-snap-type: x proximity;
+  }
+
+  .service-tile,
+  .package-card {
+    scroll-snap-align: start;
+  }
+
+  .service-tile {
+    min-width: 250px;
+  }
+
+  .package-card {
+    min-width: 260px;
+  }
+
   .site-inline-steps,
   .quote-grid,
   .quote-header,
-  .service-picker,
-  .package-grid,
   .extras-grid,
   .quote-form-grid {
     grid-template-columns: 1fr;
@@ -3352,6 +3463,21 @@ button.clickable-card {
     max-width: calc(100% - 58px);
   }
 
+  .site-header {
+    padding: 10px 0;
+  }
+
+  .site-header-inner {
+    width: min(100%, calc(100% - 16px));
+    padding: 10px 12px;
+    border-radius: 20px;
+  }
+
+  .site-nav {
+    inset: 68px 8px auto;
+    border-radius: 20px;
+  }
+
   .site-brand strong {
     font-size: 14px;
   }
@@ -3364,14 +3490,15 @@ button.clickable-card {
   .site-page-hero h1,
   .site-heading h2,
   .site-presence-copy h2 {
-    font-size: 2.15rem;
+    font-size: 2rem;
+    line-height: 1.02;
   }
 
   .site-copy-block h2,
   .site-checklist-card h2,
   .site-service-card h3,
   .site-faq-card h3 {
-    font-size: 1.6rem;
+    font-size: 1.45rem;
   }
 
   .site-hero-card-body,
@@ -3392,6 +3519,36 @@ button.clickable-card {
   .site-primary-button,
   .site-ghost-button {
     width: 100%;
+    min-height: 48px;
+    border-radius: 14px;
+  }
+
+  .site-hero,
+  .site-page-hero {
+    padding-top: 10px;
+  }
+
+  .site-hero-copy p,
+  .site-page-hero p,
+  .site-heading p,
+  .site-proof-card p,
+  .site-service-card p {
+    font-size: 14px;
+    line-height: 1.58;
+  }
+
+  .site-hero-card-image,
+  .site-hero-card-image.short {
+    aspect-ratio: 4 / 3.2;
+  }
+
+  .site-footer {
+    padding-bottom: 28px;
+  }
+
+  .site-footer-links {
+    display: grid;
+    gap: 10px;
   }
 
   .quote-section,
@@ -3403,7 +3560,47 @@ button.clickable-card {
 
   .quote-price-card strong,
   .quote-summary-total strong {
-    font-size: 30px;
+    font-size: 28px;
+  }
+
+  .quote-header h2 {
+    font-size: 1.9rem;
+  }
+
+  .quote-price-card {
+    position: static;
+  }
+
+  .service-tile {
+    min-width: 216px;
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .package-card {
+    min-width: 228px;
+    padding: 15px;
+    border-radius: 16px;
+  }
+
+  .package-card strong {
+    font-size: 24px;
+  }
+
+  .extra-chip {
+    padding: 14px;
+    border-radius: 16px;
+  }
+
+  .site-service-nav-links {
+    display: grid;
+    gap: 10px;
+  }
+
+  .site-service-nav-links a {
+    width: 100%;
+    justify-content: space-between;
+    border-radius: 16px;
   }
 }
 
