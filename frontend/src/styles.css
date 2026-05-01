@@ -1760,6 +1760,7 @@ button.clickable-card {
 /* PUBLIC SITE */
 .public-site {
   min-height: 100vh;
+  overflow-x: hidden;
   background:
     radial-gradient(circle at top left, rgba(242, 210, 184, 0.44), transparent 28%),
     radial-gradient(circle at right 14%, rgba(164, 124, 101, 0.14), transparent 22%),
@@ -3089,6 +3090,12 @@ button.clickable-card {
     margin-left: 0;
   }
 
+  .site-nav a {
+    width: 100%;
+    justify-content: space-between;
+    min-height: 46px;
+  }
+
   .site-nav.is-open {
     display: flex;
   }
@@ -3226,24 +3233,16 @@ button.clickable-card {
 
   .service-picker,
   .package-grid {
-    display: flex;
+    display: grid;
     gap: 12px;
-    overflow-x: auto;
-    padding-bottom: 6px;
-    scroll-snap-type: x proximity;
+    overflow: visible;
+    padding-bottom: 0;
+    scroll-snap-type: none;
   }
 
   .service-tile,
   .package-card {
-    scroll-snap-align: start;
-  }
-
-  .service-tile {
-    min-width: 250px;
-  }
-
-  .package-card {
-    min-width: 260px;
+    min-width: 0;
   }
 
   .site-inline-steps,
@@ -3256,6 +3255,13 @@ button.clickable-card {
 }
 
 @media (max-width: 560px) {
+  html,
+  body,
+  #root,
+  .public-site {
+    overflow-x: hidden;
+  }
+
   body {
     background: linear-gradient(180deg, #fff8f5 0%, #f6efec 100%);
   }
@@ -3572,13 +3578,13 @@ button.clickable-card {
   }
 
   .service-tile {
-    min-width: 216px;
+    min-width: 0;
     padding: 14px;
     border-radius: 16px;
   }
 
   .package-card {
-    min-width: 228px;
+    min-width: 0;
     padding: 15px;
     border-radius: 16px;
   }
