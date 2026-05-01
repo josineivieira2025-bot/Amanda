@@ -20,6 +20,7 @@ import { api } from '../api/client.js';
 import { EventModal } from '../components/EventModal.jsx';
 import { FormField } from '../components/FormField.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
+import { buildBudgetTemplateText } from '../data/budgetTemplates.js';
 
 const eventTypes = [
   { value: 'aniversario_15', label: 'Aniversario de 15' },
@@ -467,26 +468,7 @@ function formatWhen(value) {
 }
 
 function buildBudgetText(data, client) {
-  const clientName = client?.name || 'tudo bem';
-  const type = labels[data.type] || 'Evento';
-  const start = formatWhen(data.date);
-  const end = data.endDate ? format(new Date(data.endDate), 'HH:mm') : 'horario final a combinar';
-  const location = data.location || 'local a confirmar';
-  const price = formatMoney(data.price);
-
-  return [
-    `Oi, ${clientName}! Tudo bem?`,
-    '',
-    `Segue o orcamento para ${type}:`,
-    '',
-    `Data e inicio: ${start}`,
-    `Horario final: ${end}`,
-    `Local: ${location}`,
-    `Investimento: ${price}`,
-    '',
-    'Se fizer sentido para voce, posso deixar essa data pre-reservada enquanto alinhamos os detalhes.',
-    'Qualquer duvida ou ajuste que precisar, estou a disposicao.'
-  ].join('\n');
+  return buildBudgetTemplateText(data, client, labels);
 }
 
 function buildBudgetCardData(data, client, user) {
@@ -552,3 +534,4 @@ function buildBudgetCardSvg(data) {
   <text x="130" y="1200" font-family="Arial, sans-serif" font-size="22" fill="#8b7280">Validade e detalhes podem ser alinhados pelo atendimento.</text>
 </svg>`;
 }
+
