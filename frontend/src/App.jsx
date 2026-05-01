@@ -11,6 +11,7 @@ import { Finance } from './pages/Finance.jsx';
 import { Gallery } from './pages/Gallery.jsx';
 import { Login } from './pages/Login.jsx';
 import { PublicHome } from './pages/PublicHome.jsx';
+import { PublicRioPage } from './pages/PublicRioPage.jsx';
 import { Register } from './pages/Register.jsx';
 import { PublicServicePage } from './pages/PublicServicePage.jsx';
 import { Settings } from './pages/Settings.jsx';
@@ -20,6 +21,7 @@ export function App() {
     <Routes>
       <Route element={<PublicSiteLayout />}>
         <Route path="/" element={<PublicHome />} />
+        <Route path="/fotografo-no-rio-de-janeiro" element={<PublicRioPage />} />
         <Route path="/fotografo-casamento-rio-de-janeiro" element={<PublicServicePage slugOverride="casamento" />} />
         <Route path="/ensaio-gestante-rj" element={<PublicServicePage slugOverride="gestante" />} />
         <Route path="/ensaio-infantil-rj" element={<PublicServicePage slugOverride="ensaio-infantil" />} />

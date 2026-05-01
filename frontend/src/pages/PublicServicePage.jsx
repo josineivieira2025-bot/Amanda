@@ -79,6 +79,10 @@ export function PublicServicePage({ slugOverride = '' }) {
 
         <section className="site-band">
           <div className="site-section-inner">
+            <div className="site-heading">
+              <span className="site-kicker">Servico no Rio de Janeiro</span>
+              <h2>Como funciona {service?.name || content.eyebrow} no Rio de Janeiro</h2>
+            </div>
             <div className="site-copy-block">
               <span className="site-kicker">Fotografia no RJ</span>
               <h2>{content.seoTitle}</h2>
@@ -91,6 +95,10 @@ export function PublicServicePage({ slugOverride = '' }) {
 
         <section className="site-band">
           <div className="site-section-inner">
+            <div className="site-heading">
+              <span className="site-kicker">Etapas</span>
+              <h2>Veja como voce pode montar seu pedido</h2>
+            </div>
             <div className="site-inline-steps">
               <div>
                 <span>1</span>
@@ -120,6 +128,7 @@ export function PublicServicePage({ slugOverride = '' }) {
         <section className="site-band">
           <div className="site-section-inner site-service-nav">
             <span className="site-kicker">Continue navegando</span>
+            <h2>Veja outros ensaios e servicos relacionados</h2>
             <div className="site-service-nav-links">
               {content.relatedServices.map((item) => (
                 <Link key={item.slug} to={getServiceRoute(item.slug)}>

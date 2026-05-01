@@ -48,7 +48,7 @@ const serviceEntries = [
       seoRoute: '/ensaio-gestante-rj',
       legacyRoutes: ['/servicos/gestante'],
       aliases: ['gestante', 'ensaio-gestante-rj'],
-      seoTitle: 'Ensaio Gestante RJ | Fotografa no Rio de Janeiro | Vida em Foco',
+      seoTitle: 'Fotografo de Ensaio Gestante no Rio de Janeiro | Vida em Foco Fotografia RJ',
       seoDescription:
         'Ensaio gestante RJ com direcao suave, fotos elegantes e uma experiencia acolhedora para registrar a gravidez com beleza no Rio de Janeiro.',
       seoKeywords: [
@@ -90,7 +90,7 @@ const serviceEntries = [
       seoRoute: '/ensaio-infantil-rj',
       legacyRoutes: ['/servicos/ensaio-infantil', '/servicos/infantil'],
       aliases: ['ensaio-infantil', 'infantil', 'ensaio-infantil-rj'],
-      seoTitle: 'Ensaio Infantil RJ | Fotografa no Rio de Janeiro | Vida em Foco',
+      seoTitle: 'Fotografo de Ensaio Infantil no Rio de Janeiro | Vida em Foco Fotografia RJ',
       seoDescription:
         'Ensaio infantil RJ com clima leve, paciencia e registros afetivos para familias que querem guardar a infancia com sensibilidade no Rio de Janeiro.',
       seoKeywords: [
@@ -132,7 +132,7 @@ const serviceEntries = [
       seoRoute: '/ensaio-casal-rj',
       legacyRoutes: ['/servicos/casal'],
       aliases: ['casal', 'ensaio-casal-rj'],
-      seoTitle: 'Ensaio de Casal RJ | Fotografo no Rio de Janeiro | Vida em Foco',
+      seoTitle: 'Fotografo de Ensaio de Casal no Rio de Janeiro | Vida em Foco Fotografia RJ',
       seoDescription:
         'Ensaio de casal RJ com estilo natural, direcao leve e fotos romanticas para casais que querem registrar sua historia no Rio de Janeiro.',
       seoKeywords: [

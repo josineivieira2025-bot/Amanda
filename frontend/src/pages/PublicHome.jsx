@@ -69,6 +69,11 @@ export function PublicHome() {
                   Falar no WhatsApp
                 </a>
 
+                <Link className="site-ghost-button" to="/fotografo-no-rio-de-janeiro">
+                  Fotografo no Rio de Janeiro
+                  <ArrowRight size={18} />
+                </Link>
+
                 <Link className="site-ghost-button" to="/fotografo-casamento-rio-de-janeiro">
                   Ver servicos
                   <ArrowRight size={18} />

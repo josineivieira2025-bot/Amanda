@@ -2277,6 +2277,13 @@ button.clickable-card {
   gap: 18px;
 }
 
+.site-service-nav h2 {
+  margin: -6px 0 0;
+  color: #2f221b;
+  font-size: clamp(1.7rem, 3vw, 2.35rem);
+  line-height: 1.06;
+}
+
 .site-service-nav-links {
   display: flex;
   flex-wrap: wrap;
