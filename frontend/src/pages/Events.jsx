@@ -12,8 +12,8 @@ import {
   Plus,
   Sparkles,
   Trash2,
-  X,
-  UserRound
+  UserRound,
+  X
 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { api } from '../api/client.js';
@@ -100,6 +100,7 @@ export function Events() {
   const [events, setEvents] = useState([]);
   const [clients, setClients] = useState([]);
   const [form, setForm] = useState(initial);
+  const [formOpen, setFormOpen] = useState(false);
   const [statusFilter, setStatusFilter] = useState('');
   const [copiedId, setCopiedId] = useState(null);
   const [copiedBudget, setCopiedBudget] = useState(false);
@@ -160,7 +161,7 @@ export function Events() {
       } else {
         await api('/events', { method: 'POST', body: JSON.stringify(form) });
       }
-      cancelEdit();
+      closeFormModal();
       load();
     } catch (error) {
       console.error(error);
@@ -169,8 +170,18 @@ export function Events() {
     }
   }
 
+  function openCreateModal() {
+    setSelectedEvent(null);
+    setEditingId(null);
+    setCopiedBudget(false);
+    setForm(initial);
+    setFormOpen(true);
+  }
+
   function editEvent(event) {
+    setSelectedEvent(null);
     setEditingId(event._id);
+    setCopiedBudget(false);
     setForm({
       clientId: event.clientId?._id || event.clientId || '',
       type: event.type || initial.type,
@@ -183,16 +194,17 @@ export function Events() {
       price: Number(event.price || 0),
       notes: event.notes || ''
     });
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setFormOpen(true);
   }
 
-  function cancelEdit() {
+  function closeFormModal() {
+    setFormOpen(false);
     setEditingId(null);
     setForm(initial);
   }
 
   async function deleteEvent(event) {
-    const confirmed = window.confirm(`Excluir orçamento/evento de ${event.clientId?.name || 'cliente'}?`);
+    const confirmed = window.confirm(`Excluir orcamento/evento de ${event.clientId?.name || 'cliente'}?`);
     if (!confirmed) return;
     await api(`/events/${event._id}`, { method: 'DELETE' });
     load();
@@ -235,9 +247,9 @@ export function Events() {
           <h1>Eventos e orcamentos</h1>
           <p>Controle pedidos que chegam pelo Instagram, envio de orcamento e follow-up semanal.</p>
         </div>
-        <button className="ghost-button" type="button" onClick={sendBudgetPreset}>
-          <MessageCircle size={18} />
-          Marcar orcamento enviado
+        <button className="primary-button" type="button" onClick={openCreateModal}>
+          <Plus size={18} />
+          Novo atendimento
         </button>
       </div>
 
@@ -260,200 +272,213 @@ export function Events() {
         </div>
       </div>
 
-      <div className="split lead-split">
-        <form className="panel form-panel" onSubmit={submit}>
-          <div className="section-head compact-head">
-            <div>
-              <h2>{editingId ? 'Editar atendimento' : 'Novo atendimento'}</h2>
-              <p>Preencha data, local, horarios e origem do pedido.</p>
-            </div>
-            {editingId ? (
-              <button className="icon-button" type="button" onClick={cancelEdit} aria-label="Cancelar edicao">
-                <X size={16} />
-              </button>
-            ) : (
-              <div className="section-icon"><Plus size={18} /></div>
-            )}
+      <div className="panel">
+        <div className="section-head compact-head">
+          <div>
+            <h2>Lista de atendimento</h2>
+            <p>Veja quem precisa receber mensagem, quem esta aguardando e quem ja fechou.</p>
           </div>
+          <select className="filter-select" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
+            <option value="">Todos os status</option>
+            {statuses.map((status) => <option key={status.value} value={status.value}>{status.label}</option>)}
+          </select>
+        </div>
 
-          <FormField label="Cliente">
-            <select required value={form.clientId} onChange={(e) => setForm({ ...form, clientId: e.target.value })}>
-              <option value="">Selecione</option>
-              {clients.map((client) => (
-                <option key={client._id} value={client._id}>{client.name}</option>
-              ))}
-            </select>
-          </FormField>
-
-          <FormField label="Tipo de evento ou ensaio">
-            <select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}>
-              <optgroup label="Eventos">
-                {eventTypes.slice(0, 6).map((type) => <option key={type.value} value={type.value}>{type.label}</option>)}
-              </optgroup>
-              <optgroup label="Ensaios e outros">
-                {eventTypes.slice(6).map((type) => <option key={type.value} value={type.value}>{type.label}</option>)}
-              </optgroup>
-            </select>
-          </FormField>
-
-          <div className="form-duo">
-            <FormField label="Origem">
-              <select value={form.source} onChange={(e) => setForm({ ...form, source: e.target.value })}>
-                {sources.map((source) => <option key={source.value} value={source.value}>{source.label}</option>)}
-              </select>
-            </FormField>
-
-            <FormField label="Status">
-              <select value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })}>
-                {statuses.map((status) => <option key={status.value} value={status.value}>{status.label}</option>)}
-              </select>
-            </FormField>
-          </div>
-
-          <FormField label="Data e horario de inicio">
-            <input type="datetime-local" required value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
-          </FormField>
-
-          <FormField label="Horario final">
-            <input type="datetime-local" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })} />
-          </FormField>
-
-          <FormField label="Proximo contato">
-            <input type="datetime-local" value={form.followUpAt} onChange={(e) => setForm({ ...form, followUpAt: e.target.value })} />
-          </FormField>
-
-          <FormField label="Local">
-            <input required value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} placeholder="Ex.: salao, igreja, casa, estudio..." />
-          </FormField>
-
-          <FormField label="Valor do orcamento">
-            <input type="number" min="0" value={form.price} onChange={(e) => setForm({ ...form, price: Number(e.target.value) })} />
-          </FormField>
-
-          <FormField label="Observacoes do atendimento">
-            <textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} placeholder="Ex.: pediu pelo Instagram, quer saber pacote, chamar de novo semana que vem..." />
-          </FormField>
-
-          <div className="budget-preview">
-            <div className="budget-preview-head">
-              <div>
-                <strong>Orcamento pronto</strong>
-                <span>Mensagem para copiar e enviar para a cliente.</span>
-              </div>
-              <Sparkles size={18} />
-            </div>
-
-            <div className="budget-card">
-              <div className="budget-card-top">
+        <div className="lead-list">
+          {filteredEvents.map((event) => (
+            <article className="lead-card clickable-card" key={event._id} onClick={() => setSelectedEvent(event)}>
+              <div className="lead-card-top">
                 <div>
-                  <span>{budgetCard.studioName}</span>
-                  <strong>Orcamento fotografico</strong>
+                  <span className="event-type-pill">{labels[event.type] || event.type}</span>
+                  <h3>{event.clientId?.name || 'Cliente sem nome'}</h3>
                 </div>
-                <Sparkles size={20} />
+                <span className={`badge ${statusClass(event.status)}`}>{labels[event.status] || event.status}</span>
               </div>
-              <div className="budget-card-client">
-                <span>Cliente</span>
-                <strong>{budgetCard.clientName}</strong>
+
+              <div className="lead-meta">
+                <span><Instagram size={16} />{labels[event.source] || event.source || 'Origem nao informada'}</span>
+                <span><CalendarDays size={16} />{format(new Date(event.date), 'dd/MM/yyyy HH:mm')}</span>
+                <span><Clock size={16} />{event.endDate ? format(new Date(event.endDate), 'HH:mm') : 'Sem horario final'}</span>
+                <span><MapPin size={16} />{event.location}</span>
+                <span><DollarSign size={16} />{Number(event.price || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
+                <span><UserRound size={16} />{event.followUpAt ? `Chamar ${format(new Date(event.followUpAt), 'dd/MM HH:mm')}` : 'Sem follow-up'}</span>
               </div>
-              <div className="budget-card-grid">
-                <div><span>Servico</span><strong>{budgetCard.type}</strong></div>
-                <div><span>Data</span><strong>{budgetCard.date}</strong></div>
-                <div><span>Horario</span><strong>{budgetCard.time}</strong></div>
-                <div><span>Local</span><strong>{budgetCard.location}</strong></div>
+
+              <p className={event.notes ? 'event-notes' : 'event-notes muted'}>
+                {event.notes || 'Sem observacoes adicionais.'}
+              </p>
+
+              <div className="event-actions">
+                <button type="button" className="ghost-button" onClick={(clickEvent) => { clickEvent.stopPropagation(); editEvent(event); }}>
+                  <Edit size={16} />
+                  Editar
+                </button>
+                <button type="button" className="ghost-button" onClick={(clickEvent) => { clickEvent.stopPropagation(); copyBudget(buildBudgetText(event, event.clientId)); }}>
+                  <MessageCircle size={16} />
+                  Copiar orcamento
+                </button>
+                <button type="button" className="ghost-button" onClick={(clickEvent) => { clickEvent.stopPropagation(); copyLink(event); }}>
+                  <Copy size={16} />
+                  {copiedId === event._id ? 'Link copiado' : 'Copiar link do cliente'}
+                </button>
+                <button type="button" className="ghost-button danger-button" onClick={(clickEvent) => { clickEvent.stopPropagation(); deleteEvent(event); }}>
+                  <Trash2 size={16} />
+                  Excluir
+                </button>
               </div>
-              <div className="budget-card-price">
-                <span>Investimento</span>
-                <strong>{budgetCard.price}</strong>
-              </div>
+            </article>
+          ))}
+
+          {filteredEvents.length === 0 && (
+            <div className="empty-state">
+              <Sparkles size={20} />
+              <strong>Nenhum atendimento nesse filtro</strong>
+              <p>Quando cadastrar um pedido de orcamento, ele aparece aqui para acompanhar.</p>
             </div>
-
-            <pre>{budgetText}</pre>
-            <div className="budget-actions">
-              <button type="button" className="ghost-button" onClick={() => copyBudget()}>
-                <Copy size={16} />
-                {copiedBudget ? 'Copiado' : 'Copiar orcamento'}
-              </button>
-              <a className="primary-button" href={whatsappUrl()} target="_blank" rel="noreferrer">
-                <MessageCircle size={16} />
-                Enviar WhatsApp
-              </a>
-              <button type="button" className="ghost-button full-action" onClick={() => downloadBudgetCard()}>
-                <Download size={16} />
-                Baixar cartao
-              </button>
-            </div>
-          </div>
-
-          <button className="primary-button" disabled={loading}>{loading ? 'Salvando...' : editingId ? 'Atualizar atendimento' : 'Salvar atendimento'}</button>
-        </form>
-
-        <div className="panel">
-          <div className="section-head compact-head">
-            <div>
-              <h2>Funil de atendimento</h2>
-              <p>Veja quem precisa receber mensagem, quem esta aguardando e quem ja fechou.</p>
-            </div>
-            <select className="filter-select" value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-              <option value="">Todos os status</option>
-              {statuses.map((status) => <option key={status.value} value={status.value}>{status.label}</option>)}
-            </select>
-          </div>
-
-          <div className="lead-list">
-            {filteredEvents.map((event) => (
-              <article className="lead-card clickable-card" key={event._id} onClick={() => setSelectedEvent(event)}>
-                <div className="lead-card-top">
-                  <div>
-                    <span className="event-type-pill">{labels[event.type] || event.type}</span>
-                    <h3>{event.clientId?.name || 'Cliente sem nome'}</h3>
-                  </div>
-                  <span className={`badge ${statusClass(event.status)}`}>{labels[event.status] || event.status}</span>
-                </div>
-
-                <div className="lead-meta">
-                  <span><Instagram size={16} />{labels[event.source] || event.source || 'Origem nao informada'}</span>
-                  <span><CalendarDays size={16} />{format(new Date(event.date), 'dd/MM/yyyy HH:mm')}</span>
-                  <span><Clock size={16} />{event.endDate ? format(new Date(event.endDate), 'HH:mm') : 'Sem horario final'}</span>
-                  <span><MapPin size={16} />{event.location}</span>
-                  <span><DollarSign size={16} />{Number(event.price || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span>
-                  <span><UserRound size={16} />{event.followUpAt ? `Chamar ${format(new Date(event.followUpAt), 'dd/MM HH:mm')}` : 'Sem follow-up'}</span>
-                </div>
-
-                <p className={event.notes ? 'event-notes' : 'event-notes muted'}>
-                  {event.notes || 'Sem observacoes adicionais.'}
-                </p>
-
-                <div className="event-actions">
-                  <button type="button" className="ghost-button" onClick={(clickEvent) => { clickEvent.stopPropagation(); editEvent(event); }}>
-                    <Edit size={16} />
-                    Editar
-                  </button>
-                  <button type="button" className="ghost-button" onClick={(clickEvent) => { clickEvent.stopPropagation(); copyBudget(buildBudgetText(event, event.clientId)); }}>
-                    <MessageCircle size={16} />
-                    Copiar orcamento
-                  </button>
-                  <button type="button" className="ghost-button" onClick={(clickEvent) => { clickEvent.stopPropagation(); copyLink(event); }}>
-                    <Copy size={16} />
-                    {copiedId === event._id ? 'Link copiado' : 'Copiar link do cliente'}
-                  </button>
-                  <button type="button" className="ghost-button danger-button" onClick={(clickEvent) => { clickEvent.stopPropagation(); deleteEvent(event); }}>
-                    <Trash2 size={16} />
-                    Excluir
-                  </button>
-                </div>
-              </article>
-            ))}
-
-            {filteredEvents.length === 0 && (
-              <div className="empty-state">
-                <Sparkles size={20} />
-                <strong>Nenhum atendimento nesse filtro</strong>
-                <p>Quando cadastrar um pedido de orcamento, ele aparece aqui para acompanhar.</p>
-              </div>
-            )}
-          </div>
+          )}
         </div>
       </div>
+
+      {formOpen && (
+        <div className="event-modal-backdrop" role="dialog" aria-modal="true">
+          <form className="event-modal event-create-modal" onSubmit={submit}>
+            <div className="event-modal-head">
+              <div>
+                <span><CalendarDays size={16} /> {editingId ? 'Editar atendimento' : 'Novo atendimento'}</span>
+                <h2>{editingId ? 'Atualize os dados do orcamento' : 'Cadastrar novo atendimento'}</h2>
+              </div>
+              <button className="icon-button" type="button" onClick={closeFormModal} aria-label="Fechar">
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="event-create-grid">
+              <div className="event-create-form">
+                <FormField label="Cliente">
+                  <select required value={form.clientId} onChange={(e) => setForm({ ...form, clientId: e.target.value })}>
+                    <option value="">Selecione</option>
+                    {clients.map((client) => (
+                      <option key={client._id} value={client._id}>{client.name}</option>
+                    ))}
+                  </select>
+                </FormField>
+
+                <FormField label="Tipo de evento ou ensaio">
+                  <select value={form.type} onChange={(e) => setForm({ ...form, type: e.target.value })}>
+                    <optgroup label="Eventos">
+                      {eventTypes.slice(0, 6).map((type) => <option key={type.value} value={type.value}>{type.label}</option>)}
+                    </optgroup>
+                    <optgroup label="Ensaios e outros">
+                      {eventTypes.slice(6).map((type) => <option key={type.value} value={type.value}>{type.label}</option>)}
+                    </optgroup>
+                  </select>
+                </FormField>
+
+                <div className="form-duo">
+                  <FormField label="Origem">
+                    <select value={form.source} onChange={(e) => setForm({ ...form, source: e.target.value })}>
+                      {sources.map((source) => <option key={source.value} value={source.value}>{source.label}</option>)}
+                    </select>
+                  </FormField>
+
+                  <FormField label="Status">
+                    <select value={form.status} onChange={(e) => setForm({ ...form, status: e.target.value })}>
+                      {statuses.map((status) => <option key={status.value} value={status.value}>{status.label}</option>)}
+                    </select>
+                  </FormField>
+                </div>
+
+                <FormField label="Data e horario de inicio">
+                  <input type="datetime-local" required value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
+                </FormField>
+
+                <FormField label="Horario final">
+                  <input type="datetime-local" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })} />
+                </FormField>
+
+                <FormField label="Proximo contato">
+                  <input type="datetime-local" value={form.followUpAt} onChange={(e) => setForm({ ...form, followUpAt: e.target.value })} />
+                </FormField>
+
+                <FormField label="Local">
+                  <input required value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} placeholder="Ex.: salao, igreja, casa, estudio..." />
+                </FormField>
+
+                <FormField label="Valor do orcamento">
+                  <input type="number" min="0" value={form.price} onChange={(e) => setForm({ ...form, price: Number(e.target.value) })} />
+                </FormField>
+
+                <FormField label="Observacoes do atendimento">
+                  <textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} placeholder="Ex.: pediu pelo Instagram, quer saber pacote, chamar de novo semana que vem..." />
+                </FormField>
+              </div>
+
+              <div className="budget-preview">
+                <div className="budget-preview-head">
+                  <div>
+                    <strong>Orcamento pronto</strong>
+                    <span>Mensagem para copiar e enviar para a cliente.</span>
+                  </div>
+                  <Sparkles size={18} />
+                </div>
+
+                <div className="budget-card">
+                  <div className="budget-card-top">
+                    <div>
+                      <span>{budgetCard.studioName}</span>
+                      <strong>Orcamento fotografico</strong>
+                    </div>
+                    <Sparkles size={20} />
+                  </div>
+                  <div className="budget-card-client">
+                    <span>Cliente</span>
+                    <strong>{budgetCard.clientName}</strong>
+                  </div>
+                  <div className="budget-card-grid">
+                    <div><span>Servico</span><strong>{budgetCard.type}</strong></div>
+                    <div><span>Data</span><strong>{budgetCard.date}</strong></div>
+                    <div><span>Horario</span><strong>{budgetCard.time}</strong></div>
+                    <div><span>Local</span><strong>{budgetCard.location}</strong></div>
+                  </div>
+                  <div className="budget-card-price">
+                    <span>Investimento</span>
+                    <strong>{budgetCard.price}</strong>
+                  </div>
+                </div>
+
+                <pre>{budgetText}</pre>
+                <div className="budget-actions">
+                  <button type="button" className="ghost-button" onClick={sendBudgetPreset}>
+                    <MessageCircle size={16} />
+                    Marcar orcamento enviado
+                  </button>
+                  <button type="button" className="ghost-button" onClick={() => copyBudget()}>
+                    <Copy size={16} />
+                    {copiedBudget ? 'Copiado' : 'Copiar orcamento'}
+                  </button>
+                  <a className="primary-button" href={whatsappUrl()} target="_blank" rel="noreferrer">
+                    <MessageCircle size={16} />
+                    Enviar WhatsApp
+                  </a>
+                  <button type="button" className="ghost-button full-action" onClick={() => downloadBudgetCard()}>
+                    <Download size={16} />
+                    Baixar cartao
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div className="event-modal-actions">
+              <button className="ghost-button" type="button" onClick={closeFormModal}>
+                Cancelar
+              </button>
+              <button className="primary-button" disabled={loading}>
+                {loading ? 'Salvando...' : editingId ? 'Atualizar atendimento' : 'Salvar atendimento'}
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
 
       <EventModal
         event={selectedEvent}
@@ -467,11 +492,6 @@ export function Events() {
 
 function formatMoney(value) {
   return Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-}
-
-function formatWhen(value) {
-  if (!value) return 'data a confirmar';
-  return format(new Date(value), 'dd/MM/yyyy HH:mm');
 }
 
 function buildBudgetText(data, client) {
@@ -541,6 +561,3 @@ function buildBudgetCardSvg(data) {
   <text x="130" y="1200" font-family="Arial, sans-serif" font-size="22" fill="#8b7280">Validade e detalhes podem ser alinhados pelo atendimento.</text>
 </svg>`;
 }
-
-
-
