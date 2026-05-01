@@ -20,286 +20,369 @@ function timeOnly(value) {
   return new Date(value).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
 }
 
-function dateTime(value) {
+function dateAndStart(value) {
   if (!value) return '-';
   return `${dateOnly(value)} ${timeOnly(value)}`;
 }
 
-function money(value) {
-  return Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+function moneyNumber(value, fallback = 0) {
+  const number = Number(value || 0) || fallback;
+  return number.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
-function eventInfo(data) {
+function hoursText(data, fallback = '3 horas') {
+  if (!data.date || !data.endDate) return fallback;
+  const start = new Date(data.date).getTime();
+  const end = new Date(data.endDate).getTime();
+  const diff = Math.max(0, end - start);
+  if (!diff) return fallback;
+  const hours = diff / 36e5;
+  if (Number.isInteger(hours)) return `${hours} ${hours === 1 ? 'hora' : 'horas'}`;
+  return `${String(hours).replace('.', ',')} horas`;
+}
+
+function eventInfo(data, fallbackPrice = 0) {
   return {
     data: dateOnly(data.date),
-    inicio: timeOnly(data.date),
-    fim: timeOnly(data.endDate),
-    horario: data.endDate ? `${timeOnly(data.date)} as ${timeOnly(data.endDate)}` : timeOnly(data.date),
+    dataInicio: dateAndStart(data.date),
+    horario: data.endDate ? `${timeOnly(data.date)} às ${timeOnly(data.endDate)}` : timeOnly(data.date),
+    horarioFinal: data.endDate ? timeOnly(data.endDate) : '-',
     local: valueOrDash(data.location),
-    valor: money(data.price)
+    valor: moneyNumber(data.price, fallbackPrice),
+    sinal: moneyNumber((Number(data.price || 0) || fallbackPrice) * 0.1)
   };
 }
 
-const paymentText = `Formas de pagamento:
-* 10% de sinal para reserva da data e o restante ate o dia do evento via Pix ou Transferencia
-* Parcelamento no cartao de credito conforme condicoes combinadas`;
-
-const signature = `Atenciosamente,
-Vida em Foco`;
-
 const templates = {
-  casamento(data) {
+  outro(data, client, labels = {}) {
     const info = eventInfo(data);
-    return `ORCAMENTO - CASAMENTO CIVIL + RECEPCAO
+    const type = labels[data.type] || 'SERVIÇO';
+    const name = clean(client?.name);
 
-Evento: Casamento Civil + Recepcao
-Horario: ${info.horario}
-Data: ${info.data}
+    if (!name) {
+      return `Oi, tudo bem! Tudo bem?
+
+Segue o orcamento para ${type}:
+
+Data e inicio: ${info.dataInicio}
+Horario final: ${info.horarioFinal}
 Local: ${info.local}
-Cobertura Fotografica: Cartorio + Recepcao
+Investimento: R$ ${info.valor}
 
-Fotos ilimitadas no cartorio e na recepcao
-2 horas de cobertura fotografica na recepcao
-Fotos entregues em alta resolucao
-Entrega via link para download
+Se fizer sentido para voce, posso deixar essa data pre-reservada enquanto alinhamos os detalhes.
+Qualquer duvida ou ajuste que precisar, estou a disposicao.`;
+    }
 
-Investimento: R$ 700,00
+    return `Oi, ${name}! Tudo bem?
 
-${paymentText}
+Segue o orcamento para ${type}:
 
-${signature}`;
+Data e inicio: ${info.dataInicio}
+Horario final: ${info.horarioFinal}
+Local: ${info.local}
+Investimento: R$ ${info.valor}
+
+Se fizer sentido para voce, posso deixar essa data pre-reservada enquanto alinhamos os detalhes.
+Qualquer duvida ou ajuste que precisar, estou a disposicao.`;
+  },
+
+  casamento(data) {
+    const info = eventInfo(data, 700);
+    return `ORÇAMENTO – CASAMENTO CIVIL + RECEPÇÃO
+
+Evento: ${valueOrDash(data.title) === '-' ? 'Casamento Civil + Recepção' : valueOrDash(data.title)}
+
+Horário: ${info.horario}
+Data: ${info.data}
+Cobertura Fotográfica: 📸 Cartório + Recepção
+
+✔ Fotos ilimitadas no cartório e na recepção
+✔ 2 hora de cobertura fotográfica na recepção
+✔ Fotos entregues em alta resolução
+✔ Entrega via link para download
+
+Investimento: R$ ${info.valor}
+
+Formas de pagamento:
+• 10% de sinal para reserva da data e o restante até o dia do evento via Pix ou Transferência
+• Parcelamento em até 5x no cartão de crédito (com juros)
+
+      Atenciosamente,
+
+Mel Sabino Fotografia`;
   },
 
   aniversario_infantil(data, client) {
     const info = eventInfo(data);
+    const horas = hoursText(data);
     return `Prezada(o) ${clientName(client)},
-Sera um prazer registrar a festa de aniversario do(a) seu(sua) filho(a) e eternizar esse momento tao especial com todo carinho e atencao aos detalhes.
+Será um prazer registrar a festa de aniversário do(a) seu(sua) filho(a) e eternizar esse momento tão especial com todo carinho e atenção aos detalhes.
 
-Informacoes do Evento
-* Data: ${info.data}
-* Local: ${info.local}
-* Horario: ${info.horario}
+Informações do Evento
+• Data: ${info.data}
+• Local: ${info.local}
+• Horário: ${info.horario}
 
-Nossa proposta inclui cobertura fotografica completa durante 3 horas, registrando desde os detalhes da decoracao ate os momentos mais emocionantes da festa.
+Nossa proposta inclui cobertura fotográfica completa durante ${horas}, registrando desde os detalhes da decoração até os momentos mais emocionantes da festa.
 
-O que sera registrado:
-Detalhes da decoracao e do ambiente no inicio da cobertura
-Momentos espontaneos e especiais da festa
-Interacao com familiares e convidados
-O momento mais esperado: o Parabens
+O que será registrado
+📸 Detalhes da decoração e do ambiente no início da cobertura
+📸 Momentos espontâneos e especiais da festa
+📸 Interação com familiares e convidados
+📸 O momento mais esperado: o Parabéns
 
-Nosso objetivo e capturar sorrisos, emocoes e cada detalhe que torna essa data unica, criando lembrancas que poderao ser revividas por muitos anos.
+Nosso objetivo é capturar sorrisos, emoções e cada detalhe que torna essa data única, criando lembranças que poderão ser revividas por muitos anos.
 
-Investimento: ${info.valor}
+Entrega do Material
+• Quantidade de fotos:
+Todas as fotos realizadas no evento que estiverem com qualidade técnica e estética serão entregues (sem limite de cliques).
 
-${signature}`;
+• Formato de entrega:
+As fotos serão disponibilizadas através de galeria online com link para download, facilitando o compartilhamento com familiares e amigos.
+
+• Prazo de entrega:
+As fotos tratadas serão entregues em até 20 dias úteis após o evento.
+
+Investimento
+• Cobertura fotográfica: ${horas}
+• Valor: R$ ${info.valor}
+
+Formas de pagamento
+• Sinal de R$ ${info.sinal} para reserva da data
+• Restante até o dia do evento via Pix ou transferência
+• Parcelamento em até 10x no cartão (com juros da operadora)
+
+⚠️ A data só é garantida após o pagamento do sinal de reserva.
+
+Ficarei muito feliz em fazer parte desse momento especial e registrar cada detalhe dessa comemoração.
+Estou à disposição para qualquer dúvida ou para garantirmos sua data na agenda.
+
+Atenciosamente,
+
+     *Estúdio Mel Fotografia*`;
   },
 
   ensaio_gestante() {
-    return `Proposta de Orcamento - Ensaios Gestante
+    return `📸 Proposta de Orçamento - Ensaios Gestante
 
-PACOTE PREMIUM
-Sessao fotografica externa: 30 fotos em locacao escolhida com o cliente
-Sessao fotografica em estudio: 15 fotos
-Vestuario e maquiagem social inclusos para os dois ensaios
-Valor: R$ 1530,00 ou R$ 1630,00 ate 10x sem juros
+💫 PACOTE PREMIUM
+Sessão *Fotográfica externa (30 fotos em locação escolhida com o cliente)
+Sessão fotográfica estúdio  (15 fotos)
+Vestuário e maquiagem social incluído para os dois ensaios.
+💰 R$ 1530,00 ou 1630,00 até 10x SEM JUROS
 
-PACOTE MIDDLE
-Sessao fotografica externa em locacao a escolha do cliente
-3 vestuarios inclusos
-Maquiagem social
+💫 PACOTE MIDDLE
+Sessão Fotográfica externa (Locação a escolha do cliente)
+3 vestuários inclusos
+Maquiagem socia
 30 fotos
-Valor: R$ 679,00 ou R$ 779,00 ate 10x sem juros
+💰 R$ 679,00 ou 779,00 ate 10x SEM JUROS
 
-PACOTE ESSENTIAL
-Sessao fotografica em estudio
-2 vestuarios inclusos
+💫 PACOTE ESSENTIAL
+Sessão fotográfica estúdio
+2 vestuários inclusos
 Maquiagem social
 15 fotos
-Valor: R$ 590,00 ou R$ 690,00 ate 10x de R$ 69,43 sem juros
+💰 R$ 590,00 ou 690 até 10x de R$ 69,43 SEM JUROS
 
-PACOTE MINIMALIST
-Sessao fotografica em estudio
-1 vestuario incluso
+💫 PACOTE MINIMALIST
+Sessão fotográfica estúdio
+1 vestuário incluso
 Maquiagem social
 10 fotos
-Valor: R$ 469,00 ou R$ 569,00 ate 10x sem juros
-
-${signature}`;
+💰 R$ 469,00 ou 569,00 até 10x SEM JUROS`;
   },
 
   ensaio_infantil() {
     return `ENSAIO INFANTIL
-
-Um ambiente leve, delicado e atemporal, pensado para valorizar o que realmente importa: a crianca.
-Cores neutras, elementos suaves e uma composicao harmonica que nao rouba a cena, apenas realca cada expressao, gesto e detalhe do seu pequeno.
-
-O foco esta na essencia, na pureza e nas emocoes genuinas captadas em cada clique.
-
-25 fotos
-Fotos com a familia
-
-Valor: R$ 279,00 ou R$ 379,00 ate 10x sem juros
-
-${signature}`;
+Um ambiente leve, delicado e atemporal, pensado para valorizar o que realmente importa: a criança. Cores neutras, elementos suaves e uma composição harmônica que não rouba a cena — apenas realça cada expressão, gesto e detalhe do seu pequeno. O foco está na essência, na pureza e nas emoções genuínas captadas em cada clique.
+25 fotos / Fotos com a família
+💰 Valor: R$ 279,00 ou 379,00 ATÉ 10X SEM JUROS`;
   },
 
   smash_the_cake() {
-    return `ENSAIO INFANTIL - SMASH THE CAKE
+    return `ENSAIO INFANTIL
+SMASH THE CAKE*
 
-Um cenario ludico, colorido e totalmente personalizado, criado com base no tema escolhido pela familia.
-Cada detalhe e pensado para refletir a personalidade do bebe e tornar esse momento ainda mais especial.
+Um cenário lúdico, colorido e totalmente personalizado, criado com base no tema escolhido pela família. Cada detalhe é pensado para refletir a personalidade do bebê e tornar esse momento ainda mais especial.
+Composição elaborada, elementos decorativos criativos e um bolo exclusivo para o smash — tudo preparado com muito carinho para garantir uma experiência divertida e cheia de memórias encantadoras.
+🌸 Diversão, bagunça gostosa e registros inesquecíveis para celebrar o primeiro aninho!
+25 fotos / Fotos com a família
 
-Composicao elaborada, elementos decorativos criativos e um bolo exclusivo para o smash, tudo preparado com muito carinho para garantir uma experiencia divertida e cheia de memorias encantadoras.
-
-Diversao, bagunca gostosa e registros inesqueciveis para celebrar o primeiro aninho.
-
-25 fotos
-Fotos com a familia
-
-Valor: R$ 399,00 ou R$ 499,00 ate 10x sem juros
-
-${signature}`;
+💰 *Valor: R$ 399,00 ou R$ 499,00 ATÉ 10X SEM JUROS`;
   },
 
-  ensaio_casal() {
-    return `Orcamento - Ensaio de Casal
+  ensaio_casal_externo() {
+    return `🌿 Ensaio de Casal – Externo
+😊
+Segue as informações do ensaio de casal externo:
+📍 Ensaio realizado em ambiente externo
+📷 25 fotos tratadas e entregues em alta resolução.
+💰 Valor: R$ 300,00
 
-OPCAO EXTERNA
-Ensaio realizado em ambiente externo
-25 fotos tratadas e entregues em alta resolucao
-Valor: R$ 300,00
+EXTRAS MAQUIAGEM VALOR: R$120
 
-OPCAO ESTUDIO
-Ensaio realizado em estudio
-15 fotos tratadas e entregues em alta resolucao
-Valor: R$ 230,00
-
-Extra maquiagem: R$ 120,00
-
-Perfeito para casais que gostam de fotos naturais, leves e cheias de espontaneidade, ou para um registro mais intimista em estudio.
-
-${signature}`;
+Perfeito para casais que gostam de fotos naturais, leves e cheias de espontaneidade.`;
   },
 
-  aniversario_15() {
-    return `Orcamento - Ensaio de 15 anos
+  ensaio_casal_estudio() {
+    return `📸 Ensaio de Casal – Estúdio 😊
+Segue as informações do ensaio de casal no estúdio:
+📍 Ensaio realizado em estúdio
+📷 15 fotos tratadas e entregues em alta resolução.
+💰 Valor: R$ 230,00
 
-OPCAO EXTERNA
-Ensaio realizado em ambiente externo
-25 fotos tratadas e entregues em alta resolucao
-Valor: R$ 300,00 ou R$ 399,00 em ate 10x sem juros
+Extras maquiagem Valor: R$ 120
 
-OPCAO ESTUDIO
-Ensaio realizado em estudio
-15 fotos tratadas e entregues em alta resolucao
-Valor: R$ 230,00 ou R$ 330,00 em ate 10x sem juros
+Um ensaio mais intimista, ideal para registrar a conexão do casal de forma elegante e atemporal.✨`;
+  },
 
-${signature}`;
+  ensaio_casal(data, client, labels) {
+    return templates.ensaio_casal_externo(data, client, labels);
+  },
+
+  aniversario_15_externo() {
+    return `🌿 Ensaio de 15 anos – Externo
+😊
+Segue as informações do ensaio de 15 anos:
+📍 Ensaio realizado em ambiente externo
+📷 25 fotos tratadas e entregues em alta resolução.
+💰 *Valor: R$ 300,00
+Ou 399,00 em até 10x SEM JUROS.`;
+  },
+
+  aniversario_15_estudio() {
+    return `📸 Ensaio de 15 anos– Estúdio 😊
+Segue as informações do ensaio de casal no estúdio:
+📍 Ensaio realizado em estúdio
+📷 15 fotos tratadas e entregues em alta resolução.
+💰 Valor: R$ 230,00 ou 330,00 em até 10x SEM JUROS`;
+  },
+
+  aniversario_15(data, client, labels) {
+    return templates.aniversario_15_externo(data, client, labels);
   },
 
   newborn() {
-    return `Ensaio de Newborn
+    return `🤱🏻Ensaio de Newborn👶🏻
 
-PACOTE MINIMALIST
+🔹 Pacote Minimalist
 10 fotos tratadas
-Fotos com os pais / irmaos
-Roupas e acessorios do estudio inclusos
-Valor: R$ 399,00 ou R$ 499,00 ate 10x sem juros
+Fotos com os pais / irmãos
+Roupas e acessórios do estúdio inclusos
 
-PACOTE ESSENTIAL
+Valor: R$ 399,00 ou 499,00 até 10x SEM JUROS
+
+🔹 Pacote Essential
 15 fotos tratadas
-Fotos com os pais / irmaos
-Roupas e acessorios do estudio inclusos
-Valor: R$ 449,00 ou R$ 549,00 ate 10x sem juros
+Fotos com os pais / irmãos
+Roupas e acessórios do estúdio inclusos
 
-PACOTE MIDDLE
+Valor: R$ 449,00 ou 549,00 até 10x SEM JUROS
+
+🔹 Pacote Middle
 15 fotos tratadas
-Fotos com os pais / irmaos
-1 Revista 15x21cm com todas as fotos do ensaio
-Valor: R$ 499,00 ou R$ 599,00 ate 10x sem juros
+Fotos com os pais / irmãos
+1 Revista 15x21cm (com todas as fotos do ensaio)
 
-PACOTE PREMIUM
+Valor : R$ 499,00 ou 599,00 até 10x SEM JUROS
+
+🔸 Pacote Premium (O mais completo!)
 20 fotos tratadas
-Fotos com os pais / irmaos
-1 Album encadernado 15x21cm com todas as fotos do ensaio
-Valor: R$ 610,00 ou R$ 710,00 ate 10x sem juros
+Fotos com os pais / irmãos
+1 Álbum encadernado 15x21cm (com todas as fotos do ensaio)
 
-${signature}`;
+Valor: R$ 610,00 ou 710 até 10x SEM JUROS`;
   },
 
   cha_revelacao() {
-    return `Orcamento - Cha de Revelacao em Estudio
+    return `✨ Orçamento – Chá de Revelação em Estúdio ✨
 
-Pacote inclui:
-20 fotos tratadas em alta qualidade
-1 video de ate 1 minuto e 30 segundos
-Direcionamento completo de poses
-Entrega digital via link
+📸 Pacote inclui:
+• 20 fotos tratadas em alta qualidade
+• 1 vídeo de até 1 minuto e 30 segundos
+• Direcionamento completo de poses
+• Entrega digital via link
+💰 Investimento: R$ 450,00
 
-Investimento: R$ 450,00
-
-Um momento unico e cheio de emocao que merece ser registrado com muito carinho.
-
-${signature}`;
+Um momento único e cheio de emoção que merece ser registrado com muito carinho 💛`;
   },
 
   cha_de_panela() {
-    return `Orcamento - Cha de Panela em Estudio
-
-Pacote inclui:
-20 fotos tratadas em alta qualidade
-1 video de ate 1 minuto e 30 segundos
-Direcionamento completo de poses
-Entrega digital via link
-
-Investimento: R$ 450,00
-
-Um momento especial que merece ser registrado com muito carinho.
-
-${signature}`;
+    return templates.cha_revelacao();
   },
 
   corporativo() {
-    return `Orcamento - Ensaio Corporativo
+    return `Orçamento – Ensaio Corporativo
 
-O ensaio corporativo e pensado para valorizar sua imagem profissional, transmitindo credibilidade, elegancia e confianca.
+O ensaio corporativo é pensado para valorizar sua imagem profissional, transmitindo credibilidade, elegância e confiança.
 
-O que esta incluso:
-Direcionamento completo de poses e orientacao de imagem
-15 fotos profissionais tratadas
-Entrega das fotos em alta resolucao
-Arquivos enviados em formato digital atraves de link do Google Drive
+📷 O que está incluso:
+• Direcionamento completo de poses e orientação de imagem
+• 15 fotos profissionais tratadas
+• Entrega das fotos em alta resolução
+• Arquivos enviados em formato digital através de link do Google Drive
 
-Investimento: R$ 230,00
+💰 Investimento:
+R$ 230,00
 
-Sera um prazer registrar imagens que fortalecam sua presenca profissional.
+Será um prazer registrar imagens que fortaleçam sua presença profissional.💖`;
+  },
 
-${signature}`;
+  formatura_externo() {
+    return `✨ Formatura externo ✨
+
+O pacote inclui beca completa e cadeira.
+
+💰 Valor: R$ 190,00 por pessoa
+
+📸 Inclui 20 fotos, sendo:
+• Fotos individuais
+• Fotos familiares
+• Fotos em turma
+
+E formas de pagamento:
+
+Valor de 30% para reservar o ensaio e o restante até a data.
+
+Ou cartão de crédito 💳`;
+  },
+
+  formatura_pacote_1() {
+    return `🎓✨ Ensaio de Formatura ✨🎓
+📸 Pacote 1
+• 30 fotos digitais
+• Beca completa com faixa na cor do curso
+• Fotos com a família
+💰 De: R$ 349,00`;
+  },
+
+  formatura_premium() {
+    return `🎓✨ Ensaio de Formatura Premium ✨🎓
+📸 Pacote 2
+• 30 fotos digitais
+• Beca completa com faixa na cor do curso
+• Cadeira de formandos inclusa
+• Fotos com a família
+💰 De: R$ 449,00`;
+  },
+
+  ensaio_familia() {
+    return `📸 Orçamento – Ensaio em Família 💖
+
+✨ 15 fotos digitais
+
+✔ Direcionamento completo de poses
+✔ Orientação para melhores composições e expressões
+✔ Fotos entregues em alta qualidade via link do Google Drive
+
+💰 Investimento: R$ 230,00
+
+Será um prazer registrar esse momento especial da sua família! 💕`;
   }
 };
 
 export function buildBudgetTemplateText(data, client, labels = {}) {
-  const template = templates[data.type];
-  if (template) return template(data, client);
-
-  const info = eventInfo(data);
-  const type = labels[data.type] || 'Servico fotografico';
-
-  return [
-    `Oi, ${clientName(client)}! Tudo bem?`,
-    '',
-    `Segue o orcamento para ${type}:`,
-    '',
-    `Data e inicio: ${dateTime(data.date)}`,
-    `Horario final: ${data.endDate ? info.fim : 'horario final a combinar'}`,
-    `Local: ${info.local}`,
-    `Investimento: ${info.valor}`,
-    '',
-    'Se fizer sentido para voce, posso deixar essa data pre-reservada enquanto alinhamos os detalhes.',
-    'Qualquer duvida ou ajuste que precisar, estou a disposicao.',
-    '',
-    signature
-  ].join('\n');
+  const template = templates[data.type] || templates.outro;
+  return template(data, client, labels);
 }
-

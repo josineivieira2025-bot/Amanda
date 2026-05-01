@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 
 const eventTypes = [
   'aniversario_15',
+  'aniversario_15_externo',
+  'aniversario_15_estudio',
   'aniversario_adulto',
   'aniversario_infantil',
   'casamento',
@@ -13,10 +15,15 @@ const eventTypes = [
   'newborn',
   'ensaio_infantil',
   'ensaio_casal',
+  'ensaio_casal_externo',
+  'ensaio_casal_estudio',
   'ensaio_casamento',
   'ensaio_adulto',
   'ensaio_gestante',
   'ensaio_familia',
+  'formatura_externo',
+  'formatura_pacote_1',
+  'formatura_premium',
   'outro'
 ];
 
@@ -68,3 +75,4 @@ eventSchema.pre('save', function createAccessToken(next) {
 });
 
 export const Event = mongoose.model('Event', eventSchema);
+

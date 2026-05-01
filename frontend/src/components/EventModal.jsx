@@ -5,21 +5,28 @@ import { api } from '../api/client.js';
 import { FormField } from './FormField.jsx';
 
 const eventTypes = [
-  { value: 'aniversario_15', label: 'Aniversario de 15' },
+  { value: 'aniversario_15', label: 'Ensaio 15 anos externo' },
+  { value: 'aniversario_15_externo', label: 'Ensaio 15 anos externo' },
+  { value: 'aniversario_15_estudio', label: 'Ensaio 15 anos estudio' },
   { value: 'aniversario_adulto', label: 'Aniversario adulto' },
   { value: 'aniversario_infantil', label: 'Aniversario infantil' },
-  { value: 'casamento', label: 'Casamento' },
+  { value: 'casamento', label: 'Casamento civil + recepcao' },
   { value: 'cha_revelacao', label: 'Cha revelacao' },
   { value: 'cha_de_panela', label: 'Cha de panela' },
   { value: 'corporativo', label: 'Corporativo' },
   { value: 'smash_the_cake', label: 'Smash the cake' },
   { value: 'newborn', label: 'Newborn' },
   { value: 'ensaio_infantil', label: 'Ensaio infantil' },
-  { value: 'ensaio_casal', label: 'Ensaio de casal' },
+  { value: 'ensaio_casal', label: 'Ensaio casal externo' },
+  { value: 'ensaio_casal_externo', label: 'Ensaio casal externo' },
+  { value: 'ensaio_casal_estudio', label: 'Ensaio casal estudio' },
   { value: 'ensaio_casamento', label: 'Ensaio de casamento' },
   { value: 'ensaio_adulto', label: 'Ensaio adulto' },
   { value: 'ensaio_gestante', label: 'Ensaio gestante' },
   { value: 'ensaio_familia', label: 'Ensaio de familia' },
+  { value: 'formatura_externo', label: 'Formatura externo' },
+  { value: 'formatura_pacote_1', label: 'Formatura pacote 1' },
+  { value: 'formatura_premium', label: 'Formatura premium' },
   { value: 'outro', label: 'Outro' }
 ];
 
@@ -174,3 +181,4 @@ export function EventModal({ event, open, onClose, onSaved }) {
     </div>
   );
 }
+
