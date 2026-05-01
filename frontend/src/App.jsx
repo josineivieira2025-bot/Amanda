@@ -20,10 +20,7 @@ export function App() {
     <Routes>
       <Route element={<PublicSiteLayout />}>
         <Route path="/" element={<PublicHome />} />
-        <Route path="/fotografo-casamento-rio-de-janeiro" element={<PublicServicePage />} />
-        <Route path="/ensaio-infantil-rj" element={<PublicServicePage />} />
-        <Route path="/ensaio-gestante-rj" element={<PublicServicePage />} />
-        <Route path="/ensaio-casal-rj" element={<PublicServicePage />} />
+        <Route path="/servicos/:slug" element={<PublicServicePage />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />

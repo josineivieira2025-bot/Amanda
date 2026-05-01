@@ -1837,6 +1837,9 @@ button.clickable-card {
 }
 
 .site-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 10px 14px;
   border-radius: 999px;
   color: #6c5648;
@@ -1852,6 +1855,11 @@ button.clickable-card {
   background: linear-gradient(135deg, #a46843 0%, #6c4332 100%);
   color: #fff !important;
   box-shadow: 0 14px 30px rgba(108, 67, 50, 0.18);
+}
+
+.site-nav-outline {
+  border: 1px solid rgba(131, 86, 60, 0.14);
+  background: rgba(255, 255, 255, 0.74);
 }
 
 .site-mobile-only {
@@ -2193,8 +2201,331 @@ button.clickable-card {
 }
 
 .site-footer-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   color: #6a5144;
   font-weight: 700;
+}
+
+.service-bullet-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.service-bullet-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #5d493d;
+  font-weight: 700;
+}
+
+.site-inline-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.site-inline-steps div {
+  padding: 22px;
+  border-radius: 22px;
+  background: rgba(255, 251, 248, 0.9);
+  border: 1px solid rgba(131, 86, 60, 0.10);
+  box-shadow: var(--shadow-sm);
+}
+
+.site-inline-steps span {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: #f2e3d8;
+  color: #845542;
+  font-weight: 800;
+}
+
+.site-inline-steps strong {
+  display: block;
+  margin: 16px 0 8px;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 24px;
+  color: #2f221b;
+}
+
+.site-service-nav {
+  display: grid;
+  gap: 18px;
+}
+
+.site-service-nav-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.site-service-nav-links a {
+  padding: 12px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(131, 86, 60, 0.10);
+  color: #6a5144;
+  font-weight: 800;
+}
+
+.site-loading-card {
+  padding: 22px;
+  border-radius: 24px;
+  background: rgba(255, 251, 248, 0.92);
+  border: 1px solid rgba(131, 86, 60, 0.10);
+}
+
+.quote-simulator {
+  display: grid;
+  gap: 18px;
+}
+
+.quote-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 18px;
+  align-items: start;
+}
+
+.quote-header h2 {
+  margin: 14px 0 10px;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.04;
+  color: #2f221b;
+}
+
+.quote-header p,
+.quote-price-card small,
+.quote-field span,
+.package-card small,
+.service-tile span,
+.quote-summary small {
+  color: #6b574a;
+}
+
+.quote-price-card {
+  padding: 22px;
+  border-radius: 24px;
+  color: #fff;
+  background: linear-gradient(135deg, #6c4332 0%, #b57c60 100%);
+  box-shadow: 0 20px 40px rgba(108, 67, 50, 0.18);
+}
+
+.quote-price-card span,
+.quote-price-card small {
+  display: block;
+}
+
+.quote-price-card strong {
+  display: block;
+  margin: 10px 0 8px;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 38px;
+}
+
+.quote-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.quote-main,
+.quote-sidebar {
+  display: grid;
+  gap: 18px;
+}
+
+.quote-section,
+.quote-summary {
+  padding: 22px;
+  border-radius: 24px;
+  background: rgba(255, 251, 248, 0.92);
+  border: 1px solid rgba(131, 86, 60, 0.10);
+  box-shadow: var(--shadow-sm);
+}
+
+.quote-section h3 {
+  margin: 0 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  color: #2f221b;
+}
+
+.service-picker,
+.package-grid,
+.extras-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.service-picker {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.package-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.service-tile,
+.package-card {
+  width: 100%;
+  padding: 16px;
+  text-align: left;
+  border: 1px solid rgba(131, 86, 60, 0.12);
+  border-radius: 18px;
+  background: #fff;
+  transition: all 0.2s ease;
+}
+
+.service-tile strong,
+.package-card span,
+.extra-chip strong {
+  display: block;
+}
+
+.service-tile strong,
+.package-card span {
+  color: #2f221b;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.service-tile span {
+  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.package-card strong {
+  display: block;
+  margin: 12px 0 8px;
+  color: #8b543f;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 28px;
+}
+
+.service-tile.active,
+.package-card.active,
+.extra-chip.active {
+  border-color: rgba(164, 104, 67, 0.55);
+  box-shadow: 0 18px 34px rgba(108, 67, 50, 0.10);
+  background: linear-gradient(180deg, #fff8f2, #fff);
+}
+
+.extras-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.extra-chip {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(131, 86, 60, 0.12);
+  background: #fff;
+}
+
+.extra-chip input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+}
+
+.extra-chip span,
+.quote-summary-row span,
+.quote-summary-total span {
+  color: #6b574a;
+}
+
+.extra-chip strong {
+  color: #8b543f;
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 22px;
+}
+
+.quote-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.quote-field {
+  display: grid;
+  gap: 8px;
+}
+
+.quote-field span {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.quote-field.full {
+  grid-column: 1 / -1;
+}
+
+.quote-input-icon {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(125, 75, 93, 0.14);
+  background: rgba(255,255,255,0.92);
+  color: var(--text-soft);
+}
+
+.quote-input-icon input {
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  padding-left: 0;
+}
+
+.quote-summary {
+  display: grid;
+  gap: 12px;
+}
+
+.quote-summary-row,
+.quote-summary-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.quote-summary-row strong,
+.quote-summary-total strong {
+  color: #2f221b;
+}
+
+.quote-summary-row.extra strong {
+  color: #8b543f;
+}
+
+.quote-summary-total {
+  margin-top: 6px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(131, 86, 60, 0.12);
+}
+
+.quote-summary-total strong {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 30px;
 }
 
 /* RESPONSIVO */
@@ -2265,6 +2596,15 @@ button.clickable-card {
   }
 
   .site-proof-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .quote-header,
+  .quote-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .package-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -2735,6 +3075,16 @@ button.clickable-card {
   .site-footer-links {
     justify-content: flex-start;
   }
+
+  .site-inline-steps,
+  .quote-grid,
+  .quote-header,
+  .service-picker,
+  .package-grid,
+  .extras-grid,
+  .quote-form-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 560px) {
@@ -2985,6 +3335,18 @@ button.clickable-card {
   .site-primary-button,
   .site-ghost-button {
     width: 100%;
+  }
+
+  .quote-section,
+  .quote-summary,
+  .quote-price-card {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .quote-price-card strong,
+  .quote-summary-total strong {
+    font-size: 30px;
   }
 }
 
