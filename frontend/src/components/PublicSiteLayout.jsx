@@ -1,6 +1,6 @@
 import { Menu, MessageCircle } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
+import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { publicNavLinks } from '../data/publicSite.js';
 
 function whatsappHref() {
@@ -10,7 +10,15 @@ function whatsappHref() {
 
 export function PublicSiteLayout() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const navigationEntry = window.performance?.getEntriesByType?.('navigation')?.[0];
+    if (navigationEntry?.type === 'reload' && location.pathname !== '/') {
+      navigate('/', { replace: true });
+    }
+  }, [location.pathname, navigate]);
 
   useEffect(() => {
     setOpen(false);

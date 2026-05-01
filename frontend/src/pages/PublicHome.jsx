@@ -1,8 +1,5 @@
 import { ArrowRight, HeartHandshake, ImagePlus, MessageCircle, Sparkles } from 'lucide-react';
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { api } from '../api/client.js';
-import { QuoteSimulator } from '../components/QuoteSimulator.jsx';
 import { SeoMeta } from '../components/SeoMeta.jsx';
 import { homeCollections, serviceContent } from '../data/publicSite.js';
 
@@ -13,12 +10,6 @@ function whatsappHref() {
 }
 
 export function PublicHome() {
-  const [catalog, setCatalog] = useState([]);
-
-  useEffect(() => {
-    api('/public/quote-catalog').then(setCatalog).catch(console.error);
-  }, []);
-
   return (
     <>
       <SeoMeta
@@ -121,12 +112,6 @@ export function PublicHome() {
               <strong>Atendimento mais atencioso</strong>
               <p>Com mais contexto sobre o que voce imagina, o retorno fica mais proximo, util e alinhado ao seu momento.</p>
             </article>
-          </div>
-        </section>
-
-        <section className="site-band">
-          <div className="site-section-inner">
-            <QuoteSimulator catalog={catalog} />
           </div>
         </section>
       </main>

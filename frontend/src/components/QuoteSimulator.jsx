@@ -12,7 +12,7 @@ function buildInitialState(initialServiceSlug) {
   return { ...quoteFormDefaults, serviceSlug: initialServiceSlug || '' };
 }
 
-export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact = false }) {
+export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact = false, showServicePicker = true }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [form, setForm] = useState(buildInitialState(initialServiceSlug));
@@ -145,22 +145,24 @@ export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact 
 
       <div className="quote-grid">
         <div className="quote-main">
-          <div className="quote-section">
-            <h3><PartyPopper size={18} /> Escolha o servico</h3>
-            <div className="service-picker">
-              {catalog.map((item) => (
-                <button
-                  key={item.slug}
-                  className={item.slug === service?.slug ? 'service-tile active' : 'service-tile'}
-                  type="button"
-                  onClick={() => chooseService(item.slug)}
-                >
-                  <strong>{item.name}</strong>
-                  <span>{item.summary}</span>
-                </button>
-              ))}
+          {showServicePicker ? (
+            <div className="quote-section">
+              <h3><PartyPopper size={18} /> Escolha o servico</h3>
+              <div className="service-picker">
+                {catalog.map((item) => (
+                  <button
+                    key={item.slug}
+                    className={item.slug === service?.slug ? 'service-tile active' : 'service-tile'}
+                    type="button"
+                    onClick={() => chooseService(item.slug)}
+                  >
+                    <strong>{item.name}</strong>
+                    <span>{item.summary}</span>
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          ) : null}
 
           <div className="quote-section">
             <h3><Sparkles size={18} /> Selecione o pacote</h3>

@@ -96,7 +96,7 @@ export function PublicServicePage() {
 
         <section className="site-band soft">
           <div className="site-section-inner">
-            <QuoteSimulator catalog={catalog} initialServiceSlug={slug} compact />
+            <QuoteSimulator catalog={catalog} initialServiceSlug={slug} compact showServicePicker={false} />
           </div>
         </section>
 
