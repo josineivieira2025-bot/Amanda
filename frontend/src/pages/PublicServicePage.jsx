@@ -4,18 +4,20 @@ import { Link, Navigate, useParams } from 'react-router-dom';
 import { api } from '../api/client.js';
 import { QuoteSimulator } from '../components/QuoteSimulator.jsx';
 import { SeoMeta } from '../components/SeoMeta.jsx';
-import { getServiceContent } from '../data/publicSite.js';
+import { getServiceContent, getServiceRoute, resolveServiceKey } from '../data/publicSite.js';
 
-export function PublicServicePage() {
-  const { slug } = useParams();
-  const content = getServiceContent(slug);
+export function PublicServicePage({ slugOverride = '' }) {
+  const params = useParams();
+  const routeSlug = slugOverride || params.slug;
+  const content = getServiceContent(routeSlug);
+  const serviceKey = content?.serviceSlug || resolveServiceKey(routeSlug);
   const [catalog, setCatalog] = useState([]);
 
   useEffect(() => {
     api('/public/quote-catalog').then(setCatalog).catch(console.error);
   }, []);
 
-  const service = useMemo(() => catalog.find((item) => item.slug === slug), [catalog, slug]);
+  const service = useMemo(() => catalog.find((item) => item.slug === serviceKey), [catalog, serviceKey]);
 
   if (!content) {
     return <Navigate to="/" replace />;
@@ -26,16 +28,21 @@ export function PublicServicePage() {
       <SeoMeta
         title={content.seoTitle}
         description={content.seoDescription}
-        path={content.route}
-        keywords={['Vida em Foco Fotografia', content.heroTitle, 'simulacao de orcamento', service?.name || slug]}
+        path={content.seoRoute}
+        keywords={content.seoKeywords}
+        image={content.image}
         schema={{
           '@context': 'https://schema.org',
           '@type': 'Service',
           name: service?.name || content.heroTitle,
           description: content.seoDescription,
+          areaServed: {
+            '@type': 'City',
+            name: 'Rio de Janeiro'
+          },
           provider: {
             '@type': 'LocalBusiness',
-            name: 'Vida em Foco Fotografia'
+            name: 'Vida em Foco Fotografia RJ'
           }
         }}
       />
@@ -59,15 +66,25 @@ export function PublicServicePage() {
 
             <div className="site-hero-card">
               <div className="site-hero-card-image short">
-                <img src={content.image} alt={content.heroTitle} />
+                <img src={content.image} alt={content.imageAlt} />
               </div>
               <div className="site-hero-card-body">
-                <span>Escolha com mais clareza</span>
-                <strong>Visualize o que combina com o seu momento</strong>
-                <p>
-                  Compare pacotes, ajuste detalhes e envie seu pedido com mais seguranca para receber uma proposta alinhada ao que voce deseja.
-                </p>
+                <span>SEO local no Rio de Janeiro</span>
+                <strong>Servico pensado para quem busca fotografia no RJ</strong>
+                <p>Esta pagina foi otimizada para explicar melhor o servico, mostrar possibilidades e facilitar o pedido de orcamento.</p>
               </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="site-band">
+          <div className="site-section-inner">
+            <div className="site-copy-block">
+              <span className="site-kicker">Fotografia no RJ</span>
+              <h2>{content.seoTitle}</h2>
+              {content.seoIntro.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
             </div>
           </div>
         </section>
@@ -96,7 +113,7 @@ export function PublicServicePage() {
 
         <section className="site-band soft">
           <div className="site-section-inner">
-            <QuoteSimulator catalog={catalog} initialServiceSlug={slug} compact showServicePicker={false} />
+            <QuoteSimulator catalog={catalog} initialServiceSlug={serviceKey} compact showServicePicker={false} />
           </div>
         </section>
 
@@ -104,9 +121,9 @@ export function PublicServicePage() {
           <div className="site-section-inner site-service-nav">
             <span className="site-kicker">Continue navegando</span>
             <div className="site-service-nav-links">
-              {catalog.filter((item) => item.slug !== slug).map((item) => (
-                <Link key={item.slug} to={`/servicos/${item.slug}`}>
-                  <span>{item.name}</span>
+              {content.relatedServices.map((item) => (
+                <Link key={item.slug} to={getServiceRoute(item.slug)}>
+                  <span>{item.label}</span>
                   <ChevronRight size={16} />
                 </Link>
               ))}

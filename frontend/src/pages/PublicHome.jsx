@@ -1,7 +1,7 @@
 import { ArrowRight, HeartHandshake, ImagePlus, MessageCircle, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SeoMeta } from '../components/SeoMeta.jsx';
-import { homeCollections, serviceContent } from '../data/publicSite.js';
+import { getServiceRoute, homeCollections, serviceContent } from '../data/publicSite.js';
 
 function whatsappHref() {
   const phone = (import.meta.env.VITE_PUBLIC_WHATSAPP || '').replace(/\D/g, '');
@@ -15,17 +15,17 @@ export function PublicHome() {
   return (
     <>
       <SeoMeta
-        title="Fotógrafo no Rio de Janeiro | Vida em Foco Fotografia RJ"
-        description="Fotógrafo no Rio de Janeiro especializado em ensaios fotográficos, casamento, gestante, infantil, casal, família e eventos. Solicite seu orçamento pelo WhatsApp."
+        title="Fotografo no Rio de Janeiro | Vida em Foco Fotografia RJ"
+        description="Fotografo no Rio de Janeiro para casamentos, ensaio gestante RJ, ensaio infantil RJ e ensaio casal RJ com atendimento acolhedor e simulacao online."
         path="/"
         keywords={[
-          'fotógrafo no Rio de Janeiro',
-          'fotógrafo RJ',
-          'ensaio fotográfico RJ',
-          'fotógrafo de casamento RJ',
-          'ensaio gestante Rio de Janeiro',
-          'ensaio infantil RJ',
-          'Vida em Foco Fotografia RJ'
+          'fotografo no rio de janeiro',
+          'fotografo profissional no rio de janeiro',
+          'ensaio fotografico no rj',
+          'fotografo de casamento rj',
+          'ensaio gestante rj',
+          'ensaio infantil rj',
+          'ensaio casal rj'
         ]}
         schema={{
           '@context': 'https://schema.org',
@@ -42,7 +42,7 @@ export function PublicHome() {
           },
           areaServed: 'Rio de Janeiro',
           description:
-            'Fotógrafo no Rio de Janeiro especializado em ensaios fotográficos, casamento, gestante, infantil, casal, família e eventos.'
+            'Fotografo no Rio de Janeiro especializado em casamentos, ensaio gestante RJ, ensaio infantil RJ, ensaio casal RJ e eventos.'
         }}
       />
 
@@ -50,23 +50,17 @@ export function PublicHome() {
         <section className="site-hero">
           <div className="site-section-inner site-hero-grid">
             <div className="site-hero-copy">
-              <span className="site-kicker">Fotógrafo no Rio de Janeiro</span>
-
-              <h1>
-                Vida em Foco Fotografia RJ: ensaios, casamentos e eventos no Rio de Janeiro
-              </h1>
-
+              <span className="site-kicker">Fotografo no Rio de Janeiro</span>
+              <h1>Vida em Foco Fotografia RJ para ensaios, casamentos e eventos no Rio de Janeiro</h1>
               <p>
-                A Vida em Foco Fotografia é especializada em ensaios fotográficos no Rio de Janeiro,
-                incluindo ensaio gestante, infantil, casal, família, casamento e cobertura de eventos.
-                Cada registro é feito com sensibilidade, direção leve e atenção aos detalhes para
-                eternizar seus melhores momentos.
+                A Vida em Foco Fotografia atende clientes no Rio de Janeiro com uma proposta delicada, elegante e clara
+                para quem busca ensaio fotografico no RJ, fotografia de casamento e registros afetivos em diferentes fases da vida.
               </p>
 
               <div className="site-badge-row">
-                <span className="site-badge">Fotógrafo profissional RJ</span>
-                <span className="site-badge">Ensaios fotográficos no Rio de Janeiro</span>
-                <span className="site-badge">Casamentos, gestante, infantil e família</span>
+                <span className="site-badge">Fotografo profissional no Rio de Janeiro</span>
+                <span className="site-badge">Ensaio fotografico no RJ</span>
+                <span className="site-badge">Casamento, gestante, infantil e casal</span>
               </div>
 
               <div className="site-hero-actions">
@@ -75,8 +69,8 @@ export function PublicHome() {
                   Falar no WhatsApp
                 </a>
 
-                <Link className="site-ghost-button" to="/servicos/casamento">
-                  Ver serviços
+                <Link className="site-ghost-button" to="/fotografo-casamento-rio-de-janeiro">
+                  Ver servicos
                   <ArrowRight size={18} />
                 </Link>
               </div>
@@ -86,17 +80,14 @@ export function PublicHome() {
               <div className="site-hero-card-image">
                 <img
                   src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1400&q=80"
-                  alt="Fotógrafo no Rio de Janeiro registrando casal em ensaio fotográfico"
+                  alt="fotografo no rio de janeiro registrando casal em ensaio fotografico"
                 />
               </div>
 
               <div className="site-hero-card-body">
-                <span>Uma experiência leve desde o primeiro contato</span>
+                <span>Uma experiencia leve desde o primeiro contato</span>
                 <strong>Escolha com calma, compare e imagine seu dia</strong>
-                <p>
-                  O site ajuda você a visualizar possibilidades, entender faixas de investimento
-                  e pedir um orçamento com mais segurança.
-                </p>
+                <p>O site ajuda voce a visualizar possibilidades, entender faixas de investimento e pedir um orcamento com mais seguranca.</p>
               </div>
             </div>
           </div>
@@ -106,13 +97,10 @@ export function PublicHome() {
           <div className="site-section-inner">
             <div className="site-heading">
               <span className="site-kicker">Ensaios e eventos no RJ</span>
-
-              <h2>Escolha o tipo de ensaio ou evento que faz sentido para você</h2>
-
+              <h2>Escolha o tipo de ensaio ou evento que faz sentido para voce</h2>
               <p>
-                Cada página foi pensada para ajudar você a explorar estilos, entender opções
-                e solicitar um orçamento de um jeito mais prático e inspirador com a Vida em Foco
-                Fotografia no Rio de Janeiro.
+                Cada pagina foi pensada para ajudar voce a explorar estilos, entender opcoes e solicitar um orcamento
+                de um jeito mais pratico e inspirador com a Vida em Foco Fotografia no Rio de Janeiro.
               </p>
             </div>
 
@@ -122,7 +110,7 @@ export function PublicHome() {
                   <span>{item.title}</span>
                   <h3>{serviceContent[item.slug]?.heroTitle || item.title}</h3>
                   <p>{item.text}</p>
-                  <Link to={serviceContent[item.slug]?.route || '/'}>Abrir experiência</Link>
+                  <Link to={getServiceRoute(item.slug)}>Abrir experiencia</Link>
                 </article>
               ))}
             </div>
@@ -134,27 +122,19 @@ export function PublicHome() {
             <article className="site-proof-card">
               <Sparkles size={20} />
               <strong>Pacotes mais claros</strong>
-              <p>
-                Você entende melhor as possibilidades antes mesmo de conversar sobre os detalhes finais.
-              </p>
+              <p>Voce entende melhor as possibilidades antes mesmo de conversar sobre os detalhes finais.</p>
             </article>
 
             <article className="site-proof-card">
               <ImagePlus size={20} />
               <strong>Escolha mais personalizada</strong>
-              <p>
-                Data, local, extras e estilo desejado podem ser informados de um jeito simples
-                em um único pedido.
-              </p>
+              <p>Data, local, extras e estilo desejado podem ser informados de um jeito simples em um unico pedido.</p>
             </article>
 
             <article className="site-proof-card">
               <HeartHandshake size={20} />
               <strong>Atendimento mais atencioso</strong>
-              <p>
-                Com mais contexto sobre o que você imagina, o retorno fica mais próximo,
-                útil e alinhado ao seu momento.
-              </p>
+              <p>Com mais contexto sobre o que voce imagina, o retorno fica mais proximo, util e alinhado ao seu momento.</p>
             </article>
           </div>
         </section>

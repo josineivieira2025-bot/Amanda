@@ -2,7 +2,7 @@ import { CalendarDays, Check, Clock3, MapPin, MessageCircle, PartyPopper, Sparkl
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { api } from '../api/client.js';
-import { getServiceContent, quoteFormDefaults } from '../data/publicSite.js';
+import { getServiceRoute, quoteFormDefaults } from '../data/publicSite.js';
 
 function formatMoney(value) {
   return Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
@@ -59,7 +59,7 @@ export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact 
   }
 
   function chooseService(slug) {
-    const targetRoute = getServiceContent(slug)?.route;
+    const targetRoute = getServiceRoute(slug);
     setDone(null);
     setError('');
     setForm((current) => ({

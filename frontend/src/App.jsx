@@ -20,6 +20,11 @@ export function App() {
     <Routes>
       <Route element={<PublicSiteLayout />}>
         <Route path="/" element={<PublicHome />} />
+        <Route path="/fotografo-casamento-rio-de-janeiro" element={<PublicServicePage slugOverride="casamento" />} />
+        <Route path="/ensaio-gestante-rj" element={<PublicServicePage slugOverride="gestante" />} />
+        <Route path="/ensaio-infantil-rj" element={<PublicServicePage slugOverride="ensaio-infantil" />} />
+        <Route path="/ensaio-casal-rj" element={<PublicServicePage slugOverride="casal" />} />
+        <Route path="/servicos/infantil" element={<PublicServicePage slugOverride="ensaio-infantil" />} />
         <Route path="/servicos/:slug" element={<PublicServicePage />} />
       </Route>
       <Route path="/login" element={<Login />} />
