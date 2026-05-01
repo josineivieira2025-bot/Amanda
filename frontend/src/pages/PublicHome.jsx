@@ -22,8 +22,8 @@ export function PublicHome() {
   return (
     <>
       <SeoMeta
-        title="Vida em Foco Fotografia | Ensaios, casamentos e simulacao online"
-        description="Site publico da Vida em Foco Fotografia com servicos, simulacao de orcamento e envio direto para o atendimento."
+        title="Vida em Foco Fotografia | Ensaios, casamentos e eventos"
+        description="Conheca os servicos da Vida em Foco Fotografia, escolha seu estilo e solicite um orcamento com mais clareza e praticidade."
         path="/"
         keywords={['Vida em Foco Fotografia', 'simulacao de orcamento fotografia', 'casamento', 'ensaio gestante', 'ensaio infantil']}
         schema={{
@@ -33,7 +33,7 @@ export function PublicHome() {
           image: '/vida-em-foco-logo.jpeg',
           telephone: import.meta.env.VITE_PUBLIC_WHATSAPP || undefined,
           url: import.meta.env.VITE_PUBLIC_SITE_URL || undefined,
-          description: 'Ensaios, casamentos e eventos com simulacao online e atendimento integrado ao ERP.'
+          description: 'Ensaios, casamentos e eventos com atendimento atencioso, visual elegante e pedido de orcamento simplificado.'
         }}
       />
 
@@ -41,16 +41,16 @@ export function PublicHome() {
         <section className="site-hero">
           <div className="site-section-inner site-hero-grid">
             <div className="site-hero-copy">
-              <span className="site-kicker">Fotografia com atendimento organizado</span>
-              <h1>Escolha seu evento, monte a simulacao e receba um atendimento mais rapido</h1>
+              <span className="site-kicker">Fotografia com sensibilidade e direcao</span>
+              <h1>Registros pensados para transformar momentos em memórias bonitas de viver e rever</h1>
               <p>
-                O site publico da Vida em Foco foi pensado para cliente final: voce navega pelos servicos, compara
-                pacotes, adiciona extras e envia a simulacao para o atendimento sem depender de mensagens soltas.
+                Na Vida em Foco, cada ensaio e cada evento recebe um olhar delicado, uma condução leve e uma experiência
+                clara para que voce escolha o que combina com a sua historia e solicite seu orcamento com tranquilidade.
               </p>
               <div className="site-badge-row">
-                <span className="site-badge">Simulacao de orcamento online</span>
-                <span className="site-badge">Pacotes e extras por servico</span>
-                <span className="site-badge">Pedido entra direto no ERP</span>
+                <span className="site-badge">Orcamento simples e rapido</span>
+                <span className="site-badge">Pacotes pensados para cada momento</span>
+                <span className="site-badge">Atendimento mais proximo desde o inicio</span>
               </div>
               <div className="site-hero-actions">
                 <a className="site-primary-button" href={whatsappHref()} target="_blank" rel="noreferrer">
@@ -72,9 +72,9 @@ export function PublicHome() {
                 />
               </div>
               <div className="site-hero-card-body">
-                <span>Fluxo simples para o cliente</span>
-                <strong>Escolhe, simula e envia</strong>
-                <p>Do primeiro clique ao pedido no painel, tudo fica mais claro para quem quer contratar e para quem vai atender.</p>
+                <span>Uma experiencia leve desde o primeiro contato</span>
+                <strong>Escolha com calma, compare e imagine seu dia</strong>
+                <p>O site ajuda voce a visualizar possibilidades, entender faixas de investimento e pedir um orcamento com mais seguranca.</p>
               </div>
             </div>
           </div>
@@ -84,10 +84,10 @@ export function PublicHome() {
           <div className="site-section-inner">
             <div className="site-heading">
               <span className="site-kicker">Experiencias</span>
-              <h2>O site agora conversa com quem quer contratar</h2>
+              <h2>Escolha o tipo de ensaio ou evento que faz sentido para voce</h2>
               <p>
-                Em vez de uma vitrine estatica, a pessoa encontra uma experiencia de escolha e simulacao.
-                Isso deixa o pedido mais completo antes mesmo de chegar ao painel.
+                Cada pagina foi pensada para ajudar voce a explorar estilos, entender opcoes e solicitar um orcamento
+                de um jeito mais pratico e inspirador.
               </p>
             </div>
 
@@ -108,18 +108,18 @@ export function PublicHome() {
           <div className="site-section-inner site-proof-grid">
             <article className="site-proof-card">
               <Sparkles size={20} />
-              <strong>Pacotes claros</strong>
-              <p>O cliente entende faixas de investimento sem precisar perguntar tudo do zero.</p>
+              <strong>Pacotes mais claros</strong>
+              <p>Voce entende melhor as possibilidades antes mesmo de conversar sobre os detalhes finais.</p>
             </article>
             <article className="site-proof-card">
               <ImagePlus size={20} />
-              <strong>Pedido mais completo</strong>
-              <p>Data, local, extras e preferencia de contato seguem juntos para o ERP.</p>
+              <strong>Escolha mais personalizada</strong>
+              <p>Data, local, extras e estilo desejado podem ser informados de um jeito simples em um unico pedido.</p>
             </article>
             <article className="site-proof-card">
               <HeartHandshake size={20} />
-              <strong>Atendimento mais humano</strong>
-              <p>Voce recebe uma solicitacao melhor preenchida e pode responder com mais contexto.</p>
+              <strong>Atendimento mais atencioso</strong>
+              <p>Com mais contexto sobre o que voce imagina, o retorno fica mais proximo, util e alinhado ao seu momento.</p>
             </article>
           </div>
         </section>

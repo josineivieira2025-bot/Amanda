@@ -1,4 +1,4 @@
-import { Camera, Menu, MessageCircle } from 'lucide-react';
+import { Menu, MessageCircle } from 'lucide-react';
 import { useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 
@@ -46,9 +46,6 @@ export function PublicSiteLayout() {
               <MessageCircle size={16} />
               WhatsApp
             </a>
-            <Link className="site-nav-cta" to="/login" onClick={() => setOpen(false)}>
-              Entrar no painel
-            </Link>
           </nav>
         </div>
         {open && <button className="site-nav-backdrop site-mobile-only" type="button" onClick={() => setOpen(false)} aria-label="Fechar menu" />}
@@ -61,7 +58,7 @@ export function PublicSiteLayout() {
           <div>
             <strong>Vida em Foco Fotografia</strong>
             <p>
-              O cliente escolhe o tipo de evento, monta a simulacao e o pedido cai direto no ERP para atendimento e acompanhamento.
+              Ensaios, casamentos e eventos com uma experiencia leve, elegante e pensada para facilitar sua escolha.
             </p>
           </div>
           <div className="site-footer-links">
@@ -72,10 +69,6 @@ export function PublicSiteLayout() {
               <MessageCircle size={16} />
               WhatsApp
             </a>
-            <Link to="/login">
-              <Camera size={16} />
-              Painel ERP
-            </Link>
           </div>
         </div>
       </footer>

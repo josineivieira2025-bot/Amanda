@@ -3,7 +3,7 @@ export const serviceContent = {
     route: '/servicos/casamento',
     seoTitle: 'Casamento | Vida em Foco Fotografia',
     seoDescription:
-      'Cobertura de casamento com direcao leve, olhar sensivel e simulacao de orcamento online para clientes da Vida em Foco.',
+      'Cobertura de casamento com direcao leve, olhar sensivel e um atendimento acolhedor do primeiro contato a entrega.',
     eyebrow: 'Casamentos',
     heroTitle: 'Seu casamento com fotografia sensivel e planejamento claro',
     heroText:
@@ -20,7 +20,7 @@ export const serviceContent = {
     route: '/servicos/ensaio-infantil',
     seoTitle: 'Ensaio Infantil | Vida em Foco Fotografia',
     seoDescription:
-      'Ensaio infantil com clima leve, acolhedor e simulacao de orcamento online para familias da Vida em Foco.',
+      'Ensaio infantil com clima leve, acolhedor e uma experiencia pensada para familias que querem recordar essa fase com carinho.',
     eyebrow: 'Infantil',
     heroTitle: 'Memorias leves para uma fase que passa rapido',
     heroText:
@@ -37,7 +37,7 @@ export const serviceContent = {
     route: '/servicos/gestante',
     seoTitle: 'Ensaio Gestante | Vida em Foco Fotografia',
     seoDescription:
-      'Ensaio gestante com direcao suave, experiencia acolhedora e simulacao de orcamento online.',
+      'Ensaio gestante com direcao suave, experiencia acolhedora e imagens elegantes para guardar esse momento especial.',
     eyebrow: 'Gestante',
     heroTitle: 'Um ensaio para guardar a fase mais delicada da espera',
     heroText:
@@ -54,7 +54,7 @@ export const serviceContent = {
     route: '/servicos/casal',
     seoTitle: 'Ensaio de Casal | Vida em Foco Fotografia',
     seoDescription:
-      'Ensaio de casal com estilo natural, visual romantico e simulacao de orcamento online no site da Vida em Foco.',
+      'Ensaio de casal com estilo natural, visual romantico e uma experiencia leve para registrar a conexao do casal.',
     eyebrow: 'Casal',
     heroTitle: 'Um ensaio para contar a energia do casal sem poses travadas',
     heroText:
@@ -71,7 +71,7 @@ export const serviceContent = {
     route: '/servicos/evento-infantil',
     seoTitle: 'Festa Infantil | Vida em Foco Fotografia',
     seoDescription:
-      'Cobertura de festa infantil com simulacao de orcamento, pacote, extras e envio direto para o painel da Vida em Foco.',
+      'Cobertura de festa infantil com olhar espontaneo, registros afetivos e um pedido de orcamento simples de fazer.',
     eyebrow: 'Eventos',
     heroTitle: 'Cobertura fotografica para festas infantis cheias de vida',
     heroText:

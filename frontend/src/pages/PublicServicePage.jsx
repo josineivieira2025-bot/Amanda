@@ -62,10 +62,10 @@ export function PublicServicePage() {
                 <img src={content.image} alt={content.heroTitle} />
               </div>
               <div className="site-hero-card-body">
-                <span>Como funciona</span>
-                <strong>Voce escolhe o pacote e envia</strong>
+                <span>Escolha com mais clareza</span>
+                <strong>Visualize o que combina com o seu momento</strong>
                 <p>
-                  A simulacao ja vai com valor estimado, extras e detalhes importantes para o atendimento responder mais rapido.
+                  Compare pacotes, ajuste detalhes e envie seu pedido com mais seguranca para receber uma proposta alinhada ao que voce deseja.
                 </p>
               </div>
             </div>
@@ -77,18 +77,18 @@ export function PublicServicePage() {
             <div className="site-inline-steps">
               <div>
                 <span>1</span>
-                <strong>Escolha o pacote</strong>
+                <strong>Veja as opcoes</strong>
                 <p>Veja a estrutura de investimento que melhor combina com o momento.</p>
               </div>
               <div>
                 <span>2</span>
-                <strong>Adicione extras</strong>
+                <strong>Personalize</strong>
                 <p>Personalize com album, video, maquiagem ou outros complementos do servico.</p>
               </div>
               <div>
                 <span>3</span>
-                <strong>Envie a simulacao</strong>
-                <p>Seu pedido entra no ERP da Vida em Foco para acompanhamento e retorno.</p>
+                <strong>Solicite seu orcamento</strong>
+                <p>Envie seu pedido e receba um retorno mais alinhado ao estilo, data e formato que voce imaginou.</p>
               </div>
             </div>
           </div>

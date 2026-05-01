@@ -1,4 +1,4 @@
-import { CalendarDays, Check, Clock3, MapPin, MessageCircle, PartyPopper, Phone, Sparkles, UserRound } from 'lucide-react';
+import { CalendarDays, Check, Clock3, MapPin, MessageCircle, PartyPopper, Sparkles, UserRound } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { api } from '../api/client.js';
 import { quoteFormDefaults } from '../data/publicSite.js';
@@ -101,7 +101,7 @@ export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact 
         <div>
           <span className="site-kicker">Simulador</span>
           <h2>Monte seu orcamento</h2>
-          <p>Escolha o tipo de evento, pacote, extras e envie tudo direto para o atendimento da Vida em Foco.</p>
+          <p>Escolha o tipo de evento, compare pacotes, ajuste extras e envie seu pedido de um jeito simples.</p>
         </div>
         <div className="quote-price-card">
           <span>Estimativa atual</span>
@@ -112,7 +112,7 @@ export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact 
 
       {done && (
         <div className="success">
-          {done.message} Sua simulacao ja entrou no ERP para acompanhamento.
+          {done.message} Em breve voce recebe um retorno com os proximos passos.
         </div>
       )}
       {error && <div className="error">{error}</div>}
@@ -247,7 +247,7 @@ export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact 
               <MessageCircle size={18} />
               {loading ? 'Enviando...' : 'Enviar simulacao'}
             </button>
-            <small>A simulacao entra no atendimento da Vida em Foco e aparece no ERP para acompanhamento.</small>
+            <small>Depois do envio, a equipe retorna com orientacao, disponibilidade e proximos detalhes.</small>
           </div>
         </div>
       </div>
