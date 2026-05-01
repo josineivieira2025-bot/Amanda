@@ -1,6 +1,6 @@
 import { Menu, MessageCircle } from 'lucide-react';
-import { useState } from 'react';
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { publicNavLinks } from '../data/publicSite.js';
 
 function whatsappHref() {
@@ -9,7 +9,13 @@ function whatsappHref() {
 }
 
 export function PublicSiteLayout() {
+  const location = useLocation();
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setOpen(false);
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [location.pathname]);
 
   return (
     <div className="public-site">
