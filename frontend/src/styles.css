@@ -2327,6 +2327,42 @@ button.clickable-card {
   display: block;
 }
 
+.quote-price-details,
+.package-features,
+.quote-summary-features {
+  display: grid;
+  gap: 8px;
+}
+
+.quote-price-details {
+  margin-top: 14px;
+}
+
+.quote-price-detail,
+.package-feature,
+.quote-summary-feature {
+  position: relative;
+  padding-left: 16px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.quote-price-detail::before,
+.package-feature::before,
+.quote-summary-feature::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+}
+
+.quote-price-detail::before {
+  background: rgba(255, 255, 255, 0.82);
+}
+
 .quote-price-card strong {
   display: block;
   margin: 10px 0 8px;
@@ -2416,6 +2452,19 @@ button.clickable-card {
   color: #8b543f;
   font-family: "Fraunces", Georgia, serif;
   font-size: 28px;
+}
+
+.package-features {
+  margin-top: 14px;
+}
+
+.package-feature {
+  color: #6b574a;
+}
+
+.package-feature::before,
+.quote-summary-feature::before {
+  background: #b57c60;
 }
 
 .service-tile.active,
@@ -2515,6 +2564,14 @@ button.clickable-card {
 
 .quote-summary-row.extra strong {
   color: #8b543f;
+}
+
+.quote-summary-features {
+  padding-top: 4px;
+}
+
+.quote-summary-feature {
+  color: #6b574a;
 }
 
 .quote-summary-total {

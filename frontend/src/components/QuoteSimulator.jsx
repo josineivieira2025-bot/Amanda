@@ -106,7 +106,14 @@ export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact 
         <div className="quote-price-card">
           <span>Estimativa atual</span>
           <strong>{formatMoney(total)}</strong>
-          <small>{selectedPackage ? `${selectedPackage.name} • ${selectedPackage.hours}h` : 'Escolha um pacote'}</small>
+          <small>{selectedPackage ? `${selectedPackage.name} | ${selectedPackage.hours}h` : 'Escolha um pacote'}</small>
+          {selectedPackage?.details?.length ? (
+            <div className="quote-price-details">
+              {selectedPackage.details.slice(0, 3).map((detail) => (
+                <div key={detail} className="quote-price-detail">{detail}</div>
+              ))}
+            </div>
+          ) : null}
         </div>
       </div>
 
@@ -148,7 +155,14 @@ export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact 
                 >
                   <span>{item.name}</span>
                   <strong>{formatMoney(item.price)}</strong>
-                  <small>{item.hours} horas • entrega em ate {item.deliveryDays} dias</small>
+                  <small>{item.hours} horas | entrega em ate {item.deliveryDays} dias</small>
+                  {item.details?.length ? (
+                    <div className="package-features">
+                      {item.details.map((detail) => (
+                        <div key={detail} className="package-feature">{detail}</div>
+                      ))}
+                    </div>
+                  ) : null}
                 </button>
               ))}
             </div>
@@ -233,6 +247,13 @@ export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact 
               <span>Pacote</span>
               <strong>{selectedPackage?.name || '-'}</strong>
             </div>
+            {selectedPackage?.details?.length ? (
+              <div className="quote-summary-features">
+                {selectedPackage.details.map((detail) => (
+                  <div key={detail} className="quote-summary-feature">{detail}</div>
+                ))}
+              </div>
+            ) : null}
             {selectedExtras.map((item) => (
               <div className="quote-summary-row extra" key={item.id}>
                 <span>{item.name}</span>

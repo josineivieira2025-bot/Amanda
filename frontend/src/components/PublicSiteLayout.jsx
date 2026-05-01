@@ -7,7 +7,9 @@ const links = [
   { to: '/servicos/casamento', label: 'Casamentos' },
   { to: '/servicos/gestante', label: 'Gestante' },
   { to: '/servicos/casal', label: 'Casal' },
-  { to: '/servicos/evento-infantil', label: 'Eventos' }
+  { to: '/servicos/evento-infantil', label: 'Eventos' },
+  { to: '/servicos/aniversario-15', label: '15 anos' },
+  { to: '/servicos/newborn', label: 'Newborn' }
 ];
 
 function whatsappHref() {
