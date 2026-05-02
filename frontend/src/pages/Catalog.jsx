@@ -126,7 +126,7 @@ export function Catalog() {
       <div className="page-title row-title">
         <div>
           <h1>Catalogo</h1>
-          <p>Edite servicos, pacotes e extras do site publico sem precisar mexer no codigo.</p>
+          <p>Edite servicos, pacotes e extras do site publico.</p>
         </div>
         <button className="primary-button" type="button" onClick={saveCatalog} disabled={saving}>
           <Save size={18} />
