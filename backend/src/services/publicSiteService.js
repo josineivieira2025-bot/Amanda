@@ -456,6 +456,19 @@ function cloneCatalog(items) {
   return JSON.parse(JSON.stringify(items));
 }
 
+function parseConfiguredEmails() {
+  const values = [
+    String(process.env.PUBLIC_SITE_USER_EMAILS || ''),
+    String(process.env.PUBLIC_SITE_USER_EMAIL || '')
+  ]
+    .join(',')
+    .split(',')
+    .map((item) => item.trim().toLowerCase())
+    .filter(Boolean);
+
+  return Array.from(new Set(values));
+}
+
 async function getCatalogForPhotographerId(photographerId) {
   const stored = await PublicCatalog.findOne({ photographerId }).lean();
   return stored?.services?.length ? stored.services : getDefaultCatalog();
@@ -465,36 +478,57 @@ function findCatalogItem(services, serviceSlug) {
   return services.find((item) => item.slug === serviceSlug);
 }
 
-async function findPublicPhotographer(options = {}) {
-  const configuredEmail = String(process.env.PUBLIC_SITE_USER_EMAIL || '').trim().toLowerCase();
+async function findPublicPhotographers(options = {}) {
+  const configuredEmails = parseConfiguredEmails();
   const configuredId = String(process.env.PUBLIC_SITE_USER_ID || '').trim();
   const preferredPhotographerId = String(options.preferredPhotographerId || '').trim();
 
-  let photographer = null;
+  const photographers = [];
+  const seenIds = new Set();
+
+  function pushPhotographer(photographer) {
+    if (!photographer?._id) return;
+    const key = String(photographer._id);
+    if (seenIds.has(key)) return;
+    seenIds.add(key);
+    photographers.push(photographer);
+  }
 
   if (preferredPhotographerId) {
-    photographer = await User.findById(preferredPhotographerId);
+    pushPhotographer(await User.findById(preferredPhotographerId));
   }
 
-  if (!photographer && configuredId) {
-    photographer = await User.findById(configuredId);
+  if (configuredId) {
+    pushPhotographer(await User.findById(configuredId));
   }
 
-  if (!photographer && configuredEmail) {
-    photographer = await User.findOne({ email: configuredEmail });
+  if (configuredEmails.length) {
+    const configuredUsers = await User.find({ email: { $in: configuredEmails } });
+    const byEmail = new Map(
+      configuredUsers.map((user) => [String(user.email || '').trim().toLowerCase(), user])
+    );
+
+    for (const email of configuredEmails) {
+      pushPhotographer(byEmail.get(email));
+    }
   }
 
-  if (!photographer) {
-    photographer = await User.findOne().sort({ createdAt: 1 });
+  if (!photographers.length) {
+    pushPhotographer(await User.findOne().sort({ createdAt: 1 }));
   }
 
-  if (!photographer) {
+  if (!photographers.length) {
     const error = new Error('Nenhum fotografo configurado para receber simulacoes.');
     error.statusCode = 503;
     throw error;
   }
 
-  return photographer;
+  return photographers;
+}
+
+async function findPublicPhotographer(options = {}) {
+  const photographers = await findPublicPhotographers(options);
+  return photographers[0];
 }
 
 function calculateTotal(service, packageId, extraIds = []) {
@@ -566,51 +600,69 @@ export async function listQuoteCatalog(options = {}) {
 export async function createPublicQuoteRequest(payload, options = {}) {
   ensureRequired(payload);
 
-  const photographer = await findPublicPhotographer(options);
-  const services = await getCatalogForPhotographerId(photographer._id);
-  const service = findCatalogItem(services, payload.serviceSlug);
-  if (!service) {
-    const error = new Error('Servico nao encontrado para simulacao.');
-    error.statusCode = 404;
-    throw error;
+  const photographers = await findPublicPhotographers(options);
+  const createdEvents = [];
+  let responseSummary = null;
+
+  for (const photographer of photographers) {
+    const services = await getCatalogForPhotographerId(photographer._id);
+    const service = findCatalogItem(services, payload.serviceSlug);
+    if (!service) {
+      const error = new Error('Servico nao encontrado para simulacao.');
+      error.statusCode = 404;
+      throw error;
+    }
+
+    const client = await findOrCreateClient(photographer._id, payload);
+    const { selectedPackage, selectedExtras, total } = calculateTotal(service, payload.packageId, payload.extraIds || []);
+
+    const notes = [
+      'Simulacao enviada pelo site publico.',
+      `Servico escolhido: ${service.name}.`,
+      `Pacote: ${selectedPackage.name}.`,
+      selectedPackage.details?.length ? `Itens do pacote: ${selectedPackage.details.join(', ')}.` : null,
+      selectedExtras.length ? `Extras: ${selectedExtras.map((item) => item.name).join(', ')}.` : 'Extras: nenhum.',
+      payload.contactPreference ? `Preferencia de contato: ${payload.contactPreference}.` : null,
+      payload.guestCount ? `Convidados previstos: ${payload.guestCount}.` : null,
+      payload.message ? `Mensagem do cliente: ${payload.message}` : null
+    ]
+      .filter(Boolean)
+      .join('\n');
+
+    const event = await Event.create({
+      photographerId: photographer._id,
+      clientId: client._id,
+      type: service.eventType,
+      date: new Date(payload.eventDate),
+      endDate: payload.eventEndDate ? new Date(payload.eventEndDate) : undefined,
+      location: payload.location,
+      source: 'site',
+      status: 'orcamento_pendente',
+      followUpAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
+      price: total,
+      notes
+    });
+
+    createdEvents.push(event);
+
+    if (!responseSummary) {
+      responseSummary = {
+        total,
+        packageName: selectedPackage.name,
+        packageDetails: selectedPackage.details || [],
+        extras: selectedExtras.map((item) => item.name)
+      };
+    }
   }
 
-  const client = await findOrCreateClient(photographer._id, payload);
-  const { selectedPackage, selectedExtras, total } = calculateTotal(service, payload.packageId, payload.extraIds || []);
-
-  const notes = [
-    'Simulacao enviada pelo site publico.',
-    `Servico escolhido: ${service.name}.`,
-    `Pacote: ${selectedPackage.name}.`,
-    selectedPackage.details?.length ? `Itens do pacote: ${selectedPackage.details.join(', ')}.` : null,
-    selectedExtras.length ? `Extras: ${selectedExtras.map((item) => item.name).join(', ')}.` : 'Extras: nenhum.',
-    payload.contactPreference ? `Preferencia de contato: ${payload.contactPreference}.` : null,
-    payload.guestCount ? `Convidados previstos: ${payload.guestCount}.` : null,
-    payload.message ? `Mensagem do cliente: ${payload.message}` : null
-  ]
-    .filter(Boolean)
-    .join('\n');
-
-  const event = await Event.create({
-    photographerId: photographer._id,
-    clientId: client._id,
-    type: service.eventType,
-    date: new Date(payload.eventDate),
-    endDate: payload.eventEndDate ? new Date(payload.eventEndDate) : undefined,
-    location: payload.location,
-    source: 'site',
-    status: 'orcamento_pendente',
-    followUpAt: new Date(Date.now() + 24 * 60 * 60 * 1000),
-    price: total,
-    notes
-  });
-
   return {
-    eventId: event._id,
-    total,
-    packageName: selectedPackage.name,
-    packageDetails: selectedPackage.details || [],
-    extras: selectedExtras.map((item) => item.name),
+    eventId: createdEvents[0]?._id,
+    eventIds: createdEvents.map((item) => item._id),
+    recipients: photographers.length,
+    total: responseSummary?.total || 0,
+    packageName: responseSummary?.packageName || '',
+    packageDetails: responseSummary?.packageDetails || [],
+    extras: responseSummary?.extras || [],
     message: 'Simulacao enviada com sucesso.'
   };
 }
