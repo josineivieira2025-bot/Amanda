@@ -79,7 +79,7 @@ const initial = {
   date: '',
   followUpAt: '',
   location: '',
-  price: 0,
+  price: '',
   notes: ''
 };
 
@@ -155,10 +155,11 @@ export function Events() {
     event.preventDefault();
     try {
       setLoading(true);
+      const payload = { ...form, price: normalizePrice(form.price) };
       if (editingId) {
-        await api(`/events/${editingId}`, { method: 'PUT', body: JSON.stringify(form) });
+        await api(`/events/${editingId}`, { method: 'PUT', body: JSON.stringify(payload) });
       } else {
-        await api('/events', { method: 'POST', body: JSON.stringify(form) });
+        await api('/events', { method: 'POST', body: JSON.stringify(payload) });
       }
       closeFormModal();
       load();
@@ -189,7 +190,7 @@ export function Events() {
       date: event.date ? toDatetimeLocal(new Date(event.date)) : '',
       followUpAt: event.followUpAt ? toDatetimeLocal(new Date(event.followUpAt)) : '',
       location: event.location || '',
-      price: Number(event.price || 0),
+      price: event.price === 0 ? '0' : String(event.price || ''),
       notes: event.notes || ''
     });
     setFormOpen(true);
@@ -227,8 +228,28 @@ export function Events() {
     return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
   }
 
+  async function sendBudgetWhatsApp() {
+    try {
+      const file = await createBudgetCardFile(budgetCard);
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          title: `Orcamento ${budgetCard.studioName}`,
+          text: budgetText,
+          files: [file]
+        });
+        return;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+
+    window.open(whatsappUrl(), '_blank', 'noopener,noreferrer');
+    downloadBudgetCard();
+  }
+
   function downloadBudgetCard(data = budgetCard) {
-    const svg = buildBudgetCardSvg(data);
+    const svg = buildBudgetCardSvg(data, `${window.location.origin}/vida-em-foco-logo.jpeg`);
     const blob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -399,7 +420,14 @@ export function Events() {
                 </FormField>
 
                 <FormField label="Valor do orcamento">
-                  <input type="number" min="0" value={form.price} onChange={(e) => setForm({ ...form, price: Number(e.target.value) })} />
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    inputMode="decimal"
+                    value={form.price}
+                    onChange={(e) => setForm({ ...form, price: e.target.value })}
+                  />
                 </FormField>
 
                 <FormField label="Observacoes do atendimento">
@@ -418,7 +446,16 @@ export function Events() {
 
                 <div className="budget-card">
                   <div className="budget-card-top">
-                    <div>
+                    <div className="budget-card-brand">
+                      <div className="budget-card-logo">
+                        <img src="/vida-em-foco-logo.jpeg" alt="Logo Mel Fotografia" />
+                      </div>
+                      <div>
+                        <span>Mel Fotografia</span>
+                        <small>Atendimento fotografico</small>
+                      </div>
+                    </div>
+                    <div className="budget-card-title">
                       <span>{budgetCard.studioName}</span>
                       <strong>Orcamento fotografico</strong>
                     </div>
@@ -450,10 +487,10 @@ export function Events() {
                     <Copy size={16} />
                     {copiedBudget ? 'Copiado' : 'Copiar orcamento'}
                   </button>
-                  <a className="primary-button" href={whatsappUrl()} target="_blank" rel="noreferrer">
+                  <button className="primary-button" type="button" onClick={sendBudgetWhatsApp}>
                     <MessageCircle size={16} />
                     Enviar WhatsApp
-                  </a>
+                  </button>
                   <button type="button" className="ghost-button full-action" onClick={() => downloadBudgetCard()}>
                     <Download size={16} />
                     Baixar cartao
@@ -488,6 +525,12 @@ function formatMoney(value) {
   return Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 }
 
+function normalizePrice(value) {
+  if (value === '' || value === null || value === undefined) return 0;
+  const parsed = Number(String(value).replace(',', '.'));
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
 function buildBudgetText(data, client) {
   return buildBudgetTemplateText(data, client, labels);
 }
@@ -514,8 +557,9 @@ function escapeSvg(value) {
     .replace(/"/g, '&quot;');
 }
 
-function buildBudgetCardSvg(data) {
+function buildBudgetCardSvg(data, logoUrl = '') {
   const safe = Object.fromEntries(Object.entries(data).map(([key, value]) => [key, escapeSvg(value)]));
+  const safeLogoUrl = escapeSvg(logoUrl);
 
   return `
 <svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1350" viewBox="0 0 1080 1350">
@@ -535,8 +579,10 @@ function buildBudgetCardSvg(data) {
   <circle cx="120" cy="1160" r="260" fill="#ffffff" opacity="0.18"/>
   <rect x="90" y="96" width="900" height="1158" rx="54" fill="#fffdfc" opacity="0.94"/>
   <rect x="130" y="136" width="820" height="108" rx="32" fill="#fff2f5"/>
-  <text x="170" y="183" font-family="Arial, sans-serif" font-size="30" fill="#8f526b" font-weight="700">${safe.studioName}</text>
-  <text x="170" y="222" font-family="Arial, sans-serif" font-size="22" fill="#8b7280">Orcamento fotografico</text>
+  <circle cx="194" cy="190" r="40" fill="#ffffff" opacity="0.96"/>
+  ${safeLogoUrl ? `<image href="${safeLogoUrl}" x="154" y="150" width="80" height="80" preserveAspectRatio="xMidYMid slice" clip-path="circle(40px at 194px 190px)" />` : ''}
+  <text x="254" y="180" font-family="Arial, sans-serif" font-size="30" fill="#8f526b" font-weight="800">Mel Fotografia</text>
+  <text x="254" y="218" font-family="Arial, sans-serif" font-size="22" fill="#8b7280">Orcamento fotografico</text>
   <rect x="130" y="304" width="820" height="174" rx="36" fill="url(#rose)"/>
   <text x="170" y="365" font-family="Arial, sans-serif" font-size="24" fill="#ffeef4">Cliente</text>
   <text x="170" y="425" font-family="Arial, sans-serif" font-size="52" fill="#ffffff" font-weight="800">${safe.clientName}</text>
@@ -553,4 +599,36 @@ function buildBudgetCardSvg(data) {
   <text x="170" y="1098" font-family="Arial, sans-serif" font-size="54" fill="#8f526b" font-weight="900">${safe.price}</text>
   <text x="130" y="1200" font-family="Arial, sans-serif" font-size="22" fill="#8b7280">Validade e detalhes podem ser alinhados pelo atendimento.</text>
 </svg>`;
+}
+
+async function createBudgetCardFile(data) {
+  const svg = buildBudgetCardSvg(data, `${window.location.origin}/vida-em-foco-logo.jpeg`);
+  const svgBlob = new Blob([svg], { type: 'image/svg+xml;charset=utf-8' });
+  const url = URL.createObjectURL(svgBlob);
+
+  try {
+    const image = await new Promise((resolve, reject) => {
+      const nextImage = new Image();
+      nextImage.onload = () => resolve(nextImage);
+      nextImage.onerror = reject;
+      nextImage.src = url;
+    });
+
+    const canvas = document.createElement('canvas');
+    canvas.width = 1080;
+    canvas.height = 1350;
+    const context = canvas.getContext('2d');
+    if (!context) {
+      throw new Error('Nao foi possivel gerar a imagem do cartao.');
+    }
+    context.drawImage(image, 0, 0);
+
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, 'image/png'));
+    if (!blob) {
+      throw new Error('Nao foi possivel converter o cartao em imagem.');
+    }
+    return new File([blob], `orcamento-${data.clientName.replace(/\s+/g, '-').toLowerCase()}.png`, { type: 'image/png' });
+  } finally {
+    URL.revokeObjectURL(url);
+  }
 }

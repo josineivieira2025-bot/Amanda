@@ -65,9 +65,15 @@ function eventToForm(event) {
     date: toDatetimeLocal(event.date),
     followUpAt: toDatetimeLocal(event.followUpAt),
     location: event.location || '',
-    price: Number(event.price || 0),
+    price: event.price === 0 ? '0' : String(event.price || ''),
     notes: event.notes || ''
   };
+}
+
+function normalizePrice(value) {
+  if (value === '' || value === null || value === undefined) return 0;
+  const parsed = Number(String(value).replace(',', '.'));
+  return Number.isFinite(parsed) ? parsed : 0;
 }
 
 export function EventModal({ event, open, onClose, onSaved }) {
@@ -87,7 +93,10 @@ export function EventModal({ event, open, onClose, onSaved }) {
     submitEvent.preventDefault();
     setSaving(true);
     try {
-      await api(`/events/${event._id}`, { method: 'PUT', body: JSON.stringify(form) });
+      await api(`/events/${event._id}`, {
+        method: 'PUT',
+        body: JSON.stringify({ ...form, price: normalizePrice(form.price) })
+      });
       onSaved?.();
       onClose?.();
     } finally {
@@ -150,7 +159,14 @@ export function EventModal({ event, open, onClose, onSaved }) {
           </FormField>
 
           <FormField label="Valor">
-            <input type="number" min="0" value={form.price} onChange={(e) => setForm({ ...form, price: Number(e.target.value) })} />
+            <input
+              type="number"
+              min="0"
+              step="0.01"
+              inputMode="decimal"
+              value={form.price}
+              onChange={(e) => setForm({ ...form, price: e.target.value })}
+            />
           </FormField>
         </div>
 
