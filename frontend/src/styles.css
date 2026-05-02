@@ -1192,7 +1192,7 @@ button.clickable-card {
 .event-modal-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 80;
+  z-index: 260;
   display: grid;
   place-items: center;
   padding: 22px;
@@ -1201,6 +1201,8 @@ button.clickable-card {
 }
 
 .event-modal {
+  position: relative;
+  z-index: 261;
   width: min(820px, 100%);
   max-height: min(92vh, 920px);
   overflow: auto;
