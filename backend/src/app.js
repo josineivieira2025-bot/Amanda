@@ -28,16 +28,21 @@ function parseAllowedOrigins() {
 
 const allowedOrigins = parseAllowedOrigins();
 
-app.use(cors({
-  origin(origin, callback) {
-    if (!origin || !allowedOrigins.length || allowedOrigins.includes(origin)) {
-      callback(null, true);
-      return;
-    }
+app.use(cors((req, callback) => {
+  const origin = req.header('Origin');
+  const isPublicRoute = req.path.startsWith('/api/public');
 
-    callback(new Error('Origem nao permitida pelo CORS.'));
-  },
-  credentials: true
+  if (isPublicRoute) {
+    callback(null, { origin: true, credentials: true });
+    return;
+  }
+
+  if (!origin || !allowedOrigins.length || allowedOrigins.includes(origin)) {
+    callback(null, { origin: true, credentials: true });
+    return;
+  }
+
+  callback(new Error('Origem nao permitida pelo CORS.'));
 }));
 app.use(express.json({ limit: '15mb' }));
 app.use(morgan('dev'));

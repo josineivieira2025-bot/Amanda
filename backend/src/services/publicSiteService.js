@@ -455,13 +455,18 @@ function findCatalogItem(serviceSlug) {
   return catalog.find((item) => item.slug === serviceSlug);
 }
 
-async function findPublicPhotographer() {
+async function findPublicPhotographer(options = {}) {
   const configuredEmail = String(process.env.PUBLIC_SITE_USER_EMAIL || '').trim().toLowerCase();
   const configuredId = String(process.env.PUBLIC_SITE_USER_ID || '').trim();
+  const preferredPhotographerId = String(options.preferredPhotographerId || '').trim();
 
   let photographer = null;
 
-  if (configuredId) {
+  if (preferredPhotographerId) {
+    photographer = await User.findById(preferredPhotographerId);
+  }
+
+  if (!photographer && configuredId) {
     photographer = await User.findById(configuredId);
   }
 
@@ -543,7 +548,7 @@ export function listQuoteCatalog() {
   return catalog;
 }
 
-export async function createPublicQuoteRequest(payload) {
+export async function createPublicQuoteRequest(payload, options = {}) {
   ensureRequired(payload);
 
   const service = findCatalogItem(payload.serviceSlug);
@@ -553,7 +558,7 @@ export async function createPublicQuoteRequest(payload) {
     throw error;
   }
 
-  const photographer = await findPublicPhotographer();
+  const photographer = await findPublicPhotographer(options);
   const client = await findOrCreateClient(photographer._id, payload);
   const { selectedPackage, selectedExtras, total } = calculateTotal(service, payload.packageId, payload.extraIds || []);
 
