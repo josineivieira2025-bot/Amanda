@@ -20,16 +20,18 @@ export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact 
   const [done, setDone] = useState(null);
   const [error, setError] = useState('');
 
+  const safeCatalog = Array.isArray(catalog) ? catalog : [];
+
   useEffect(() => {
     setForm((current) => ({
       ...current,
-      serviceSlug: initialServiceSlug || current.serviceSlug || catalog[0]?.slug || ''
+      serviceSlug: initialServiceSlug || current.serviceSlug || safeCatalog[0]?.slug || ''
     }));
-  }, [catalog, initialServiceSlug]);
+  }, [safeCatalog, initialServiceSlug]);
 
   const service = useMemo(
-    () => catalog.find((item) => item.slug === form.serviceSlug) || catalog[0] || null,
-    [catalog, form.serviceSlug]
+    () => safeCatalog.find((item) => item.slug === form.serviceSlug) || safeCatalog[0] || null,
+    [safeCatalog, form.serviceSlug]
   );
 
   const selectedPackage = useMemo(
@@ -110,7 +112,7 @@ export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact 
     }
   }
 
-  if (!catalog.length) {
+  if (!safeCatalog.length) {
     return <div className="site-loading-card">Carregando simulador...</div>;
   }
 
@@ -149,7 +151,7 @@ export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact 
             <div className="quote-section">
               <h3><PartyPopper size={18} /> Escolha o servico</h3>
               <div className="service-picker">
-                {catalog.map((item) => (
+                {safeCatalog.map((item) => (
                   <button
                     key={item.slug}
                     className={item.slug === service?.slug ? 'service-tile active' : 'service-tile'}

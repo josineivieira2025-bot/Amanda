@@ -527,11 +527,16 @@ export function PublicServicePage({ slugOverride = '' }) {
   const [catalog, setCatalog] = useState([]);
 
   useEffect(() => {
-    api('/public/quote-catalog').then(setCatalog).catch(console.error);
+    api('/public/quote-catalog')
+      .then((response) => setCatalog(Array.isArray(response) ? response : []))
+      .catch((error) => {
+        console.error(error);
+        setCatalog([]);
+      });
   }, []);
 
   const service = useMemo(
-    () => catalog.find((item) => item.slug === serviceKey),
+    () => (Array.isArray(catalog) ? catalog.find((item) => item.slug === serviceKey) : undefined),
     [catalog, serviceKey]
   );
 

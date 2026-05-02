@@ -5,7 +5,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { verifyToken } from '../utils/token.js';
 
 export const quoteCatalog = asyncHandler(async (req, res) => {
-  res.json(listQuoteCatalog());
+  res.json(await listQuoteCatalog());
 });
 
 export const createQuoteRequest = asyncHandler(async (req, res) => {
