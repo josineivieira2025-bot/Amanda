@@ -32,16 +32,16 @@ export function AppLayout() {
       <aside className={`sidebar ${open ? 'is-open' : ''}`}>
         <Link className="brand" to="/painel/configuracoes" onClick={() => setOpen(false)}>
           <span className="brand-icon">
-            {user?.avatarUrl ? <img src={user.avatarUrl} alt={user.name || 'Perfil'} /> : <img src="/vida-em-foco-logo.jpeg" alt="Vida em Foco" />}
+            {user?.avatarUrl ? <img src={user.avatarUrl} alt={user.name || 'Perfil'} /> : <img src="/vida-em-foco-logo.jpeg" alt="Mel Fotografia" />}
           </span>
           <div>
-            <strong>{user?.studioName || 'Vida em Foco'}</strong>
+            <strong>{user?.studioName || 'Mel Fotografia'}</strong>
             <span>{user?.name || 'Eternizando seus melhores momentos'}</span>
           </div>
         </Link>
         <div className="sidebar-note">
           <Sparkles size={15} />
-          <span>Painel Vida em Foco</span>
+          <span>Painel Mel Fotografia</span>
         </div>
         <nav>
           <span className="nav-label">Menu principal</span>
@@ -64,8 +64,8 @@ export function AppLayout() {
             <Menu size={20} />
           </button>
           <div className="topbar-copy">
-            <span className="eyebrow">Vida em Foco</span>
-            <strong>Gestao fotografica Vida em Foco</strong>
+            <span className="eyebrow">Mel Fotografia</span>
+            <strong>Gestao fotografica Mel Fotografia</strong>
             <span>Agenda, clientes, orcamentos e memorias em um so lugar.</span>
           </div>
           <div className="topbar-actions">

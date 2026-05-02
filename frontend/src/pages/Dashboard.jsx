@@ -93,7 +93,7 @@ export function Dashboard() {
       <div className="dashboard-rose-hero">
         <div>
           <span className="hero-eyebrow rose">{format(new Date(), "MMMM 'de' yyyy", { locale: ptBR })}</span>
-          <h1>Painel Vida em Foco</h1>
+          <h1>Painel Mel Fotografia</h1>
           <p>Uma visao rapida da agenda, orcamentos, clientes em espera e entradas financeiras do estudio.</p>
           <div className="hero-footer">
             <span className="hero-chip rose-chip"><Sparkles size={16} /> Operacao organizada</span>

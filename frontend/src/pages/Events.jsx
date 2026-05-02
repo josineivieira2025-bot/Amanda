@@ -503,7 +503,7 @@ function buildBudgetCardData(data, client, user) {
   const endDate = data.endDate ? new Date(data.endDate) : null;
 
   return {
-    studioName: user?.studioName || 'Vida em Foco',
+    studioName: user?.studioName || 'Mel Fotografia',
     clientName: client?.name || 'Cliente',
     type: labels[data.type] || 'Servico fotografico',
     date: startDate ? format(startDate, 'dd/MM/yyyy') : 'A confirmar',

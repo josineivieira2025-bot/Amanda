@@ -13,7 +13,7 @@ export function PublicRioPage() {
   return (
     <>
       <SeoMeta
-        title="Fotografo no Rio de Janeiro | Vida em Foco Fotografia RJ"
+        title="Fotografo no Rio de Janeiro | Mel Fotografia RJ"
         description="Fotografo no Rio de Janeiro para ensaio gestante RJ, ensaio infantil RJ, ensaio casal RJ e fotografia de casamento RJ com atendimento acolhedor."
         path="/fotografo-no-rio-de-janeiro"
         keywords={[
@@ -27,7 +27,7 @@ export function PublicRioPage() {
         schema={{
           '@context': 'https://schema.org',
           '@type': 'LocalBusiness',
-          name: 'Vida em Foco Fotografia RJ',
+          name: 'Mel Fotografia RJ',
           url: import.meta.env.VITE_PUBLIC_SITE_URL || undefined,
           telephone: import.meta.env.VITE_PUBLIC_WHATSAPP || undefined,
           areaServed: {
@@ -46,7 +46,7 @@ export function PublicRioPage() {
               <span className="site-kicker">Fotografo no Rio de Janeiro</span>
               <h1>Fotografo no Rio de Janeiro para ensaios, casamentos e eventos com sensibilidade</h1>
               <p>
-                A Vida em Foco Fotografia atende clientes que buscam um fotografo no Rio de Janeiro com um olhar delicado,
+                A Mel Fotografia atende clientes que buscam um fotografo no Rio de Janeiro com um olhar delicado,
                 orientacao leve e uma experiencia clara desde o primeiro contato.
               </p>
               <div className="service-bullet-list">
@@ -87,7 +87,7 @@ export function PublicRioPage() {
               <span className="site-kicker">Atendimento local</span>
               <h2>Fotografo no Rio de Janeiro</h2>
               <p>
-                Se voce esta procurando um fotografo no Rio de Janeiro, a Vida em Foco Fotografia oferece ensaios fotograficos personalizados para casais, gestantes, familias e eventos.
+                Se voce esta procurando um fotografo no Rio de Janeiro, a Mel Fotografia oferece ensaios fotograficos personalizados para casais, gestantes, familias e eventos.
               </p>
               <p>
                 Atendemos em diversas regioes do RJ, criando registros naturais, elegantes e cheios de emocao. Cada ensaio e pensado de forma unica, respeitando o estilo e o momento de cada cliente.
@@ -131,7 +131,7 @@ export function PublicRioPage() {
           <div className="site-section-inner">
             <div className="site-copy-block">
               <span className="site-kicker">Contato</span>
-              <h2>Fale com a Vida em Foco Fotografia RJ</h2>
+              <h2>Fale com a Mel Fotografia RJ</h2>
               <p>
                 Se voce quer saber mais sobre ensaio fotografico no RJ, datas, valores e formatos de cobertura, o WhatsApp e o caminho mais rapido para iniciar o atendimento.
               </p>

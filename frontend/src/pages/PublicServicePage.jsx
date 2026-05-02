@@ -42,7 +42,7 @@ export function PublicServicePage({ slugOverride = '' }) {
           },
           provider: {
             '@type': 'LocalBusiness',
-            name: 'Vida em Foco Fotografia RJ'
+            name: 'Mel Fotografia RJ'
           }
         }}
       />

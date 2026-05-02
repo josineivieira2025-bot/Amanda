@@ -6,7 +6,7 @@ import { getServiceRoute, homeCollections, serviceContent } from '../data/public
 function whatsappHref() {
   const phone = (import.meta.env.VITE_PUBLIC_WHATSAPP || '').replace(/\D/g, '');
   const text = encodeURIComponent(
-    'Oi! Vim pelo site da Vida em Foco e quero ajuda para escolher um ensaio ou evento.'
+    'Oi! Vim pelo site da Mel Fotografia e quero ajuda para escolher um ensaio ou evento.'
   );
   return phone ? `https://wa.me/${phone}?text=${text}` : '/';
 }
@@ -15,7 +15,7 @@ export function PublicHome() {
   return (
     <>
       <SeoMeta
-        title="Fotografo no Rio de Janeiro | Vida em Foco Fotografia RJ"
+        title="Fotografo no Rio de Janeiro | Mel Fotografia RJ"
         description="Fotografo no Rio de Janeiro para casamentos, ensaio gestante RJ, ensaio infantil RJ e ensaio casal RJ com atendimento acolhedor e simulacao online."
         path="/"
         keywords={[
@@ -30,7 +30,7 @@ export function PublicHome() {
         schema={{
           '@context': 'https://schema.org',
           '@type': 'LocalBusiness',
-          name: 'Vida em Foco Fotografia RJ',
+          name: 'Mel Fotografia RJ',
           image: '/vida-em-foco-logo.jpeg',
           telephone: import.meta.env.VITE_PUBLIC_WHATSAPP || undefined,
           url: import.meta.env.VITE_PUBLIC_SITE_URL || undefined,
@@ -51,9 +51,9 @@ export function PublicHome() {
           <div className="site-section-inner site-hero-grid">
             <div className="site-hero-copy">
               <span className="site-kicker">Fotografo no Rio de Janeiro</span>
-              <h1>Vida em Foco Fotografia RJ para ensaios, casamentos e eventos no Rio de Janeiro</h1>
+              <h1>Mel Fotografia RJ para ensaios, casamentos e eventos no Rio de Janeiro</h1>
               <p>
-                A Vida em Foco Fotografia atende clientes no Rio de Janeiro com uma proposta delicada, elegante e clara
+                A Mel Fotografia atende clientes no Rio de Janeiro com uma proposta delicada, elegante e clara
                 para quem busca ensaio fotografico no RJ, fotografia de casamento e registros afetivos em diferentes fases da vida.
               </p>
 
@@ -105,7 +105,7 @@ export function PublicHome() {
               <h2>Escolha o tipo de ensaio ou evento que faz sentido para voce</h2>
               <p>
                 Cada pagina foi pensada para ajudar voce a explorar estilos, entender opcoes e solicitar um orcamento
-                de um jeito mais pratico e inspirador com a Vida em Foco Fotografia no Rio de Janeiro.
+                de um jeito mais pratico e inspirador com a Mel Fotografia no Rio de Janeiro.
               </p>
             </div>
 

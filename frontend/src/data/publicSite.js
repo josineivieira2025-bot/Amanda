@@ -6,7 +6,7 @@ const serviceEntries = [
       seoRoute: '/fotografo-casamento-rio-de-janeiro',
       legacyRoutes: ['/servicos/casamento'],
       aliases: ['casamento', 'fotografo-casamento-rio-de-janeiro'],
-      seoTitle: 'Fotografo de Casamento no Rio de Janeiro | Vida em Foco Fotografia RJ',
+      seoTitle: 'Fotografo de Casamento no Rio de Janeiro | Mel Fotografia RJ',
       seoDescription:
         'Fotografo de casamento no Rio de Janeiro com cobertura sensivel, direcao leve e atendimento acolhedor para casais que querem viver o grande dia com tranquilidade.',
       seoKeywords: [
@@ -14,14 +14,14 @@ const serviceEntries = [
         'fotografo de casamento rj',
         'fotografia de casamento rio de janeiro',
         'casamento rj',
-        'vida em foco fotografia rj'
+        'mel fotografia rj'
       ],
       eyebrow: 'Casamentos',
       heroTitle: 'Fotografia de casamento no Rio de Janeiro com olhar sensivel e direcao leve',
       heroText:
-        'A Vida em Foco Fotografia acompanha casamentos no Rio de Janeiro com planejamento claro, presenca discreta e registros pensados para contar o dia com verdade e emocao.',
+        'A Mel Fotografia acompanha casamentos no Rio de Janeiro com planejamento claro, presenca discreta e registros pensados para contar o dia com verdade e emocao.',
       seoIntro: [
-        'A Vida em Foco Fotografia e especializada em fotografia de casamento no Rio de Janeiro para casais que querem viver o dia com leveza e receber imagens cheias de memoria, afeto e beleza. Cada cobertura e pensada para respeitar o ritmo do evento, da cerimonia ao inicio da festa, sem engessar os momentos mais importantes.',
+        'A Mel Fotografia e especializada em fotografia de casamento no Rio de Janeiro para casais que querem viver o dia com leveza e receber imagens cheias de memoria, afeto e beleza. Cada cobertura e pensada para respeitar o ritmo do evento, da cerimonia ao inicio da festa, sem engessar os momentos mais importantes.',
         'Quando voce procura um fotografo de casamento RJ, nao esta buscando apenas alguem para apertar o clique. Esta buscando alguem que saiba orientar quando preciso, observar quando o momento pede silencio e registrar as trocas reais entre voces, familia e convidados.',
         'Nesta pagina voce pode conhecer melhor a proposta, visualizar pacotes e fazer uma simulacao de orcamento para casamento no Rio de Janeiro de um jeito simples. Assim o atendimento ja comeca com mais clareza sobre o estilo, o local e o tipo de cobertura que faz sentido para o seu dia.'
       ],
@@ -48,7 +48,7 @@ const serviceEntries = [
       seoRoute: '/ensaio-gestante-rj',
       legacyRoutes: ['/servicos/gestante'],
       aliases: ['gestante', 'ensaio-gestante-rj'],
-      seoTitle: 'Fotografo de Ensaio Gestante no Rio de Janeiro | Vida em Foco Fotografia RJ',
+      seoTitle: 'Fotografo de Ensaio Gestante no Rio de Janeiro | Mel Fotografia RJ',
       seoDescription:
         'Ensaio gestante RJ com direcao suave, fotos elegantes e uma experiencia acolhedora para registrar a gravidez com beleza no Rio de Janeiro.',
       seoKeywords: [
@@ -56,14 +56,14 @@ const serviceEntries = [
         'ensaio gestante no rio de janeiro',
         'fotografa gestante rio de janeiro',
         'fotografo profissional no rio de janeiro',
-        'vida em foco fotografia gestante'
+        'mel fotografia gestante'
       ],
       eyebrow: 'Gestante',
       heroTitle: 'Ensaio gestante no Rio de Janeiro com delicadeza, conforto e fotos elegantes',
       heroText:
-        'A proposta da Vida em Foco e transformar a gestacao em imagens afetivas e sofisticadas, com uma experiencia leve para maes, casais e familias no Rio de Janeiro.',
+        'A proposta da Mel Fotografia e transformar a gestacao em imagens afetivas e sofisticadas, com uma experiencia leve para maes, casais e familias no Rio de Janeiro.',
       seoIntro: [
-        'O ensaio gestante RJ da Vida em Foco Fotografia foi pensado para mulheres que querem viver esse momento com calma, autoestima e um resultado bonito de verdade. Cada ensaio no Rio de Janeiro e conduzido com orientacao suave, respeitando o estilo da cliente e o ritmo dessa fase.',
+        'O ensaio gestante RJ da Mel Fotografia foi pensado para mulheres que querem viver esse momento com calma, autoestima e um resultado bonito de verdade. Cada ensaio no Rio de Janeiro e conduzido com orientacao suave, respeitando o estilo da cliente e o ritmo dessa fase.',
         'Para quem busca ensaio gestante no Rio de Janeiro, faz diferenca contar com uma fotografa que ajude na escolha de clima, poses, looks e composicao das imagens. O objetivo e criar fotos elegantes sem perder naturalidade, seja em estudio, em area externa ou com participacao da familia.',
         'Aqui voce consegue visualizar opcoes de ensaio gestante RJ, comparar pacotes e fazer sua simulacao de orcamento online. Isso ajuda a iniciar o atendimento de um jeito mais pratico, com uma proposta alinhada ao que voce imagina para esse registro.'
       ],
@@ -90,7 +90,7 @@ const serviceEntries = [
       seoRoute: '/ensaio-infantil-rj',
       legacyRoutes: ['/servicos/ensaio-infantil', '/servicos/infantil'],
       aliases: ['ensaio-infantil', 'infantil', 'ensaio-infantil-rj'],
-      seoTitle: 'Fotografo de Ensaio Infantil no Rio de Janeiro | Vida em Foco Fotografia RJ',
+      seoTitle: 'Fotografo de Ensaio Infantil no Rio de Janeiro | Mel Fotografia RJ',
       seoDescription:
         'Ensaio infantil RJ com clima leve, paciencia e registros afetivos para familias que querem guardar a infancia com sensibilidade no Rio de Janeiro.',
       seoKeywords: [
@@ -98,14 +98,14 @@ const serviceEntries = [
         'ensaio infantil no rio de janeiro',
         'fotografa infantil rio de janeiro',
         'fotografo no rio de janeiro infantil',
-        'vida em foco fotografia infantil'
+        'mel fotografia infantil'
       ],
       eyebrow: 'Infantil',
       heroTitle: 'Ensaio infantil no Rio de Janeiro com fotos leves, naturais e cheias de memoria',
       heroText:
-        'A Vida em Foco Fotografia cria ensaios infantis no Rio de Janeiro com paciencia, brincadeira e um olhar atento para a verdade de cada fase da crianca.',
+        'A Mel Fotografia cria ensaios infantis no Rio de Janeiro com paciencia, brincadeira e um olhar atento para a verdade de cada fase da crianca.',
       seoIntro: [
-        'O ensaio infantil RJ e ideal para familias que querem registrar a essencia da crianca com espontaneidade e delicadeza. Na Vida em Foco Fotografia, o ensaio infantil no Rio de Janeiro e conduzido com respeito ao tempo da crianca, sem pressa e sem forcar expressoes.',
+        'O ensaio infantil RJ e ideal para familias que querem registrar a essencia da crianca com espontaneidade e delicadeza. Na Mel Fotografia, o ensaio infantil no Rio de Janeiro e conduzido com respeito ao tempo da crianca, sem pressa e sem forcar expressoes.',
         'Para quem procura ensaio infantil no Rio de Janeiro, o mais importante e encontrar uma fotografa que saiba transformar movimento, curiosidade e pequenos gestos em imagens afetivas. O resultado sao fotos naturais, bonitas e cheias de significado para a familia.',
         'Nesta pagina voce pode entender melhor como funciona o ensaio infantil RJ, comparar opcoes de pacote e fazer uma simulacao de orcamento. Assim fica mais facil planejar um ensaio que combine com a fase da crianca e com o estilo da familia.'
       ],
@@ -132,7 +132,7 @@ const serviceEntries = [
       seoRoute: '/ensaio-casal-rj',
       legacyRoutes: ['/servicos/casal'],
       aliases: ['casal', 'ensaio-casal-rj'],
-      seoTitle: 'Fotografo de Ensaio de Casal no Rio de Janeiro | Vida em Foco Fotografia RJ',
+      seoTitle: 'Fotografo de Ensaio de Casal no Rio de Janeiro | Mel Fotografia RJ',
       seoDescription:
         'Ensaio de casal RJ com estilo natural, direcao leve e fotos romanticas para casais que querem registrar sua historia no Rio de Janeiro.',
       seoKeywords: [
@@ -140,14 +140,14 @@ const serviceEntries = [
         'ensaio de casal no rio de janeiro',
         'fotografo casal rio de janeiro',
         'pre wedding rj',
-        'vida em foco fotografia casal'
+        'mel fotografia casal'
       ],
       eyebrow: 'Casal',
       heroTitle: 'Ensaio de casal no Rio de Janeiro com naturalidade, conexao e fotos romanticas',
       heroText:
         'Perfeito para namoro, noivado, pre wedding ou simplesmente para registrar a fase atual com espontaneidade e direcao leve em locacoes do Rio de Janeiro.',
       seoIntro: [
-        'O ensaio casal RJ da Vida em Foco Fotografia foi pensado para casais que querem imagens romanticas sem poses travadas. O ensaio de casal no Rio de Janeiro pode acontecer em praia, parque, centro urbano, estudio ou em um local que tenha a cara da historia de voces.',
+        'O ensaio casal RJ da Mel Fotografia foi pensado para casais que querem imagens romanticas sem poses travadas. O ensaio de casal no Rio de Janeiro pode acontecer em praia, parque, centro urbano, estudio ou em um local que tenha a cara da historia de voces.',
         'Quem busca um fotografo no Rio de Janeiro para ensaio de casal normalmente quer um resultado bonito, mas tambem uma experiencia gostosa de viver. Por isso a direcao e leve, natural e focada em criar conforto para que as fotos mostrem a conexao real entre voces.',
         'Aqui voce encontra informacoes sobre ensaio casal RJ, compara pacotes e faz uma simulacao online. Isso ajuda a transformar a ideia em um pedido mais objetivo, com data, estilo e faixa de investimento mais alinhados desde o inicio.'
       ],
@@ -174,7 +174,7 @@ const serviceEntries = [
       seoRoute: '/servicos/evento-infantil',
       legacyRoutes: ['/servicos/evento-infantil'],
       aliases: ['evento-infantil'],
-      seoTitle: 'Festa Infantil no Rio de Janeiro | Vida em Foco Fotografia',
+      seoTitle: 'Festa Infantil no Rio de Janeiro | Mel Fotografia',
       seoDescription:
         'Cobertura de festa infantil no Rio de Janeiro com registros espontaneos, detalhes afetivos e simulacao online de orcamento.',
       seoKeywords: ['festa infantil rio de janeiro', 'fotografo infantil rj', 'fotografia evento infantil rj'],
@@ -183,7 +183,7 @@ const serviceEntries = [
       heroText:
         'Da decoracao ao parabens, a cobertura registra detalhes, emocao e movimento para que a familia aproveite a festa sabendo que tudo esta sendo guardado.',
       seoIntro: [
-        'A cobertura de festa infantil no Rio de Janeiro precisa ser leve, agil e sensivel aos pequenos momentos. A Vida em Foco Fotografia registra aniversarios e comemoracoes com atencao aos detalhes e aos encontros de familia.',
+        'A cobertura de festa infantil no Rio de Janeiro precisa ser leve, agil e sensivel aos pequenos momentos. A Mel Fotografia registra aniversarios e comemoracoes com atencao aos detalhes e aos encontros de familia.',
         'Para quem procura fotografia de evento infantil RJ, o diferencial esta em unir espontaneidade com organizacao. Isso permite aproveitar a festa enquanto os principais registros vao sendo construidos ao longo do evento.',
         'Nesta pagina voce pode comparar pacotes, entender melhor a cobertura e solicitar uma simulacao de orcamento para festa infantil no Rio de Janeiro.'
       ],

@@ -25,8 +25,8 @@ export function Register() {
       <section className="auth-wrap">
         <div className="auth-visual">
           <div className="auth-brand">
-            <span className="brand-mark"><img src="/vida-em-foco-logo.jpeg" alt="Vida em Foco" /></span>
-            <strong>Vida em Foco</strong>
+            <span className="brand-mark"><img src="/vida-em-foco-logo.jpeg" alt="Mel Fotografia" /></span>
+            <strong>Mel Fotografia</strong>
           </div>
           <div className="auth-quote">
             <Sparkles size={20} />
@@ -35,10 +35,10 @@ export function Register() {
         </div>
         <form className="auth-card" onSubmit={submit}>
           <div className="auth-heading">
-            <span className="brand-mark soft"><img src="/vida-em-foco-logo.jpeg" alt="Vida em Foco" /></span>
+            <span className="brand-mark soft"><img src="/vida-em-foco-logo.jpeg" alt="Mel Fotografia" /></span>
             <div>
               <p>Comece seu painel</p>
-              <h1>Crie seu acesso Vida em Foco</h1>
+              <h1>Crie seu acesso Mel Fotografia</h1>
             </div>
           </div>
           {error && <p className="error">{error}</p>}

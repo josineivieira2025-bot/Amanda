@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 const DEFAULT_IMAGE = '/vida-em-foco-logo.jpeg';
-const SITE_NAME = 'Vida em Foco Fotografia';
+const SITE_NAME = 'Mel Fotografia';
 
 function upsertMeta(selector, attributes) {
   let element = document.head.querySelector(selector);
@@ -47,11 +47,11 @@ export function SeoMeta({ title, description, path = '', keywords = [], image = 
     upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: description });
     upsertLink('link[rel="canonical"]', { rel: 'canonical', href: canonicalUrl });
 
-    let schemaNode = document.head.querySelector('script[data-seo-schema="vida-em-foco"]');
+    let schemaNode = document.head.querySelector('script[data-seo-schema="mel-fotografia"]');
     if (!schemaNode) {
       schemaNode = document.createElement('script');
       schemaNode.type = 'application/ld+json';
-      schemaNode.dataset.seoSchema = 'vida-em-foco';
+      schemaNode.dataset.seoSchema = 'mel-fotografia';
       document.head.appendChild(schemaNode);
     }
 

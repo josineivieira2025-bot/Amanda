@@ -35,10 +35,10 @@ export function PublicSiteLayout() {
         <div className="site-header-inner">
           <Link className="site-brand" to="/" onClick={() => setOpen(false)}>
             <span className="site-brand-mark">
-              <img src="/vida-em-foco-logo.jpeg" alt="Vida em Foco Fotografia" />
+              <img src="/vida-em-foco-logo.jpeg" alt="Mel Fotografia" />
             </span>
             <div>
-              <strong>Vida em Foco Fotografia</strong>
+              <strong>Mel Fotografia</strong>
               <span>Ensaios, casamentos e eventos com simulacao online</span>
             </div>
           </Link>
@@ -67,7 +67,7 @@ export function PublicSiteLayout() {
       <footer className="site-footer">
         <div className="site-section-inner site-footer-grid">
           <div>
-            <strong>Vida em Foco Fotografia</strong>
+            <strong>Mel Fotografia</strong>
             <p>
               Ensaios, casamentos e eventos com uma experiencia leve, elegante e pensada para facilitar sua escolha.
             </p>
