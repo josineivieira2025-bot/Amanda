@@ -304,6 +304,7 @@ a {
   display: flex;
   align-items: center;
   gap: 10px;
+  position: relative;
 }
 
 .status-pill {
@@ -327,6 +328,96 @@ a {
   border-radius: 999px;
   background: #3f8f68;
   box-shadow: 0 0 0 4px rgba(63, 143, 104, 0.12);
+}
+
+.topbar-bell {
+  position: relative;
+}
+
+.topbar-bell-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #c45d6d;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  box-shadow: 0 8px 16px rgba(196, 93, 109, 0.28);
+}
+
+.topbar-notifications {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  width: min(360px, calc(100vw - 32px));
+  padding: 14px;
+  display: grid;
+  gap: 12px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.96);
+  border: 1px solid rgba(125, 75, 93, 0.10);
+  box-shadow: 0 24px 48px rgba(52, 32, 43, 0.16);
+  backdrop-filter: blur(16px);
+  z-index: 40;
+}
+
+.topbar-notifications-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.topbar-notifications-head strong {
+  color: var(--text);
+  font-size: 15px;
+}
+
+.topbar-notifications-head span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.topbar-notifications-list {
+  display: grid;
+  gap: 10px;
+}
+
+.topbar-notification-card,
+.topbar-notification-empty {
+  display: grid;
+  gap: 5px;
+  padding: 12px 13px;
+  border-radius: 16px;
+  background: #fff8fb;
+  border: 1px solid rgba(125, 75, 93, 0.08);
+}
+
+.topbar-notification-card strong,
+.topbar-notification-empty strong {
+  color: var(--text);
+  font-size: 14px;
+}
+
+.topbar-notification-card span,
+.topbar-notification-card small,
+.topbar-notification-empty span {
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.topbar-notification-card:hover {
+  transform: translateY(-1px);
+  background: #fff;
 }
 
 .mobile-only {

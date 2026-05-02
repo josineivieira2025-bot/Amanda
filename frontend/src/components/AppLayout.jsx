@@ -10,8 +10,11 @@ import {
   Sparkles,
   Users
 } from 'lucide-react';
-import { useState } from 'react';
+import { formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
+import { api } from '../api/client.js';
 import { useAuth } from '../context/AuthContext.jsx';
 
 const links = [
@@ -26,6 +29,20 @@ const links = [
 export function AppLayout() {
   const { user, logout } = useAuth();
   const [open, setOpen] = useState(false);
+  const [notificationOpen, setNotificationOpen] = useState(false);
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    api('/events').then(setEvents).catch(console.error);
+  }, []);
+
+  const siteNotifications = useMemo(
+    () =>
+      events
+        .filter((event) => event.source === 'site' && event.status === 'orcamento_pendente')
+        .sort((a, b) => new Date(b.createdAt || b.date) - new Date(a.createdAt || a.date)),
+    [events]
+  );
 
   return (
     <div className="shell">
@@ -69,10 +86,51 @@ export function AppLayout() {
             <span>Agenda, clientes, orcamentos e memorias em um so lugar.</span>
           </div>
           <div className="topbar-actions">
-            <span className="status-pill">Online</span>
-            <button className="icon-button" aria-label="Notificacoes">
+            <button
+              className={notificationOpen ? 'icon-button active topbar-bell' : 'icon-button topbar-bell'}
+              aria-label="Notificacoes"
+              type="button"
+              onClick={() => setNotificationOpen((value) => !value)}
+            >
               <Bell size={18} />
+              {siteNotifications.length > 0 ? <span className="topbar-bell-badge">{siteNotifications.length}</span> : null}
             </button>
+            {notificationOpen && (
+              <div className="topbar-notifications">
+                <div className="topbar-notifications-head">
+                  <strong>Novos orcamentos do site</strong>
+                  <span>{siteNotifications.length} pendente(s)</span>
+                </div>
+
+                <div className="topbar-notifications-list">
+                  {siteNotifications.length ? (
+                    siteNotifications.slice(0, 6).map((event) => (
+                      <Link
+                        key={event._id}
+                        className="topbar-notification-card"
+                        to="/painel/eventos"
+                        onClick={() => setNotificationOpen(false)}
+                      >
+                        <strong>{event.clientId?.name || 'Cliente sem nome'}</strong>
+                        <span>{event.location || 'Local a confirmar'}</span>
+                        <small>
+                          Recebido{' '}
+                          {formatDistanceToNow(new Date(event.createdAt || event.date), {
+                            addSuffix: true,
+                            locale: ptBR
+                          })}
+                        </small>
+                      </Link>
+                    ))
+                  ) : (
+                    <div className="topbar-notification-empty">
+                      <strong>Nenhum novo orçamento do site</strong>
+                      <span>Quando chegar uma nova simulacao pendente, ela aparece aqui.</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </header>
         <Outlet />
