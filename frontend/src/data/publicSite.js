@@ -202,6 +202,294 @@ const serviceEntries = [
         { slug: 'ensaio-familia', label: 'Ensaio em familia' }
       ]
     }
+  ],
+  [
+    'aniversario-15',
+    {
+      serviceSlug: 'aniversario-15',
+      seoRoute: '/servicos/aniversario-15',
+      legacyRoutes: ['/servicos/aniversario-15'],
+      aliases: ['aniversario-15'],
+      seoTitle: 'Ensaio e Festa de 15 Anos no Rio de Janeiro | Mel Fotografia',
+      seoDescription:
+        'Ensaio e cobertura de 15 anos no Rio de Janeiro com fotos elegantes, personalidade e simulacao online de orcamento.',
+      seoKeywords: ['15 anos rio de janeiro', 'ensaio 15 anos rj', 'fotografa 15 anos rio de janeiro'],
+      eyebrow: '15 anos',
+      heroTitle: '15 anos no Rio de Janeiro com fotos marcantes, delicadas e cheias de personalidade',
+      heroText:
+        'A Mel Fotografia cria ensaios e registros de 15 anos com direcao leve, atmosfera especial e uma experiencia pensada para valorizar essa fase unica.',
+      seoIntro: [
+        'O ensaio de 15 anos no Rio de Janeiro e uma oportunidade linda para registrar personalidade, fase e estilo com fotos que tenham brilho e identidade. A Mel Fotografia trabalha esse momento com sensibilidade e orientacao clara.',
+        'Para quem procura fotografia de 15 anos RJ, faz diferenca ter uma experiencia organizada, com sugestoes de locacao, ritmo do ensaio e uma cobertura que deixe a cliente segura para curtir o momento.',
+        'Nesta pagina voce pode visualizar pacotes, comparar opcoes e fazer uma simulacao de orcamento para ensaio ou cobertura de 15 anos no Rio de Janeiro.'
+      ],
+      image:
+        'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1400&q=80',
+      imageAlt: 'ensaio de 15 anos no rio de janeiro com fotografia delicada e marcante',
+      imageFileSuggestion: 'ensaio-15-anos-rio-de-janeiro.jpg',
+      bullets: [
+        'Ensaio em estudio ou area externa',
+        'Cobertura da festa com momentos especiais',
+        'Extras para album, reels e maquiagem'
+      ],
+      relatedServices: [
+        { slug: 'casal', label: 'Ensaio casal RJ' },
+        { slug: 'ensaio-infantil', label: 'Ensaio infantil RJ' },
+        { slug: 'formatura', label: 'Ensaio de formatura' }
+      ]
+    }
+  ],
+  [
+    'aniversario-adulto',
+    {
+      serviceSlug: 'aniversario-adulto',
+      seoRoute: '/servicos/aniversario-adulto',
+      legacyRoutes: ['/servicos/aniversario-adulto'],
+      aliases: ['aniversario-adulto'],
+      seoTitle: 'Aniversario Adulto no Rio de Janeiro | Mel Fotografia',
+      seoDescription:
+        'Cobertura fotografica para aniversario adulto no Rio de Janeiro com registros espontaneos, retratos e simulacao online.',
+      seoKeywords: ['aniversario adulto rio de janeiro', 'fotografo aniversario adulto rj', 'evento adulto rj'],
+      eyebrow: 'Comemoracoes',
+      heroTitle: 'Aniversario adulto no Rio de Janeiro com fotos naturais e cobertura elegante',
+      heroText:
+        'A Mel Fotografia registra encontros, festas e comemoracoes especiais com um olhar atento aos detalhes, aos convidados e ao clima do evento.',
+      seoIntro: [
+        'A cobertura de aniversario adulto no Rio de Janeiro precisa equilibrar espontaneidade, retratos bem feitos e atencao aos detalhes do encontro. A Mel Fotografia organiza esse registro de forma leve e elegante.',
+        'Para quem procura um fotografo de aniversario adulto RJ, o ideal e ter fotos que contem a energia da festa sem perder naturalidade. Isso inclui pessoas importantes, decoracao e pequenos momentos que fazem a noite valer a pena.',
+        'Nesta pagina voce pode comparar pacotes, ajustar extras e fazer sua simulacao de orcamento para aniversario adulto no Rio de Janeiro.'
+      ],
+      image:
+        'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1400&q=80',
+      imageAlt: 'fotografia de aniversario adulto no rio de janeiro com cobertura de evento',
+      imageFileSuggestion: 'aniversario-adulto-rio-de-janeiro.jpg',
+      bullets: [
+        'Cobertura para jantares, festas e encontros',
+        'Retratos naturais e registros espontaneos',
+        'Opcoes de video e retratos extras'
+      ],
+      relatedServices: [
+        { slug: 'evento-infantil', label: 'Evento infantil RJ' },
+        { slug: 'cha-revelacao', label: 'Cha revelacao' },
+        { slug: 'corporativo', label: 'Corporativo' }
+      ]
+    }
+  ],
+  [
+    'cha-revelacao',
+    {
+      serviceSlug: 'cha-revelacao',
+      seoRoute: '/servicos/cha-revelacao',
+      legacyRoutes: ['/servicos/cha-revelacao'],
+      aliases: ['cha-revelacao'],
+      seoTitle: 'Cha Revelacao no Rio de Janeiro | Mel Fotografia',
+      seoDescription:
+        'Cobertura de cha revelacao no Rio de Janeiro com fotos emocionantes, familia em destaque e simulacao online.',
+      seoKeywords: ['cha revelacao rio de janeiro', 'fotografa cha revelacao rj', 'ensaio familia rj'],
+      eyebrow: 'Familia',
+      heroTitle: 'Cha revelacao no Rio de Janeiro com fotos emocionantes e clima de familia',
+      heroText:
+        'A Mel Fotografia registra a surpresa, a expectativa e o carinho desse encontro com leveza e atencao aos detalhes que fazem a memoria ficar viva.',
+      seoIntro: [
+        'O cha revelacao no Rio de Janeiro mistura emocao, expectativa e encontros especiais entre familia e amigos. A Mel Fotografia trabalha esse momento com um olhar sensivel e atento ao que acontece de verdade.',
+        'Para quem procura fotografia de cha revelacao RJ, o registro precisa valorizar reacoes, abracos, decoracao e o momento central da revelacao, sem perder a leveza do evento.',
+        'Nesta pagina voce pode conhecer os pacotes, ajustar extras e fazer uma simulacao de orcamento para cha revelacao no Rio de Janeiro.'
+      ],
+      image:
+        'https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=1400&q=80',
+      imageAlt: 'cha revelacao no rio de janeiro com fotografia de familia e emocao',
+      imageFileSuggestion: 'cha-revelacao-rio-de-janeiro.jpg',
+      bullets: [
+        'Cobertura da revelacao e da familia',
+        'Retratos afetivos e espontaneos',
+        'Extras com video e album'
+      ],
+      relatedServices: [
+        { slug: 'gestante', label: 'Ensaio gestante RJ' },
+        { slug: 'ensaio-familia', label: 'Ensaio em familia' },
+        { slug: 'newborn', label: 'Ensaio newborn' }
+      ]
+    }
+  ],
+  [
+    'newborn',
+    {
+      serviceSlug: 'newborn',
+      seoRoute: '/servicos/newborn',
+      legacyRoutes: ['/servicos/newborn'],
+      aliases: ['newborn'],
+      seoTitle: 'Ensaio Newborn no Rio de Janeiro | Mel Fotografia',
+      seoDescription:
+        'Ensaio newborn no Rio de Janeiro com cuidado, seguranca e imagens delicadas dos primeiros dias do bebe.',
+      seoKeywords: ['newborn rio de janeiro', 'ensaio newborn rj', 'fotografa newborn rio de janeiro'],
+      eyebrow: 'Newborn',
+      heroTitle: 'Newborn no Rio de Janeiro com delicadeza, cuidado e fotos suaves',
+      heroText:
+        'A Mel Fotografia conduz ensaios newborn com paciencia, seguranca e respeito ao ritmo do bebe e da familia, criando memorias leves e afetivas.',
+      seoIntro: [
+        'O ensaio newborn no Rio de Janeiro e uma forma delicada de guardar os primeiros dias do bebe com imagens suaves, confortaveis e cheias de afeto. A Mel Fotografia trabalha esse momento com calma e atencao.',
+        'Para quem procura uma fotografa newborn RJ, faz muita diferenca ter um ensaio que respeite pausas, colo, troca de roupa e o ritmo natural do bebe, sem pressa e sem forcar poses que nao combinam com o momento.',
+        'Nesta pagina voce encontra opcoes de pacote, entende melhor a proposta e faz uma simulacao de orcamento para ensaio newborn no Rio de Janeiro.'
+      ],
+      image:
+        'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=1400&q=80',
+      imageAlt: 'ensaio newborn no rio de janeiro com fotos delicadas do bebe',
+      imageFileSuggestion: 'ensaio-newborn-rio-de-janeiro.jpg',
+      bullets: [
+        'Conducao delicada e segura',
+        'Opcao de incluir pais e irmaos',
+        'Kits com album e impressas'
+      ],
+      relatedServices: [
+        { slug: 'gestante', label: 'Ensaio gestante RJ' },
+        { slug: 'ensaio-infantil', label: 'Ensaio infantil RJ' },
+        { slug: 'ensaio-familia', label: 'Ensaio em familia' }
+      ]
+    }
+  ],
+  [
+    'ensaio-familia',
+    {
+      serviceSlug: 'ensaio-familia',
+      seoRoute: '/servicos/ensaio-familia',
+      legacyRoutes: ['/servicos/ensaio-familia'],
+      aliases: ['ensaio-familia'],
+      seoTitle: 'Ensaio em Familia no Rio de Janeiro | Mel Fotografia',
+      seoDescription:
+        'Ensaio em familia no Rio de Janeiro com clima leve, conexao verdadeira e fotos afetivas para guardar momentos especiais.',
+      seoKeywords: ['ensaio em familia rio de janeiro', 'ensaio familia rj', 'fotografo familia rio de janeiro'],
+      eyebrow: 'Familia',
+      heroTitle: 'Ensaio em familia no Rio de Janeiro com leveza, afeto e memorias verdadeiras',
+      heroText:
+        'A Mel Fotografia cria ensaios em familia com direcao suave e um olhar sensivel para os pequenos gestos, a conexao e a energia de cada encontro.',
+      seoIntro: [
+        'O ensaio em familia no Rio de Janeiro e uma forma bonita de guardar fases, encontros e memorias que passam rapido. A Mel Fotografia trabalha esse registro de forma natural, sem rigidez e com foco na conexao entre voces.',
+        'Para quem procura ensaio familia RJ, o ideal e ter uma experiencia leve, em que adultos e criancas consigam viver o momento sem pressao, enquanto as fotos nascem de carinho, movimento e troca real.',
+        'Nesta pagina voce pode conhecer a proposta, comparar pacotes e fazer sua simulacao de orcamento para ensaio em familia no Rio de Janeiro.'
+      ],
+      image:
+        'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=1400&q=80',
+      imageAlt: 'ensaio em familia no rio de janeiro com fotos afetivas ao ar livre',
+      imageFileSuggestion: 'ensaio-familia-rio-de-janeiro.jpg',
+      bullets: [
+        'Em casa, no estudio ou ao ar livre',
+        'Direcao leve para todas as idades',
+        'Pacotes com opcoes de video e album'
+      ],
+      relatedServices: [
+        { slug: 'gestante', label: 'Ensaio gestante RJ' },
+        { slug: 'ensaio-infantil', label: 'Ensaio infantil RJ' },
+        { slug: 'newborn', label: 'Ensaio newborn' }
+      ]
+    }
+  ],
+  [
+    'corporativo',
+    {
+      serviceSlug: 'corporativo',
+      seoRoute: '/servicos/corporativo',
+      legacyRoutes: ['/servicos/corporativo'],
+      aliases: ['corporativo'],
+      seoTitle: 'Fotografia Corporativa no Rio de Janeiro | Mel Fotografia',
+      seoDescription:
+        'Fotografia corporativa no Rio de Janeiro para retratos profissionais, equipes, marcas e posicionamento visual.',
+      seoKeywords: ['fotografia corporativa rio de janeiro', 'ensaio corporativo rj', 'retrato profissional rj'],
+      eyebrow: 'Corporativo',
+      heroTitle: 'Fotografia corporativa no Rio de Janeiro para marcas, equipes e posicionamento visual',
+      heroText:
+        'A Mel Fotografia desenvolve retratos e ensaios corporativos com clareza visual, profissionalismo e uma linguagem alinhada ao objetivo da marca.',
+      seoIntro: [
+        'A fotografia corporativa no Rio de Janeiro ajuda marcas e profissionais a comunicarem presenca, confianca e posicionamento. A Mel Fotografia trabalha esse registro com direcao clara e resultado profissional.',
+        'Para quem busca retrato profissional RJ, o mais importante e encontrar uma experiencia organizada, que ajude na postura, expresao, enquadramento e imagem que a pessoa ou equipe deseja transmitir.',
+        'Nesta pagina voce pode conhecer os formatos de ensaio, comparar opcoes e fazer uma simulacao de orcamento para fotografia corporativa no Rio de Janeiro.'
+      ],
+      image:
+        'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1400&q=80',
+      imageAlt: 'fotografia corporativa no rio de janeiro com retrato profissional',
+      imageFileSuggestion: 'fotografia-corporativa-rio-de-janeiro.jpg',
+      bullets: [
+        'Retratos profissionais e fotos de equipe',
+        'Cobertura para eventos e encontros de marca',
+        'Entrega agil e opcoes de reels'
+      ],
+      relatedServices: [
+        { slug: 'casal', label: 'Ensaio casal RJ' },
+        { slug: 'aniversario-adulto', label: 'Aniversario adulto' },
+        { slug: 'formatura', label: 'Formatura' }
+      ]
+    }
+  ],
+  [
+    'formatura',
+    {
+      serviceSlug: 'formatura',
+      seoRoute: '/servicos/formatura',
+      legacyRoutes: ['/servicos/formatura'],
+      aliases: ['formatura'],
+      seoTitle: 'Ensaio de Formatura no Rio de Janeiro | Mel Fotografia',
+      seoDescription:
+        'Ensaio de formatura no Rio de Janeiro com beca, retratos especiais e simulacao online de orcamento.',
+      seoKeywords: ['formatura rio de janeiro', 'ensaio formatura rj', 'fotografo formatura rio de janeiro'],
+      eyebrow: 'Formatura',
+      heroTitle: 'Formatura no Rio de Janeiro com fotos de conquista, retratos marcantes e clima especial',
+      heroText:
+        'A Mel Fotografia cria ensaios de formatura com atmosfera leve, boa direcao e registros que valorizam esse momento tao importante.',
+      seoIntro: [
+        'O ensaio de formatura no Rio de Janeiro e uma forma especial de marcar uma conquista que representa muito mais do que um diploma. A Mel Fotografia valoriza esse momento com retratos bem construidos e clima leve.',
+        'Para quem procura fotografia de formatura RJ, o ensaio precisa unir presenca, identidade e orientacao, para que cada foto traduza orgulho, alegria e a historia dessa etapa.',
+        'Nesta pagina voce pode ver os pacotes, entender a proposta e fazer uma simulacao de orcamento para ensaio de formatura no Rio de Janeiro.'
+      ],
+      image:
+        'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1400&q=80',
+      imageAlt: 'ensaio de formatura no rio de janeiro com beca e retratos especiais',
+      imageFileSuggestion: 'ensaio-formatura-rio-de-janeiro.jpg',
+      bullets: [
+        'Ensaios individuais ou com familia',
+        'Opcoes com beca, album e retratos extras',
+        'Pacotes para perfis mais classicos ou premium'
+      ],
+      relatedServices: [
+        { slug: 'aniversario-15', label: '15 anos' },
+        { slug: 'corporativo', label: 'Corporativo' },
+        { slug: 'casal', label: 'Ensaio casal RJ' }
+      ]
+    }
+  ],
+  [
+    'smash-the-cake',
+    {
+      serviceSlug: 'smash-the-cake',
+      seoRoute: '/servicos/smash-the-cake',
+      legacyRoutes: ['/servicos/smash-the-cake'],
+      aliases: ['smash-the-cake'],
+      seoTitle: 'Smash the Cake no Rio de Janeiro | Mel Fotografia',
+      seoDescription:
+        'Ensaio smash the cake no Rio de Janeiro com cenario delicado, bolo, familia e simulacao online de orcamento.',
+      seoKeywords: ['smash the cake rio de janeiro', 'ensaio smash the cake rj', 'ensaio bebe rj'],
+      eyebrow: 'Smash the Cake',
+      heroTitle: 'Smash the Cake no Rio de Janeiro com delicadeza, expressao e muita memoria bonita',
+      heroText:
+        'A Mel Fotografia cria ensaios smash the cake com atmosfera divertida, cenario bem cuidado e registros espontaneos para celebrar o primeiro aninho.',
+      seoIntro: [
+        'O smash the cake no Rio de Janeiro e um ensaio divertido e cheio de personalidade para celebrar o primeiro aninho do bebe. A Mel Fotografia conduz esse momento com carinho, planejamento e fotos leves.',
+        'Para quem procura ensaio smash the cake RJ, faz diferenca ter um cenario bonito, ritmo tranquilo e espaco para que o bebe explore o momento naturalmente, com reacoes verdadeiras e fotos afetivas.',
+        'Nesta pagina voce pode conhecer os pacotes, ajustar extras e fazer uma simulacao de orcamento para smash the cake no Rio de Janeiro.'
+      ],
+      image:
+        'https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?auto=format&fit=crop&w=1400&q=80',
+      imageAlt: 'smash the cake no rio de janeiro com fotos delicadas do primeiro aninho',
+      imageFileSuggestion: 'smash-the-cake-rio-de-janeiro.jpg',
+      bullets: [
+        'Cenario tematico e clima ludico',
+        'Fotos espontaneas e cheias de expressao',
+        'Opcoes com familia e video curto'
+      ],
+      relatedServices: [
+        { slug: 'ensaio-infantil', label: 'Ensaio infantil RJ' },
+        { slug: 'newborn', label: 'Ensaio newborn' },
+        { slug: 'ensaio-familia', label: 'Ensaio em familia' }
+      ]
+    }
   ]
 ];
 
