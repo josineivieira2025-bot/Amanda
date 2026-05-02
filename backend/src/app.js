@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import morgan from 'morgan';
 import authRoutes from './routes/authRoutes.js';
+import catalogRoutes from './routes/catalogRoutes.js';
 import clientRoutes from './routes/clientRoutes.js';
 import eventRoutes from './routes/eventRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
@@ -52,6 +53,7 @@ app.get('/api/health', (req, res) => {
 });
 
 app.use('/api/auth', authRoutes);
+app.use('/api/catalog', catalogRoutes);
 app.use('/api/clients', clientRoutes);
 app.use('/api/events', eventRoutes);
 app.use('/api/photos', photoRoutes);

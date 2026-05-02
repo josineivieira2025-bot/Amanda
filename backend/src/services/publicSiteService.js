@@ -1,5 +1,6 @@
 import { Client } from '../models/Client.js';
 import { Event } from '../models/Event.js';
+import { PublicCatalog } from '../models/PublicCatalog.js';
 import { User } from '../models/User.js';
 
 const catalog = [
@@ -451,8 +452,17 @@ const catalog = [
   }
 ];
 
-function findCatalogItem(serviceSlug) {
-  return catalog.find((item) => item.slug === serviceSlug);
+function cloneCatalog(items) {
+  return JSON.parse(JSON.stringify(items));
+}
+
+async function getCatalogForPhotographerId(photographerId) {
+  const stored = await PublicCatalog.findOne({ photographerId }).lean();
+  return stored?.services?.length ? stored.services : getDefaultCatalog();
+}
+
+function findCatalogItem(services, serviceSlug) {
+  return services.find((item) => item.slug === serviceSlug);
 }
 
 async function findPublicPhotographer(options = {}) {
@@ -544,21 +554,27 @@ function ensureRequired(payload) {
   }
 }
 
-export function listQuoteCatalog() {
-  return catalog;
+export function getDefaultCatalog() {
+  return cloneCatalog(catalog);
+}
+
+export async function listQuoteCatalog(options = {}) {
+  const photographer = await findPublicPhotographer(options);
+  return getCatalogForPhotographerId(photographer._id);
 }
 
 export async function createPublicQuoteRequest(payload, options = {}) {
   ensureRequired(payload);
 
-  const service = findCatalogItem(payload.serviceSlug);
+  const photographer = await findPublicPhotographer(options);
+  const services = await getCatalogForPhotographerId(photographer._id);
+  const service = findCatalogItem(services, payload.serviceSlug);
   if (!service) {
     const error = new Error('Servico nao encontrado para simulacao.');
     error.statusCode = 404;
     throw error;
   }
 
-  const photographer = await findPublicPhotographer(options);
   const client = await findOrCreateClient(photographer._id, payload);
   const { selectedPackage, selectedExtras, total } = calculateTotal(service, payload.packageId, payload.extraIds || []);
 

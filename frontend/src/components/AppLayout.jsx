@@ -1,5 +1,6 @@
 import {
   Bell,
+  BookOpen,
   CalendarDays,
   Camera,
   CreditCard,
@@ -22,6 +23,7 @@ const links = [
   { to: '/painel/agenda', label: 'Agenda', icon: CalendarDays },
   { to: '/painel/clientes', label: 'Clientes', icon: Users },
   { to: '/painel/eventos', label: 'Eventos', icon: PartyPopper },
+  { to: '/painel/catalogo', label: 'Catalogo', icon: BookOpen },
   { to: '/painel/galeria', label: 'Galeria', icon: Camera },
   { to: '/painel/financeiro', label: 'Financeiro', icon: CreditCard }
 ];

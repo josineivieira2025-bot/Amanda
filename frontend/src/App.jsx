@@ -3,6 +3,7 @@ import { AppLayout } from './components/AppLayout.jsx';
 import { ProtectedRoute } from './components/ProtectedRoute.jsx';
 import { PublicSiteLayout } from './components/PublicSiteLayout.jsx';
 import { Agenda } from './pages/Agenda.jsx';
+import { Catalog } from './pages/Catalog.jsx';
 import { ClientGallery } from './pages/ClientGallery.jsx';
 import { Clients } from './pages/Clients.jsx';
 import { Dashboard } from './pages/Dashboard.jsx';
@@ -44,6 +45,7 @@ export function App() {
         <Route path="agenda" element={<Agenda />} />
         <Route path="clientes" element={<Clients />} />
         <Route path="eventos" element={<Events />} />
+        <Route path="catalogo" element={<Catalog />} />
         <Route path="galeria" element={<Gallery />} />
         <Route path="financeiro" element={<Finance />} />
         <Route path="configuracoes" element={<Settings />} />
