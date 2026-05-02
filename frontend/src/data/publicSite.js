@@ -239,6 +239,46 @@ export const homeCollections = [
     title: 'Eventos infantis',
     text: 'Cobertura espontanea para aniversarios e comemoracoes em familia.',
     slug: 'evento-infantil'
+  },
+  {
+    title: '15 anos',
+    text: 'Ensaio e cobertura de 15 anos com fotos marcantes, delicadas e cheias de personalidade.',
+    slug: 'aniversario-15'
+  },
+  {
+    title: 'Aniversario adulto',
+    text: 'Cobertura fotografica para encontros, festas e comemoracoes especiais no Rio de Janeiro.',
+    slug: 'aniversario-adulto'
+  },
+  {
+    title: 'Cha revelacao',
+    text: 'Registros emocionantes para o momento da revelacao com familia e amigos.',
+    slug: 'cha-revelacao'
+  },
+  {
+    title: 'Newborn',
+    text: 'Ensaio newborn com cuidado, delicadeza e fotos suaves dos primeiros dias do bebe.',
+    slug: 'newborn'
+  },
+  {
+    title: 'Familia',
+    text: 'Ensaio em familia com clima leve, conexao verdadeira e memorias afetivas.',
+    slug: 'ensaio-familia'
+  },
+  {
+    title: 'Corporativo',
+    text: 'Retratos e fotografias profissionais para marcas, equipes e posicionamento visual.',
+    slug: 'corporativo'
+  },
+  {
+    title: 'Formatura',
+    text: 'Ensaios de formatura com beca, retratos especiais e clima de conquista.',
+    slug: 'formatura'
+  },
+  {
+    title: 'Smash the Cake',
+    text: 'Ensaio divertido e delicado para celebrar o primeiro aninho com muita memoria bonita.',
+    slug: 'smash-the-cake'
   }
 ];
 
