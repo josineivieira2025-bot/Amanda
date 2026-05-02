@@ -1,4 +1,4 @@
-import { CalendarDays, Check, Clock3, MapPin, MessageCircle, PartyPopper, Sparkles, UserRound } from 'lucide-react';
+import { CalendarDays, Check, MapPin, MessageCircle, PartyPopper, Sparkles, UserRound } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { api } from '../api/client.js';
@@ -235,13 +235,6 @@ export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact 
                 <div className="quote-input-icon">
                   <CalendarDays size={16} />
                   <input type="datetime-local" required value={form.eventDate} onChange={(event) => updateField('eventDate', event.target.value)} />
-                </div>
-              </label>
-              <label className="quote-field">
-                <span>Horario final</span>
-                <div className="quote-input-icon">
-                  <Clock3 size={16} />
-                  <input type="datetime-local" value={form.eventEndDate} onChange={(event) => updateField('eventEndDate', event.target.value)} />
                 </div>
               </label>
               <label className="quote-field">

@@ -63,7 +63,6 @@ function eventToForm(event) {
     source: event.source || 'instagram',
     status: event.status || 'orcamento_pendente',
     date: toDatetimeLocal(event.date),
-    endDate: toDatetimeLocal(event.endDate),
     followUpAt: toDatetimeLocal(event.followUpAt),
     location: event.location || '',
     price: Number(event.price || 0),
@@ -144,10 +143,6 @@ export function EventModal({ event, open, onClose, onSaved }) {
 
           <FormField label="Inicio">
             <input type="datetime-local" required value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
-          </FormField>
-
-          <FormField label="Final">
-            <input type="datetime-local" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })} />
           </FormField>
 
           <FormField label="Proximo contato">

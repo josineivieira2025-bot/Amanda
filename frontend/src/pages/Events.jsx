@@ -77,7 +77,6 @@ const initial = {
   source: 'instagram',
   status: 'orcamento_pendente',
   date: '',
-  endDate: '',
   followUpAt: '',
   location: '',
   price: 0,
@@ -188,7 +187,6 @@ export function Events() {
       source: event.source || 'instagram',
       status: event.status || 'orcamento_pendente',
       date: event.date ? toDatetimeLocal(new Date(event.date)) : '',
-      endDate: event.endDate ? toDatetimeLocal(new Date(event.endDate)) : '',
       followUpAt: event.followUpAt ? toDatetimeLocal(new Date(event.followUpAt)) : '',
       location: event.location || '',
       price: Number(event.price || 0),
@@ -392,10 +390,6 @@ export function Events() {
                   <input type="datetime-local" required value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
                 </FormField>
 
-                <FormField label="Horario final">
-                  <input type="datetime-local" value={form.endDate} onChange={(e) => setForm({ ...form, endDate: e.target.value })} />
-                </FormField>
-
                 <FormField label="Proximo contato">
                   <input type="datetime-local" value={form.followUpAt} onChange={(e) => setForm({ ...form, followUpAt: e.target.value })} />
                 </FormField>
@@ -500,14 +494,13 @@ function buildBudgetText(data, client) {
 
 function buildBudgetCardData(data, client, user) {
   const startDate = data.date ? new Date(data.date) : null;
-  const endDate = data.endDate ? new Date(data.endDate) : null;
 
   return {
     studioName: user?.studioName || 'Mel Fotografia',
     clientName: client?.name || 'Cliente',
     type: labels[data.type] || 'Servico fotografico',
     date: startDate ? format(startDate, 'dd/MM/yyyy') : 'A confirmar',
-    time: startDate ? `${format(startDate, 'HH:mm')} ate ${endDate ? format(endDate, 'HH:mm') : 'combinar'}` : 'A combinar',
+    time: startDate ? format(startDate, 'HH:mm') : 'A combinar',
     location: data.location || 'Local a confirmar',
     price: formatMoney(data.price)
   };

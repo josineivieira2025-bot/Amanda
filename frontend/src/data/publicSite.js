@@ -585,7 +585,6 @@ export const quoteFormDefaults = {
   phone: '',
   location: '',
   eventDate: '',
-  eventEndDate: '',
   guestCount: '',
   contactPreference: 'whatsapp',
   message: '',
