@@ -257,6 +257,8 @@ a {
 
 .topbar {
   min-height: 86px;
+  position: relative;
+  z-index: 120;
   padding: 16px 18px 16px 20px;
   display: flex;
   align-items: center;
@@ -305,6 +307,7 @@ a {
   align-items: center;
   gap: 10px;
   position: relative;
+  z-index: 130;
 }
 
 .status-pill {
@@ -365,7 +368,7 @@ a {
   border: 1px solid rgba(125, 75, 93, 0.10);
   box-shadow: 0 24px 48px rgba(52, 32, 43, 0.16);
   backdrop-filter: blur(16px);
-  z-index: 40;
+  z-index: 180;
 }
 
 .topbar-notifications-head {
@@ -402,6 +405,18 @@ a {
   border: 1px solid rgba(125, 75, 93, 0.08);
 }
 
+.topbar-notification-card {
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 12px;
+}
+
+.topbar-notification-link {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
 .topbar-notification-card strong,
 .topbar-notification-empty strong {
   color: var(--text);
@@ -416,8 +431,21 @@ a {
 }
 
 .topbar-notification-card:hover {
-  transform: translateY(-1px);
   background: #fff;
+}
+
+.topbar-notification-link:hover {
+  transform: translateY(-1px);
+}
+
+.topbar-notification-remove {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--primary-dark);
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
 .mobile-only {
