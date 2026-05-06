@@ -505,66 +505,79 @@ const aliasMap = serviceEntries.reduce((accumulator, [key, value]) => {
 export const homeCollections = [
   {
     title: 'Casamentos',
+    cardTitle: 'Casamento no RJ com fotos cheias de emocao',
     text: 'Fotografia de casamento no Rio de Janeiro com cobertura sensivel e simulacao online.',
     slug: 'casamento'
   },
   {
     title: 'Gestante',
+    cardTitle: 'Ensaio gestante delicado e elegante',
     text: 'Ensaio gestante RJ com direcao suave, fotos elegantes e atendimento acolhedor.',
     slug: 'gestante'
   },
   {
     title: 'Infantil',
+    cardTitle: 'Infancia registrada com leveza e carinho',
     text: 'Ensaio infantil no Rio de Janeiro com leveza, paciencia e registros afetivos.',
     slug: 'ensaio-infantil'
   },
   {
     title: 'Casal',
+    cardTitle: 'Ensaio de casal natural e romantico',
     text: 'Ensaio casal RJ com fotos naturais para namoro, noivado ou pre wedding.',
     slug: 'casal'
   },
   {
     title: 'Eventos infantis',
+    cardTitle: 'Festa infantil com registros espontaneos',
     text: 'Cobertura espontanea para aniversarios e comemoracoes em familia.',
     slug: 'evento-infantil'
   },
   {
     title: '15 anos',
+    cardTitle: '15 anos com brilho, estilo e personalidade',
     text: 'Ensaio e cobertura de 15 anos com fotos marcantes, delicadas e cheias de personalidade.',
     slug: 'aniversario-15'
   },
   {
     title: 'Aniversario adulto',
+    cardTitle: 'Aniversario adulto com cobertura elegante',
     text: 'Cobertura fotografica para encontros, festas e comemoracoes especiais no Rio de Janeiro.',
     slug: 'aniversario-adulto'
   },
   {
     title: 'Cha revelacao',
+    cardTitle: 'Cha revelacao com emocao de verdade',
     text: 'Registros emocionantes para o momento da revelacao com familia e amigos.',
     slug: 'cha-revelacao'
   },
   {
     title: 'Newborn',
+    cardTitle: 'Newborn com cuidado, calma e delicadeza',
     text: 'Ensaio newborn com cuidado, delicadeza e fotos suaves dos primeiros dias do bebe.',
     slug: 'newborn'
   },
   {
     title: 'Familia',
+    cardTitle: 'Ensaio em familia com conexao real',
     text: 'Ensaio em familia com clima leve, conexao verdadeira e memorias afetivas.',
     slug: 'ensaio-familia'
   },
   {
     title: 'Corporativo',
+    cardTitle: 'Retratos profissionais para sua marca',
     text: 'Retratos e fotografias profissionais para marcas, equipes e posicionamento visual.',
     slug: 'corporativo'
   },
   {
     title: 'Formatura',
+    cardTitle: 'Formatura com fotos de conquista',
     text: 'Ensaios de formatura com beca, retratos especiais e clima de conquista.',
     slug: 'formatura'
   },
   {
     title: 'Smash the Cake',
+    cardTitle: 'Smash the Cake divertido e memoravel',
     text: 'Ensaio divertido e delicado para celebrar o primeiro aninho com muita memoria bonita.',
     slug: 'smash-the-cake'
   }

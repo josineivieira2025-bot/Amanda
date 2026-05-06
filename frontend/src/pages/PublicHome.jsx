@@ -315,6 +315,8 @@ export function PublicHome() {
         }
 
         .site-service-card {
+          position: relative;
+          overflow: hidden;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
@@ -325,6 +327,14 @@ export function PublicHome() {
           background: rgba(255,255,255,0.8);
           box-shadow: var(--shadow-sm);
           transition: all 0.25s ease;
+        }
+
+        .site-service-card::before {
+          content: "";
+          position: absolute;
+          inset: 0 0 auto;
+          height: 5px;
+          background: linear-gradient(90deg, #b57c91, #d59a2d);
         }
 
         .site-service-card:hover {
@@ -349,6 +359,7 @@ export function PublicHome() {
           margin: 0 0 12px;
           font-size: 1.28rem;
           line-height: 1.35;
+          color: #8b3f5f;
         }
 
         .site-service-card p {
@@ -359,11 +370,17 @@ export function PublicHome() {
         }
 
         .site-service-card a {
-          color: var(--primary-dark);
+          width: fit-content;
+          min-height: 42px;
+          padding: 10px 14px;
+          border-radius: 999px;
+          background: linear-gradient(135deg, #a46843 0%, #8b3f5f 100%);
+          color: #fff;
           font-weight: 700;
           display: inline-flex;
           align-items: center;
           gap: 8px;
+          box-shadow: 0 14px 24px rgba(139, 63, 95, 0.18);
         }
 
         .site-service-card a:hover {
@@ -565,12 +582,12 @@ export function PublicHome() {
                 <article className="site-service-card" key={item.slug}>
                   <div>
                     <span>{item.title}</span>
-                    <h3>{serviceContent[item.slug]?.heroTitle || item.title}</h3>
+                    <h3>{item.cardTitle || serviceContent[item.slug]?.heroTitle || item.title}</h3>
                     <p>{item.text}</p>
                   </div>
 
                   <Link to={getServiceRoute(item.slug)}>
-                    Abrir experiencia
+                    Simule seu orcamento Gratis
                     <ArrowRight size={16} />
                   </Link>
                 </article>

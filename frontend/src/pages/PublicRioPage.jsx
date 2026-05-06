@@ -1,7 +1,7 @@
 import { ArrowRight, MapPin, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { SeoMeta } from '../components/SeoMeta.jsx';
-import { getServiceRoute } from '../data/publicSite.js';
+import { getServiceRoute, homeCollections } from '../data/publicSite.js';
 
 function whatsappHref() {
   const phone = (import.meta.env.VITE_PUBLIC_WHATSAPP || '').replace(/\D/g, '');
@@ -107,22 +107,12 @@ export function PublicRioPage() {
               <p>Escolha a experiencia que mais combina com o seu momento e veja detalhes, pacotes e simulacao.</p>
             </div>
             <div className="site-service-nav-links">
-              <Link to={getServiceRoute('casamento')}>
-                <span>Fotografo de casamento RJ</span>
-                <ArrowRight size={16} />
-              </Link>
-              <Link to={getServiceRoute('gestante')}>
-                <span>Ensaio gestante RJ</span>
-                <ArrowRight size={16} />
-              </Link>
-              <Link to={getServiceRoute('ensaio-infantil')}>
-                <span>Ensaio infantil RJ</span>
-                <ArrowRight size={16} />
-              </Link>
-              <Link to={getServiceRoute('casal')}>
-                <span>Ensaio casal RJ</span>
-                <ArrowRight size={16} />
-              </Link>
+              {homeCollections.map((service) => (
+                <Link key={service.slug} to={getServiceRoute(service.slug)}>
+                  <span>{service.title}</span>
+                  <ArrowRight size={16} />
+                </Link>
+              ))}
             </div>
           </div>
         </section>
