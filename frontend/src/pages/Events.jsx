@@ -550,11 +550,22 @@ function buildBudgetText(data, client) {
 }
 
 function formatWhatsAppPhone(value = '') {
-  const digits = String(value).replace(/\D/g, '').replace(/^0+/, '');
+  let digits = String(value).replace(/\D/g, '');
   if (!digits) return '';
-  if (digits.startsWith('55') && digits.length >= 12) return digits;
-  if (digits.length === 10 || digits.length === 11) return `55${digits}`;
-  return digits;
+
+  digits = digits.replace(/^00/, '').replace(/^0+/, '');
+
+  let national = digits.startsWith('55') && digits.length > 11 ? digits.slice(2) : digits;
+
+  if (national.length === 8 || national.length === 9) {
+    national = `21${national}`;
+  }
+
+  if (national.length === 10 && /^[6-9]/.test(national.slice(2, 3))) {
+    national = `${national.slice(0, 2)}9${national.slice(2)}`;
+  }
+
+  return national.length >= 10 ? `55${national}` : '';
 }
 
 function buildBudgetCardData(data, client, user) {
