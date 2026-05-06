@@ -2728,6 +2728,17 @@ button.clickable-card {
   color: #1f3427;
 }
 
+.studio-address-card {
+  gap: 8px;
+}
+
+.studio-address-card p {
+  margin: 0;
+  color: #526b59;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
 .service-picker,
 .package-grid,
 .extras-grid {

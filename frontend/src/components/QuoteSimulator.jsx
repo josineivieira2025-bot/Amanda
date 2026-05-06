@@ -207,6 +207,11 @@ export function QuoteSimulator({ catalog = [], initialServiceSlug = '', compact 
               ))}
             </div>
           </div>
+
+          <div className="quote-section studio-address-card">
+            <h3><MapPin size={18} /> Endereco do estudio</h3>
+            <p>Duque de Caxias, Xerem - RJ</p>
+          </div>
         </div>
 
         <div className="quote-sidebar">
