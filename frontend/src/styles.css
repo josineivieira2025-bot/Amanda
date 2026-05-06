@@ -609,6 +609,12 @@ textarea:focus {
   background: #fff2f4 !important;
 }
 
+.whatsapp-button {
+  color: #176b43 !important;
+  border-color: rgba(37, 211, 102, 0.28) !important;
+  background: #edfff4 !important;
+}
+
 textarea {
   min-height: 96px;
   resize: vertical;

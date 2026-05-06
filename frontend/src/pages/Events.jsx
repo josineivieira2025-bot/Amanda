@@ -224,8 +224,13 @@ export function Events() {
 
   function whatsappUrl(text = budgetText, client = selectedClient) {
     const phone = (client?.phone || '').replace(/\D/g, '');
-    const number = phone.length >= 10 ? `55${phone}` : '';
+    const number = phone.length >= 12 && phone.startsWith('55') ? phone : phone.length >= 10 ? `55${phone}` : '';
     return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
+  }
+
+  function sendEventBudgetWhatsApp(event) {
+    const text = buildBudgetText(event, event.clientId);
+    window.open(whatsappUrl(text, event.clientId), '_blank', 'noopener,noreferrer');
   }
 
   async function sendBudgetWhatsApp() {
@@ -332,9 +337,9 @@ export function Events() {
                   <Edit size={16} />
                   Editar
                 </button>
-                <button type="button" className="ghost-button" onClick={(clickEvent) => { clickEvent.stopPropagation(); copyBudget(buildBudgetText(event, event.clientId)); }}>
+                <button type="button" className="ghost-button whatsapp-button" onClick={(clickEvent) => { clickEvent.stopPropagation(); sendEventBudgetWhatsApp(event); }}>
                   <MessageCircle size={16} />
-                  Copiar orcamento
+                  Enviar WhatsApp
                 </button>
                 <button type="button" className="ghost-button" onClick={(clickEvent) => { clickEvent.stopPropagation(); copyLink(event); }}>
                   <Copy size={16} />
