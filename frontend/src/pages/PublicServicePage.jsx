@@ -653,6 +653,30 @@ export function PublicServicePage({ slugOverride = '' }) {
           </div>
         </section>
 
+        <section className="mel-section mel-section-soft">
+          <div className="mel-container mel-quote-wrap">
+            <div className="mel-quote-shell">
+              <div className="mel-quote-head">
+                <div>
+                  <span className="mel-kicker">Simulacao online</span>
+                  <h2>Monte uma estimativa de forma simples</h2>
+                  <p>
+                    Escolha opcoes, compare possibilidades e envie um pedido com muito
+                    mais contexto.
+                  </p>
+                </div>
+              </div>
+
+              <QuoteSimulator
+                catalog={catalog}
+                initialServiceSlug={serviceKey}
+                compact
+                showServicePicker={false}
+              />
+            </div>
+          </div>
+        </section>
+
         <section className="mel-section">
           <div className="mel-container">
             <div className="mel-heading">
@@ -742,30 +766,6 @@ export function PublicServicePage({ slugOverride = '' }) {
                   formato que voce imaginou.
                 </p>
               </article>
-            </div>
-          </div>
-        </section>
-
-        <section className="mel-section mel-section-soft">
-          <div className="mel-container mel-quote-wrap">
-            <div className="mel-quote-shell">
-              <div className="mel-quote-head">
-                <div>
-                  <span className="mel-kicker">Simulacao online</span>
-                  <h2>Monte uma estimativa de forma simples</h2>
-                  <p>
-                    Escolha opcoes, compare possibilidades e envie um pedido com muito
-                    mais contexto.
-                  </p>
-                </div>
-              </div>
-
-              <QuoteSimulator
-                catalog={catalog}
-                initialServiceSlug={serviceKey}
-                compact
-                showServicePicker={false}
-              />
             </div>
           </div>
         </section>
