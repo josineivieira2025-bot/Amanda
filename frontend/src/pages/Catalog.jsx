@@ -1,10 +1,42 @@
-import { BookOpen, Package, Plus, Save, Sparkles, Tag } from 'lucide-react';
+import { BookOpen, Package, Plus, Save, Sparkles, Tag, Trash2 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { api } from '../api/client.js';
 import { FormField } from '../components/FormField.jsx';
 
 function formatMoney(value) {
   return Number(value || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+}
+
+function slugify(value) {
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '') || `servico-${Date.now()}`;
+}
+
+function uniqueSlug(value, services) {
+  const base = slugify(value);
+  const used = new Set(services.map((service) => service.slug));
+  let slug = base;
+  let index = 2;
+  while (used.has(slug)) {
+    slug = `${base}-${index}`;
+    index += 1;
+  }
+  return slug;
+}
+
+function uniqueItemId(prefix, items = []) {
+  const used = new Set(items.map((item) => item.id));
+  let id = `${prefix}-${Date.now()}`;
+  let index = 2;
+  while (used.has(id)) {
+    id = `${prefix}-${Date.now()}-${index}`;
+    index += 1;
+  }
+  return id;
 }
 
 export function Catalog() {
@@ -92,6 +124,124 @@ export function Catalog() {
     );
   }
 
+  function addService() {
+    const name = window.prompt('Nome do novo evento/servico:', 'Novo evento');
+    if (!name) return;
+
+    const slug = uniqueSlug(name, services);
+    const newService = {
+      slug,
+      eventType: slug.replace(/-/g, '_'),
+      name: name.trim(),
+      summary: 'Descricao curta do servico.',
+      packages: [
+        {
+          id: 'pacote-1',
+          name: 'Pacote principal',
+          price: 0,
+          hours: 1,
+          deliveryDays: 7,
+          details: ['Cobertura fotografica']
+        }
+      ],
+      extras: []
+    };
+
+    setMessage('');
+    setError('');
+    setServices((current) => [...current, newService]);
+    setSelectedSlug(slug);
+  }
+
+  function deleteService(slug) {
+    const service = services.find((item) => item.slug === slug);
+    if (!service) return;
+    if (services.length <= 1) {
+      setError('O catalogo precisa ter pelo menos um evento ou servico.');
+      return;
+    }
+    if (!window.confirm(`Excluir "${service.name}" do catalogo publico?`)) return;
+
+    const nextServices = services.filter((item) => item.slug !== slug);
+    setMessage('');
+    setError('');
+    setServices(nextServices);
+    setSelectedSlug(nextServices[0]?.slug || '');
+  }
+
+  function addPackage(slug) {
+    setMessage('');
+    setError('');
+    setServices((current) =>
+      current.map((service) =>
+        service.slug === slug
+          ? {
+              ...service,
+              packages: [
+                ...service.packages,
+                {
+                  id: uniqueItemId('pacote', service.packages),
+                  name: 'Novo pacote',
+                  price: 0,
+                  hours: 1,
+                  deliveryDays: 7,
+                  details: ['Cobertura fotografica']
+                }
+              ]
+            }
+          : service
+      )
+    );
+  }
+
+  function deletePackage(slug, packageId) {
+    const service = services.find((item) => item.slug === slug);
+    if (!service || service.packages.length <= 1) {
+      setError('Cada servico precisa ter pelo menos um pacote.');
+      return;
+    }
+
+    setMessage('');
+    setError('');
+    setServices((current) =>
+      current.map((item) =>
+        item.slug === slug ? { ...item, packages: item.packages.filter((packageItem) => packageItem.id !== packageId) } : item
+      )
+    );
+  }
+
+  function addExtra(slug) {
+    setMessage('');
+    setError('');
+    setServices((current) =>
+      current.map((service) =>
+        service.slug === slug
+          ? {
+              ...service,
+              extras: [
+                ...service.extras,
+                {
+                  id: uniqueItemId('extra', service.extras),
+                  name: 'Novo extra',
+                  price: 0
+                }
+              ]
+            }
+          : service
+      )
+    );
+  }
+
+  function deleteExtra(slug, extraId) {
+    setMessage('');
+    setError('');
+    setServices((current) =>
+      current.map((service) =>
+        service.slug === slug ? { ...service, extras: service.extras.filter((item) => item.id !== extraId) } : service
+      )
+    );
+  }
+
   async function saveCatalog() {
     setSaving(true);
     setMessage('');
@@ -146,6 +296,11 @@ export function Catalog() {
             <span className="badge">{services.length}</span>
           </div>
 
+          <button className="ghost-button catalog-action-button" type="button" onClick={addService}>
+            <Plus size={16} />
+            Adicionar evento
+          </button>
+
           <select
             className="catalog-service-select"
             value={selectedService?.slug || selectedSlug}
@@ -181,6 +336,9 @@ export function Catalog() {
                   <h2><BookOpen size={18} /> Dados do servico</h2>
                   <p>Essas informacoes alimentam o catalogo publico e o simulador.</p>
                 </div>
+                <button className="icon-button danger-button" type="button" onClick={() => deleteService(selectedService.slug)} aria-label="Excluir servico">
+                  <Trash2 size={16} />
+                </button>
               </div>
 
               <FormField label="Nome do servico">
@@ -205,6 +363,10 @@ export function Catalog() {
                     <h2><Package size={18} /> Pacotes</h2>
                     <p>Edite nome, valor, duracao, prazo de entrega e os itens mostrados no simulador.</p>
                   </div>
+                  <button className="ghost-button catalog-action-button" type="button" onClick={() => addPackage(selectedService.slug)}>
+                    <Plus size={16} />
+                    Adicionar pacote
+                  </button>
                 </div>
 
                 <div className="catalog-card-list">
@@ -212,7 +374,12 @@ export function Catalog() {
                     <div className="catalog-card" key={item.id}>
                       <div className="catalog-card-head">
                         <strong>{item.name}</strong>
-                        <span>{formatMoney(item.price)}</span>
+                        <div className="catalog-card-actions">
+                          <span>{formatMoney(item.price)}</span>
+                          <button className="icon-button danger-button" type="button" onClick={() => deletePackage(selectedService.slug, item.id)} aria-label="Excluir pacote">
+                            <Trash2 size={15} />
+                          </button>
+                        </div>
                       </div>
 
                       <div className="catalog-card-grid">
@@ -268,6 +435,10 @@ export function Catalog() {
                     <h2><Tag size={18} /> Extras</h2>
                     <p>Edite os complementos que aparecem no simulador publico.</p>
                   </div>
+                  <button className="ghost-button catalog-action-button" type="button" onClick={() => addExtra(selectedService.slug)}>
+                    <Plus size={16} />
+                    Adicionar extra
+                  </button>
                 </div>
 
                 <div className="catalog-card-list">
@@ -275,7 +446,12 @@ export function Catalog() {
                     <div className="catalog-card" key={item.id}>
                       <div className="catalog-card-head">
                         <strong>{item.name}</strong>
-                        <span>{formatMoney(item.price)}</span>
+                        <div className="catalog-card-actions">
+                          <span>{formatMoney(item.price)}</span>
+                          <button className="icon-button danger-button" type="button" onClick={() => deleteExtra(selectedService.slug, item.id)} aria-label="Excluir extra">
+                            <Trash2 size={15} />
+                          </button>
+                        </div>
                       </div>
 
                       <div className="catalog-card-grid compact">

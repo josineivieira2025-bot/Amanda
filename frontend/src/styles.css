@@ -1678,11 +1678,29 @@ button.clickable-card {
   gap: 14px;
 }
 
+.catalog-action-button {
+  flex: 0 0 auto;
+}
+
+.catalog-card-actions {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.catalog-card-actions .icon-button {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+}
+
 .catalog-card-head strong {
   overflow-wrap: anywhere;
 }
 
-.catalog-card-head span {
+.catalog-card-head > span,
+.catalog-card-actions span {
   flex: 0 0 auto;
   white-space: nowrap;
 }
@@ -3250,6 +3268,10 @@ button.clickable-card {
     gap: 12px;
   }
 
+  .catalog-action-button {
+    width: 100%;
+  }
+
   .catalog-service-select {
     display: block;
   }
@@ -3821,7 +3843,13 @@ button.clickable-card {
     gap: 5px;
   }
 
-  .catalog-card-head span {
+  .catalog-card-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .catalog-card-head span,
+  .catalog-card-actions span {
     white-space: normal;
   }
 
