@@ -128,7 +128,7 @@ export function Catalog() {
           <h1>Catalogo</h1>
           <p>Edite servicos, pacotes e extras do site publico.</p>
         </div>
-        <button className="primary-button" type="button" onClick={saveCatalog} disabled={saving}>
+        <button className="primary-button catalog-save-button" type="button" onClick={saveCatalog} disabled={saving}>
           <Save size={18} />
           {saving ? 'Salvando...' : 'Salvar catalogo'}
         </button>
@@ -145,6 +145,18 @@ export function Catalog() {
             </div>
             <span className="badge">{services.length}</span>
           </div>
+
+          <select
+            className="catalog-service-select"
+            value={selectedService?.slug || selectedSlug}
+            onChange={(event) => setSelectedSlug(event.target.value)}
+          >
+            {services.map((service) => (
+              <option key={service.slug} value={service.slug}>
+                {service.name}
+              </option>
+            ))}
+          </select>
 
           <div className="catalog-service-list">
             {services.map((service) => (

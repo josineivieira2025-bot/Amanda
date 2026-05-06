@@ -128,8 +128,8 @@ export function PublicHome() {
           margin: 18px 0 18px;
           font-size: clamp(2.2rem, 5vw, 4.8rem);
           line-height: 1.03;
-          letter-spacing: -0.04em;
-          font-weight: 800;
+          letter-spacing: -0.01em;
+          font-weight: 700;
           color: #1f1718;
         }
 

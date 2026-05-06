@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap");
 
 :root {
   color-scheme: light;
@@ -38,6 +38,7 @@
   --radius-md: 18px;
   --radius-lg: 24px;
   --radius-xl: 30px;
+  --site-display-font: "Playfair Display", Georgia, serif;
 
   background:
     radial-gradient(circle at top left, #fff9fb 0%, transparent 28%),
@@ -1614,6 +1615,10 @@ button.clickable-card {
   gap: 14px;
 }
 
+.catalog-service-select {
+  display: none;
+}
+
 .catalog-service-item {
   width: 100%;
   display: grid;
@@ -1665,6 +1670,15 @@ button.clickable-card {
   align-items: flex-start;
   justify-content: space-between;
   gap: 14px;
+}
+
+.catalog-card-head strong {
+  overflow-wrap: anywhere;
+}
+
+.catalog-card-head span {
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .catalog-card-grid {
@@ -2187,7 +2201,7 @@ button.clickable-card {
 .site-heading h2,
 .site-copy-block h2 {
   margin: 16px 0 12px;
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--site-display-font);
   font-weight: 700;
   letter-spacing: 0;
   color: #2c1f18;
@@ -2311,7 +2325,7 @@ button.clickable-card {
 .site-side-panel strong {
   margin: 10px 0;
   font-size: 24px;
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--site-display-font);
 }
 
 .site-band {
@@ -2370,7 +2384,7 @@ button.clickable-card {
 .site-faq-card h3 {
   margin: 12px 0 10px;
   font-size: 25px;
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--site-display-font);
 }
 
 .site-service-card a {
@@ -2391,7 +2405,7 @@ button.clickable-card {
 
 .site-proof-card strong {
   font-size: 20px;
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--site-display-font);
 }
 
 .site-content-grid,
@@ -2449,7 +2463,7 @@ button.clickable-card {
 
 .site-presence-copy h2 {
   margin: 16px 0 10px;
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--site-display-font);
   font-size: clamp(2rem, 4vw, 3.1rem);
   line-height: 1.04;
   color: #2f221b;
@@ -2532,7 +2546,7 @@ button.clickable-card {
 .site-inline-steps strong {
   display: block;
   margin: 16px 0 8px;
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--site-display-font);
   font-size: 24px;
   color: #2f221b;
 }
@@ -2588,7 +2602,7 @@ button.clickable-card {
 
 .quote-header h2 {
   margin: 14px 0 10px;
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--site-display-font);
   font-size: clamp(2rem, 4vw, 3rem);
   line-height: 1.04;
   color: #2f221b;
@@ -2655,7 +2669,7 @@ button.clickable-card {
 .quote-price-card strong {
   display: block;
   margin: 10px 0 8px;
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--site-display-font);
   font-size: 38px;
 }
 
@@ -2745,7 +2759,7 @@ button.clickable-card {
   display: block;
   margin: 2px 0 0;
   color: #8b543f;
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--site-display-font);
   font-size: 28px;
   line-height: 1.02;
   overflow-wrap: anywhere;
@@ -2806,7 +2820,7 @@ button.clickable-card {
 
 .extra-chip strong {
   color: #8b543f;
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--site-display-font);
   font-size: 22px;
 }
 
@@ -2885,7 +2899,7 @@ button.clickable-card {
 }
 
 .quote-summary-total strong {
-  font-family: "Fraunces", Georgia, serif;
+  font-family: var(--site-display-font);
   font-size: 30px;
 }
 
@@ -3204,6 +3218,43 @@ button.clickable-card {
   .primary-button,
   .ghost-button {
     min-height: 46px;
+  }
+
+  .catalog-save-button {
+    width: 100%;
+  }
+
+  .catalog-grid,
+  .catalog-editor,
+  .catalog-card-list {
+    gap: 12px;
+  }
+
+  .catalog-sidebar {
+    gap: 12px;
+  }
+
+  .catalog-service-list {
+    display: flex;
+    gap: 10px;
+    margin: 0 -2px;
+    padding: 0 2px 4px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .catalog-service-item {
+    flex: 0 0 min(270px, 78vw);
+    scroll-snap-align: start;
+  }
+
+  .catalog-card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-card-grid .field:last-child {
+    grid-column: auto;
   }
 
   .calendar-grid {
@@ -3734,6 +3785,33 @@ button.clickable-card {
   .bottom-nav a {
     height: 48px;
     font-size: 9px;
+  }
+
+  .catalog-service-select {
+    display: block;
+  }
+
+  .catalog-service-list {
+    display: none;
+  }
+
+  .catalog-card {
+    gap: 12px;
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .catalog-card-head {
+    display: grid;
+    gap: 5px;
+  }
+
+  .catalog-card-head span {
+    white-space: normal;
+  }
+
+  .catalog-highlight {
+    gap: 8px;
   }
 
   .agenda-calendar-body {
