@@ -116,9 +116,9 @@ export function Agenda() {
           display: grid;
           gap: 24px;
           background:
-            radial-gradient(circle at top left, rgba(14, 165, 233, 0.10), transparent 26%),
-            radial-gradient(circle at top right, rgba(99, 102, 241, 0.10), transparent 22%),
-            linear-gradient(180deg, #fff8fb 0%, #f7edf1 100%);
+            radial-gradient(circle at top left, rgba(143, 207, 157, 0.18), transparent 26%),
+            radial-gradient(circle at top right, rgba(210, 239, 217, 0.55), transparent 22%),
+            linear-gradient(180deg, #f8fff9 0%, #edf8ef 100%);
         }
 
         .agenda-hero {
@@ -133,8 +133,8 @@ export function Agenda() {
           border-radius: 28px;
           padding: 28px;
           color: #fff;
-          background: linear-gradient(135deg, #553140 0%, #9a6276 48%, #c78da2 100%);
-          box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
+          background: linear-gradient(135deg, #1f4d2d 0%, #4f9a64 48%, #8fcf9d 100%);
+          box-shadow: 0 24px 60px rgba(31, 72, 43, 0.18);
         }
 
         .agenda-hero-card::after {
@@ -269,8 +269,8 @@ export function Agenda() {
           gap: 8px;
           padding: 6px;
           border-radius: 999px;
-          background: #fff8fb;
-          border: 1px solid #f2d6dc;
+          background: #f6fff7;
+          border: 1px solid #d4ecd9;
         }
 
         .agenda-icon-button,
@@ -312,13 +312,13 @@ export function Agenda() {
         .agenda-today-button {
           padding: 10px 14px;
           border-radius: 999px;
-          background: #fff0f5;
-          color: #965f73;
+          background: #edf9ef;
+          color: #2f7042;
           font-weight: 700;
         }
 
         .agenda-today-button:hover {
-          background: #f7e5ec;
+          background: #dff3e4;
         }
 
         .agenda-mode-switch {
@@ -326,8 +326,8 @@ export function Agenda() {
           align-items: center;
           padding: 5px;
           border-radius: 999px;
-          background: #fff8fb;
-          border: 1px solid #f2d6dc;
+          background: #f6fff7;
+          border: 1px solid #d4ecd9;
         }
 
         .agenda-mode-button {
@@ -339,7 +339,7 @@ export function Agenda() {
         }
 
         .agenda-mode-button.active {
-          background: linear-gradient(135deg, #c78da2 0%, #9a6276 100%);
+          background: linear-gradient(135deg, #76bd86 0%, #2f7042 100%);
           color: #fff;
           box-shadow: 0 10px 24px rgba(37, 99, 235, 0.22);
         }
@@ -377,7 +377,7 @@ export function Agenda() {
         }
 
         .agenda-stat-card.blue::before {
-          background: linear-gradient(90deg, #e7b0c2, #b57c91);
+          background: linear-gradient(90deg, #b9e7c2, #76bd86);
         }
 
         .agenda-stat-card.green::before {
@@ -453,8 +453,8 @@ export function Agenda() {
           gap: 8px;
           padding: 8px 12px;
           border-radius: 999px;
-          background: #fff8fb;
-          border: 1px solid #f2d6dc;
+          background: #f6fff7;
+          border: 1px solid #d4ecd9;
           color: #475569;
           font-size: 13px;
           font-weight: 600;
@@ -467,7 +467,7 @@ export function Agenda() {
         }
 
         .agenda-legend-dot.evento {
-          background: #b57c91;
+          background: #76bd86;
         }
 
         .agenda-legend-dot.bloqueio {
@@ -477,7 +477,7 @@ export function Agenda() {
         .agenda-calendar-body {
           border-radius: 22px;
           background: linear-gradient(180deg, rgba(248,251,255,0.9) 0%, rgba(255,255,255,0.95) 100%);
-          border: 1px solid #f2d6dc;
+          border: 1px solid #d4ecd9;
           padding: 14px;
           overflow-x: auto;
           -webkit-overflow-scrolling: touch;

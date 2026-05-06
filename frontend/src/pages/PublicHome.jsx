@@ -81,17 +81,17 @@ export function PublicHome() {
 
       <style>{`
         :root {
-          --bg: #fffaf8;
+          --bg: #f8fff9;
           --surface: rgba(255,255,255,0.82);
           --surface-strong: #ffffff;
-          --text: #201a1a;
-          --muted: #6f6364;
-          --line: rgba(60, 38, 38, 0.08);
-          --primary: #8d5c63;
-          --primary-dark: #74464d;
-          --accent: #f3e4e6;
-          --shadow-sm: 0 10px 30px rgba(39, 24, 24, 0.06);
-          --shadow-md: 0 22px 60px rgba(39, 24, 24, 0.10);
+          --text: #1f3427;
+          --muted: #526b59;
+          --line: rgba(47, 112, 66, 0.10);
+          --primary: #76bd86;
+          --primary-dark: #2f7042;
+          --accent: #dff3e4;
+          --shadow-sm: 0 10px 30px rgba(45, 92, 57, 0.06);
+          --shadow-md: 0 22px 60px rgba(45, 92, 57, 0.10);
           --radius-sm: 14px;
           --radius-md: 24px;
           --radius-lg: 32px;
@@ -106,8 +106,8 @@ export function PublicHome() {
           overflow: hidden;
           color: var(--text);
           background:
-            radial-gradient(circle at top left, rgba(243, 228, 230, 0.9), transparent 30%),
-            radial-gradient(circle at top right, rgba(255, 240, 236, 0.75), transparent 25%),
+            radial-gradient(circle at top left, rgba(210, 239, 217, 0.95), transparent 30%),
+            radial-gradient(circle at top right, rgba(235, 250, 238, 0.82), transparent 25%),
             var(--bg);
         }
 
@@ -131,7 +131,7 @@ export function PublicHome() {
           gap: 8px;
           padding: 8px 14px;
           border-radius: 999px;
-          background: rgba(141, 92, 99, 0.12);
+          background: rgba(143, 207, 157, 0.22);
           color: var(--primary-dark);
           font-size: 0.82rem;
           font-weight: 700;
@@ -156,7 +156,7 @@ export function PublicHome() {
           line-height: 1.03;
           letter-spacing: -0.01em;
           font-weight: 700;
-          color: #1f1718;
+          color: #1f3427;
         }
 
         .site-hero-copy p {
@@ -182,7 +182,7 @@ export function PublicHome() {
           border-radius: 999px;
           background: rgba(255,255,255,0.72);
           border: 1px solid var(--line);
-          color: #4d3d3f;
+          color: #36523e;
           font-size: 0.92rem;
           font-weight: 600;
           backdrop-filter: blur(10px);
@@ -212,18 +212,18 @@ export function PublicHome() {
         .site-primary-button {
           background: linear-gradient(135deg, var(--primary), var(--primary-dark));
           color: #fff;
-          box-shadow: 0 16px 36px rgba(141, 92, 99, 0.28);
+          box-shadow: 0 16px 36px rgba(47, 112, 66, 0.22);
         }
 
         .site-primary-button:hover {
           transform: translateY(-2px);
-          box-shadow: 0 22px 42px rgba(141, 92, 99, 0.34);
+          box-shadow: 0 22px 42px rgba(47, 112, 66, 0.28);
         }
 
         .site-ghost-button {
           background: rgba(255,255,255,0.75);
           border: 1px solid var(--line);
-          color: #2f2526;
+          color: #2f7042;
           backdrop-filter: blur(10px);
         }
 
@@ -244,7 +244,7 @@ export function PublicHome() {
           display: inline-flex;
           align-items: center;
           gap: 10px;
-          color: #5b4e50;
+          color: #526b59;
           font-size: 0.95rem;
           font-weight: 600;
         }
@@ -360,13 +360,13 @@ export function PublicHome() {
           position: absolute;
           inset: 0 0 auto;
           height: 5px;
-          background: linear-gradient(90deg, #b57c91, #d59a2d);
+          background: linear-gradient(90deg, #76bd86, #b9e7c2);
         }
 
         .site-service-card:hover {
           transform: translateY(-4px);
           box-shadow: var(--shadow-md);
-          border-color: rgba(141, 92, 99, 0.18);
+          border-color: rgba(47, 112, 66, 0.18);
         }
 
         .site-service-card span {
@@ -385,7 +385,7 @@ export function PublicHome() {
           margin: 0 0 12px;
           font-size: 1.28rem;
           line-height: 1.35;
-          color: #8b3f5f;
+          color: #2f7042;
         }
 
         .site-service-card p {
@@ -400,13 +400,13 @@ export function PublicHome() {
           min-height: 42px;
           padding: 10px 14px;
           border-radius: 999px;
-          background: linear-gradient(135deg, #a46843 0%, #8b3f5f 100%);
+          background: linear-gradient(135deg, #76bd86 0%, #2f7042 100%);
           color: #fff;
           font-weight: 700;
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          box-shadow: 0 14px 24px rgba(139, 63, 95, 0.18);
+          box-shadow: 0 14px 24px rgba(47, 112, 66, 0.18);
         }
 
         .site-service-card a:hover {

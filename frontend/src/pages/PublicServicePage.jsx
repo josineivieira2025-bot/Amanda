@@ -8,20 +8,20 @@ import { getServiceContent, getServiceRoute, resolveServiceKey } from '../data/p
 
 const pageStyles = `
   :root {
-    --mel-bg: #fff9f7;
-    --mel-bg-soft: #f8efee;
+    --mel-bg: #f8fff9;
+    --mel-bg-soft: #edf8ef;
     --mel-card: rgba(255,255,255,0.84);
     --mel-card-strong: #ffffff;
-    --mel-text: #201a1a;
-    --mel-muted: #6e6263;
-    --mel-line: rgba(75, 45, 45, 0.08);
-    --mel-primary: #8d5c63;
-    --mel-primary-dark: #74464d;
-    --mel-accent: #f3e4e6;
-    --mel-accent-2: #f8dfe3;
-    --mel-shadow-sm: 0 12px 30px rgba(49, 28, 28, 0.06);
-    --mel-shadow-md: 0 20px 60px rgba(49, 28, 28, 0.10);
-    --mel-shadow-lg: 0 28px 80px rgba(49, 28, 28, 0.14);
+    --mel-text: #1f3427;
+    --mel-muted: #526b59;
+    --mel-line: rgba(47, 112, 66, 0.10);
+    --mel-primary: #76bd86;
+    --mel-primary-dark: #2f7042;
+    --mel-accent: #dff3e4;
+    --mel-accent-2: #edf9ef;
+    --mel-shadow-sm: 0 12px 30px rgba(45, 92, 57, 0.06);
+    --mel-shadow-md: 0 20px 60px rgba(45, 92, 57, 0.10);
+    --mel-shadow-lg: 0 28px 80px rgba(45, 92, 57, 0.14);
     --mel-radius-sm: 14px;
     --mel-radius-md: 24px;
     --mel-radius-lg: 34px;
@@ -35,9 +35,9 @@ const pageStyles = `
   .mel-service-page {
     color: var(--mel-text);
     background:
-      radial-gradient(circle at top left, rgba(243, 228, 230, 0.95), transparent 32%),
-      radial-gradient(circle at top right, rgba(255, 242, 239, 0.82), transparent 28%),
-      linear-gradient(180deg, #fffaf8 0%, #fff7f5 100%);
+      radial-gradient(circle at top left, rgba(210, 239, 217, 0.95), transparent 32%),
+      radial-gradient(circle at top right, rgba(235, 250, 238, 0.82), transparent 28%),
+      linear-gradient(180deg, #f8fff9 0%, #edf8ef 100%);
     overflow: hidden;
   }
 
@@ -63,7 +63,7 @@ const pageStyles = `
     min-height: 36px;
     padding: 8px 14px;
     border-radius: 999px;
-    background: rgba(141, 92, 99, 0.10);
+    background: rgba(143, 207, 157, 0.22);
     color: var(--mel-primary-dark);
     font-size: 0.82rem;
     font-weight: 800;
@@ -78,7 +78,7 @@ const pageStyles = `
 
   .mel-section-soft {
     background:
-      linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(243,228,230,0.36) 100%);
+      linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(223,243,228,0.55) 100%);
   }
 
   .mel-hero {
@@ -102,7 +102,7 @@ const pageStyles = `
     line-height: 1.02;
     letter-spacing: -0.045em;
     font-weight: 800;
-    color: #1e1718;
+    color: #1f3427;
   }
 
   .mel-hero-copy p {
@@ -139,7 +139,7 @@ const pageStyles = `
   }
 
   .mel-bullet-item span {
-    color: #46393b;
+    color: #36523e;
     font-size: 0.95rem;
     line-height: 1.55;
     font-weight: 600;
@@ -350,7 +350,7 @@ const pageStyles = `
     font-weight: 800;
     font-size: 1rem;
     margin-bottom: 16px;
-    box-shadow: 0 14px 30px rgba(141, 92, 99, 0.25);
+    box-shadow: 0 14px 30px rgba(47, 112, 66, 0.22);
   }
 
   .mel-step-card strong {
@@ -420,7 +420,7 @@ const pageStyles = `
   .mel-related-card:hover {
     transform: translateY(-4px);
     box-shadow: var(--mel-shadow-md);
-    border-color: rgba(141, 92, 99, 0.16);
+    border-color: rgba(47, 112, 66, 0.16);
   }
 
   .mel-related-card span {
@@ -572,8 +572,8 @@ export function PublicServicePage({ slugOverride = '' }) {
     }))
   };
 
-  const heroTitle = service?.name || pageContent.heroTitle;
-  const heroText = service?.summary || pageContent.heroText;
+  const heroTitle = content ? pageContent.heroTitle : service?.name || pageContent.heroTitle;
+  const heroText = content ? pageContent.heroText : service?.summary || pageContent.heroText;
 
   return (
     <>
