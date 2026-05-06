@@ -3225,28 +3225,37 @@ button.clickable-card {
   }
 
   .catalog-grid,
+  .catalog-columns {
+    width: 100%;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .catalog-grid,
   .catalog-editor,
   .catalog-card-list {
     gap: 12px;
   }
 
   .catalog-sidebar {
+    position: static;
+    width: 100%;
+    min-width: 0;
     gap: 12px;
   }
 
-  .catalog-service-list {
-    display: flex;
-    gap: 10px;
-    margin: 0 -2px;
-    padding: 0 2px 4px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
+  .catalog-service-select {
+    display: block;
   }
 
-  .catalog-service-item {
-    flex: 0 0 min(270px, 78vw);
-    scroll-snap-align: start;
+  .catalog-service-list {
+    display: none;
+  }
+
+  .catalog-editor,
+  .catalog-card,
+  .catalog-highlight {
+    min-width: 0;
   }
 
   .catalog-card-grid {
