@@ -1,32 +1,6 @@
 import crypto from 'crypto';
 import mongoose from 'mongoose';
 
-const eventTypes = [
-  'aniversario_15',
-  'aniversario_15_externo',
-  'aniversario_15_estudio',
-  'aniversario_adulto',
-  'aniversario_infantil',
-  'casamento',
-  'cha_revelacao',
-  'cha_de_panela',
-  'corporativo',
-  'smash_the_cake',
-  'newborn',
-  'ensaio_infantil',
-  'ensaio_casal',
-  'ensaio_casal_externo',
-  'ensaio_casal_estudio',
-  'ensaio_casamento',
-  'ensaio_adulto',
-  'ensaio_gestante',
-  'ensaio_familia',
-  'formatura_externo',
-  'formatura_pacote_1',
-  'formatura_premium',
-  'outro'
-];
-
 const eventStatuses = [
   'orcamento_pendente',
   'orcamento_enviado',
@@ -43,7 +17,7 @@ const eventSchema = new mongoose.Schema(
   {
     photographerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true, index: true },
     clientId: { type: mongoose.Schema.Types.ObjectId, ref: 'Client', required: true },
-    type: { type: String, required: true, enum: eventTypes },
+    type: { type: String, required: true, trim: true },
     date: { type: Date, required: true },
     endDate: { type: Date },
     location: { type: String, required: true, trim: true },

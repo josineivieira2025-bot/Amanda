@@ -525,6 +525,7 @@ export function PublicServicePage({ slugOverride = '' }) {
   const content = getServiceContent(routeSlug);
   const serviceKey = content?.serviceSlug || resolveServiceKey(routeSlug);
   const [catalog, setCatalog] = useState([]);
+  const [catalogLoaded, setCatalogLoaded] = useState(false);
 
   useEffect(() => {
     api('/public/quote-catalog')
@@ -532,7 +533,8 @@ export function PublicServicePage({ slugOverride = '' }) {
       .catch((error) => {
         console.error(error);
         setCatalog([]);
-      });
+      })
+      .finally(() => setCatalogLoaded(true));
   }, []);
 
   const service = useMemo(
@@ -540,23 +542,52 @@ export function PublicServicePage({ slugOverride = '' }) {
     [catalog, serviceKey]
   );
 
-  if (!content) {
+  if (!content && catalogLoaded && !service) {
     return <Navigate to="/" replace />;
   }
+
+  const pageContent = content || {
+    eyebrow: service?.name || 'Servico',
+    seoTitle: `${service?.name || 'Servico fotografico'} no Rio de Janeiro | Mel Fotografia RJ`,
+    seoDescription: service?.summary || 'Servico fotografico no Rio de Janeiro com simulacao online de orcamento.',
+    seoRoute: getServiceRoute(service?.slug || routeSlug),
+    seoKeywords: [service?.name || 'fotografia no rio de janeiro'],
+    heroTitle: service?.name || 'Servico fotografico no Rio de Janeiro',
+    heroText: service?.summary || 'Monte seu orcamento online e envie seu pedido com os detalhes principais.',
+    image: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=1400&q=80',
+    imageAlt: service?.name || 'fotografia no rio de janeiro',
+    bullets: [
+      'Pacotes configurados no catalogo',
+      'Extras opcionais para personalizar',
+      'Simulacao online com retorno pelo atendimento'
+    ],
+    seoIntro: [
+      service?.summary || 'Esse servico foi configurado no catalogo da Mel Fotografia para facilitar a simulacao de orcamento no site publico.',
+      'Voce pode comparar pacotes, escolher extras e enviar uma solicitacao com data, local e preferencias.',
+      'Depois do envio, a equipe retorna com disponibilidade, orientacao e proximos passos.'
+    ],
+    relatedServices: catalog.filter((item) => item.slug !== service?.slug).slice(0, 3).map((item) => ({
+      slug: item.slug,
+      label: item.name
+    }))
+  };
+
+  const heroTitle = service?.name || pageContent.heroTitle;
+  const heroText = service?.summary || pageContent.heroText;
 
   return (
     <>
       <SeoMeta
-        title={content.seoTitle}
-        description={content.seoDescription}
-        path={content.seoRoute}
-        keywords={content.seoKeywords}
-        image={content.image}
+        title={pageContent.seoTitle}
+        description={pageContent.seoDescription}
+        path={pageContent.seoRoute}
+        keywords={pageContent.seoKeywords}
+        image={pageContent.image}
         schema={{
           '@context': 'https://schema.org',
           '@type': 'Service',
-          name: service?.name || content.heroTitle,
-          description: content.seoDescription,
+          name: heroTitle,
+          description: pageContent.seoDescription,
           areaServed: {
             '@type': 'City',
             name: 'Rio de Janeiro'
@@ -574,14 +605,14 @@ export function PublicServicePage({ slugOverride = '' }) {
         <section className="mel-section mel-hero">
           <div className="mel-container mel-hero-grid">
             <div className="mel-hero-copy">
-              <span className="mel-kicker">{content.eyebrow}</span>
+              <span className="mel-kicker">{pageContent.eyebrow}</span>
 
-              <h1>{content.heroTitle}</h1>
+              <h1>{heroTitle}</h1>
 
-              <p>{content.heroText}</p>
+              <p>{heroText}</p>
 
               <div className="mel-bullet-grid">
-                {content.bullets.map((item) => (
+                {pageContent.bullets.map((item) => (
                   <div className="mel-bullet-item" key={item}>
                     <Check size={16} />
                     <span>{item}</span>
@@ -607,7 +638,7 @@ export function PublicServicePage({ slugOverride = '' }) {
 
             <aside className="mel-hero-card">
               <div className="mel-hero-image short">
-                <img src={content.image} alt={content.imageAlt} />
+                <img src={pageContent.image} alt={pageContent.imageAlt} />
               </div>
 
               <div className="mel-hero-body">
@@ -626,15 +657,15 @@ export function PublicServicePage({ slugOverride = '' }) {
           <div className="mel-container">
             <div className="mel-heading">
               <span className="mel-kicker">Servico no Rio de Janeiro</span>
-              <h2>Como funciona {service?.name || content.eyebrow} no Rio de Janeiro</h2>
+              <h2>Como funciona {service?.name || pageContent.eyebrow} no Rio de Janeiro</h2>
             </div>
 
             <div className="mel-overview-grid">
               <article className="mel-copy-card">
                 <span className="mel-kicker">Fotografia no RJ</span>
-                <h3>{content.seoTitle}</h3>
+                <h3>{pageContent.seoTitle}</h3>
 
-                {content.seoIntro.map((paragraph) => (
+                {pageContent.seoIntro.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
               </article>
@@ -747,7 +778,7 @@ export function PublicServicePage({ slugOverride = '' }) {
             </div>
 
             <div className="mel-related-grid">
-              {content.relatedServices.map((item) => (
+              {pageContent.relatedServices.map((item) => (
                 <Link
                   key={item.slug}
                   to={getServiceRoute(item.slug)}

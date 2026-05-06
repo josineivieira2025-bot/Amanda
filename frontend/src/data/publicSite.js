@@ -617,5 +617,5 @@ export function getServiceContent(slug) {
 
 export function getServiceRoute(slug) {
   const content = getServiceContent(slug);
-  return content?.seoRoute || content?.legacyRoutes?.[0] || '/';
+  return content?.seoRoute || content?.legacyRoutes?.[0] || `/servicos/${slug}`;
 }

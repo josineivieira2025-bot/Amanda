@@ -1,5 +1,7 @@
 import { ArrowRight, MapPin, MessageCircle } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { api } from '../api/client.js';
 import { SeoMeta } from '../components/SeoMeta.jsx';
 import { getServiceRoute, homeCollections } from '../data/publicSite.js';
 
@@ -10,6 +12,28 @@ function whatsappHref() {
 }
 
 export function PublicRioPage() {
+  const [catalog, setCatalog] = useState([]);
+
+  useEffect(() => {
+    api('/public/quote-catalog')
+      .then((response) => setCatalog(Array.isArray(response) ? response : []))
+      .catch((error) => {
+        console.error(error);
+        setCatalog([]);
+      });
+  }, []);
+
+  const publicServices = useMemo(() => {
+    if (catalog.length) {
+      return catalog.map((service) => ({
+        title: service.name,
+        slug: service.slug
+      }));
+    }
+
+    return homeCollections;
+  }, [catalog]);
+
   return (
     <>
       <SeoMeta
@@ -107,7 +131,7 @@ export function PublicRioPage() {
               <p>Escolha a experiencia que mais combina com o seu momento e veja detalhes, pacotes e simulacao.</p>
             </div>
             <div className="site-service-nav-links">
-              {homeCollections.map((service) => (
+              {publicServices.map((service) => (
                 <Link key={service.slug} to={getServiceRoute(service.slug)}>
                   <span>{service.title}</span>
                   <ArrowRight size={16} />

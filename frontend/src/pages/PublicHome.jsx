@@ -6,7 +6,9 @@ import {
   MessageCircle,
   Sparkles
 } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { api } from '../api/client.js';
 import { SeoMeta } from '../components/SeoMeta.jsx';
 import { getServiceRoute, homeCollections, serviceContent } from '../data/publicSite.js';
 
@@ -19,6 +21,30 @@ function whatsappHref() {
 }
 
 export function PublicHome() {
+  const [catalog, setCatalog] = useState([]);
+
+  useEffect(() => {
+    api('/public/quote-catalog')
+      .then((response) => setCatalog(Array.isArray(response) ? response : []))
+      .catch((error) => {
+        console.error(error);
+        setCatalog([]);
+      });
+  }, []);
+
+  const publicServices = useMemo(() => {
+    if (catalog.length) {
+      return catalog.map((service) => ({
+        title: service.name,
+        cardTitle: service.name,
+        text: service.summary,
+        slug: service.slug
+      }));
+    }
+
+    return homeCollections;
+  }, [catalog]);
+
   return (
     <>
       <SeoMeta
@@ -578,7 +604,7 @@ export function PublicHome() {
             </div>
 
             <div className="site-service-grid">
-              {homeCollections.map((item) => (
+              {publicServices.map((item) => (
                 <article className="site-service-card" key={item.slug}>
                   <div>
                     <span>{item.title}</span>
