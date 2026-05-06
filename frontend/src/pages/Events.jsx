@@ -223,14 +223,17 @@ export function Events() {
   }
 
   function whatsappUrl(text = budgetText, client = selectedClient) {
-    const phone = (client?.phone || '').replace(/\D/g, '');
-    const number = phone.length >= 12 && phone.startsWith('55') ? phone : phone.length >= 10 ? `55${phone}` : '';
-    return `https://wa.me/${number}?text=${encodeURIComponent(text)}`;
+    const number = formatWhatsAppPhone(client?.phone);
+    const query = new URLSearchParams({
+      ...(number ? { phone: number } : {}),
+      text
+    });
+
+    return `https://api.whatsapp.com/send?${query.toString()}`;
   }
 
-  function sendEventBudgetWhatsApp(event) {
-    const text = buildBudgetText(event, event.clientId);
-    window.open(whatsappUrl(text, event.clientId), '_blank', 'noopener,noreferrer');
+  function eventBudgetWhatsAppUrl(event) {
+    return whatsappUrl(buildBudgetText(event, event.clientId), event.clientId);
   }
 
   async function sendBudgetWhatsApp() {
@@ -337,10 +340,16 @@ export function Events() {
                   <Edit size={16} />
                   Editar
                 </button>
-                <button type="button" className="ghost-button whatsapp-button" onClick={(clickEvent) => { clickEvent.stopPropagation(); sendEventBudgetWhatsApp(event); }}>
+                <a
+                  className="ghost-button whatsapp-button"
+                  href={eventBudgetWhatsAppUrl(event)}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={(clickEvent) => clickEvent.stopPropagation()}
+                >
                   <MessageCircle size={16} />
                   Enviar WhatsApp
-                </button>
+                </a>
                 <button type="button" className="ghost-button" onClick={(clickEvent) => { clickEvent.stopPropagation(); copyLink(event); }}>
                   <Copy size={16} />
                   {copiedId === event._id ? 'Link copiado' : 'Copiar link do cliente'}
@@ -538,6 +547,14 @@ function normalizePrice(value) {
 
 function buildBudgetText(data, client) {
   return buildBudgetTemplateText(data, client, labels);
+}
+
+function formatWhatsAppPhone(value = '') {
+  const digits = String(value).replace(/\D/g, '').replace(/^0+/, '');
+  if (!digits) return '';
+  if (digits.startsWith('55') && digits.length >= 12) return digits;
+  if (digits.length === 10 || digits.length === 11) return `55${digits}`;
+  return digits;
 }
 
 function buildBudgetCardData(data, client, user) {
