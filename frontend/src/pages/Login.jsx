@@ -25,7 +25,7 @@ export function Login() {
       <section className="auth-wrap">
         <div className="auth-visual">
           <div className="auth-brand">
-            <span className="brand-mark"><img src="/vida-em-foco-logo.jpeg" alt="Mel Fotografia" /></span>
+            <span className="brand-mark"><img src="/mel-fotografia-logo.jpeg" alt="Mel Fotografia" /></span>
             <strong>Mel Fotografia</strong>
           </div>
           <div className="auth-quote">
@@ -35,7 +35,7 @@ export function Login() {
         </div>
         <form className="auth-card" onSubmit={submit}>
           <div className="auth-heading">
-            <span className="brand-mark soft"><img src="/vida-em-foco-logo.jpeg" alt="Mel Fotografia" /></span>
+            <span className="brand-mark soft"><img src="/mel-fotografia-logo.jpeg" alt="Mel Fotografia" /></span>
             <div>
               <p>Bem-vinda de volta</p>
               <h1>Entre na Mel Fotografia</h1>

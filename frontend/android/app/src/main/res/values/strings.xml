@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Mel Fotografia</string>
+    <string name="title_activity_main">Mel Fotografia</string>
+    <string name="package_name">br.com.melfotografia.painel</string>
+    <string name="custom_url_scheme">br.com.melfotografia.painel</string>
+</resources>

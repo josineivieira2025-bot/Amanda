@@ -91,7 +91,7 @@ export function AppLayout() {
       <aside className={`sidebar ${open ? 'is-open' : ''}`}>
         <Link className="brand" to="/painel/configuracoes" onClick={() => setOpen(false)}>
           <span className="brand-icon">
-            {user?.avatarUrl ? <img src={user.avatarUrl} alt={user.name || 'Perfil'} /> : <img src="/vida-em-foco-logo.jpeg" alt="Mel Fotografia" />}
+            {user?.avatarUrl ? <img src={user.avatarUrl} alt={user.name || 'Perfil'} /> : <img src="/mel-fotografia-logo.jpeg" alt="Mel Fotografia" />}
           </span>
           <div>
             <strong>{user?.studioName || 'Mel Fotografia'}</strong>

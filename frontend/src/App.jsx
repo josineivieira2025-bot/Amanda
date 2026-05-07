@@ -18,6 +18,36 @@ import { PublicServicePage } from './pages/PublicServicePage.jsx';
 import { Settings } from './pages/Settings.jsx';
 
 export function App() {
+  const isPanelApp = import.meta.env.VITE_APP_MODE === 'panel';
+
+  if (isPanelApp) {
+    return (
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/painel"
+          element={
+            <ProtectedRoute>
+              <AppLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<Dashboard />} />
+          <Route path="agenda" element={<Agenda />} />
+          <Route path="clientes" element={<Clients />} />
+          <Route path="eventos" element={<Events />} />
+          <Route path="catalogo" element={<Catalog />} />
+          <Route path="galeria" element={<Gallery />} />
+          <Route path="financeiro" element={<Finance />} />
+          <Route path="configuracoes" element={<Settings />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    );
+  }
+
   return (
     <Routes>
       <Route element={<PublicSiteLayout />}>

@@ -1417,7 +1417,7 @@ button.clickable-card {
 .brand-mark img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: inherit;
 }
 
@@ -1511,6 +1511,38 @@ button.clickable-card {
 
 .auth-submit:hover {
   filter: brightness(0.98);
+}
+
+body.panel-app-mode {
+  background:
+    radial-gradient(circle at 15% 0%, rgba(255, 255, 255, 0.88), transparent 30%),
+    linear-gradient(180deg, #f8fff9 0%, #edf8ef 100%);
+}
+
+body.panel-app-mode .auth-screen,
+body.panel-app-mode .shell {
+  min-height: 100dvh;
+}
+
+body.panel-app-mode .auth-screen {
+  padding-top: calc(28px + env(safe-area-inset-top));
+  padding-bottom: calc(28px + env(safe-area-inset-bottom));
+}
+
+body.panel-app-mode .auth-visual {
+  background:
+    linear-gradient(180deg, rgba(36, 68, 47, 0.10), rgba(36, 68, 47, 0.78)),
+    radial-gradient(circle at 50% 26%, rgba(255, 255, 255, 0.76), transparent 32%),
+    url("/mel-fotografia-logo.jpeg") center 34% / min(420px, 74%) no-repeat,
+    linear-gradient(145deg, #315f3d 0%, #24442f 58%, #1a3324 100%);
+}
+
+body.panel-app-mode .main {
+  padding-top: calc(22px + env(safe-area-inset-top));
+}
+
+body.panel-app-mode .sidebar {
+  padding-top: calc(26px + env(safe-area-inset-top));
 }
 
 .auth-switch {
