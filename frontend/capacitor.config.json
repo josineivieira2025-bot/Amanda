@@ -1,0 +1,11 @@
+{
+  "appId": "br.com.melfotografia.painel",
+  "appName": "Mel Fotografia",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "backgroundColor": "#f8fff9"
+  }
+}
