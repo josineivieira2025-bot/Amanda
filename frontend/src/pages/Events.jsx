@@ -11,6 +11,7 @@ import {
   MapPin,
   MessageCircle,
   Plus,
+  SlidersHorizontal,
   Sparkles,
   Trash2,
   UserRound,
@@ -122,6 +123,7 @@ export function Events() {
   const [loading, setLoading] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const statusCounts = useMemo(() => {
     return events.reduce((counts, event) => {
@@ -157,6 +159,7 @@ export function Events() {
     setStatusFilter('');
     setTagFilter('');
     setTypeFilter('');
+    setFiltersOpen(false);
   }
 
   const selectedClient = useMemo(
@@ -349,7 +352,7 @@ export function Events() {
 
         <div className="events-dashboard">
           <main className="events-main">
-            <section className="surface-panel">
+            <section className="surface-panel event-types-panel">
               <div className="section-head section-head--space">
                 <div>
                   <span className="section-kicker">
@@ -359,10 +362,6 @@ export function Events() {
                   <h2>Visão rápida do funil</h2>
                   <p>Escolha um tipo para focar nos atendimentos daquele serviço.</p>
                 </div>
-
-                <button className="soft-button" type="button" onClick={clearFilters}>
-                  Limpar filtros
-                </button>
               </div>
 
               <div className="type-filter-grid">
@@ -400,25 +399,90 @@ export function Events() {
                   <p>Veja quem precisa de resposta, orçamento, acompanhamento ou fechamento.</p>
                 </div>
 
-                <div className="active-filters">
-                  {statusFilter && (
-                    <button className="filter-pill" type="button" onClick={() => setStatusFilter('')}>
-                      {labels[statusFilter] || statusFilter}
-                      <X size={14} />
+                <div className="list-tools">
+                  <div className="active-filters">
+                    {statusFilter && (
+                      <button className="filter-pill" type="button" onClick={() => setStatusFilter('')}>
+                        {labels[statusFilter] || statusFilter}
+                        <X size={14} />
+                      </button>
+                    )}
+                    {tagFilter && (
+                      <button className="filter-pill" type="button" onClick={() => setTagFilter('')}>
+                        {labels[tagFilter] || tagFilter}
+                        <X size={14} />
+                      </button>
+                    )}
+                    {typeFilter && (
+                      <button className="filter-pill" type="button" onClick={() => setTypeFilter('')}>
+                        {labels[typeFilter] || typeFilter}
+                        <X size={14} />
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="filter-menu">
+                    <button
+                      className="icon-button filter-menu__trigger"
+                      type="button"
+                      onClick={() => setFiltersOpen((open) => !open)}
+                      aria-label="Abrir filtros"
+                      aria-expanded={filtersOpen}
+                    >
+                      <SlidersHorizontal size={18} />
                     </button>
-                  )}
-                  {tagFilter && (
-                    <button className="filter-pill" type="button" onClick={() => setTagFilter('')}>
-                      {labels[tagFilter] || tagFilter}
-                      <X size={14} />
-                    </button>
-                  )}
-                  {typeFilter && (
-                    <button className="filter-pill" type="button" onClick={() => setTypeFilter('')}>
-                      {labels[typeFilter] || typeFilter}
-                      <X size={14} />
-                    </button>
-                  )}
+
+                    {filtersOpen && (
+                      <div className="filter-popover">
+                        <div className="filter-popover__head">
+                          <div>
+                            <span>Filtros</span>
+                            <strong>Status e prioridades</strong>
+                          </div>
+                          <button className="icon-button icon-button--small" type="button" onClick={() => setFiltersOpen(false)} aria-label="Fechar filtros">
+                            <X size={16} />
+                          </button>
+                        </div>
+
+                        <div className="filter-group">
+                          <h3>Status</h3>
+                          <div className="status-filter-grid">
+                            {statuses.map((status) => (
+                              <button
+                                key={status.value}
+                                type="button"
+                                className={`status-filter-card ${statusFilter === status.value ? 'active' : ''}`}
+                                onClick={() => setStatusFilter(status.value)}
+                              >
+                                <span>{status.label}</span>
+                                <strong>{statusCounts[status.value] || 0}</strong>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="filter-group">
+                          <h3>Prioridades</h3>
+                          <div className="tag-card-grid premium-tag-grid">
+                            {eventTags.slice(1).map((tag) => (
+                              <button
+                                key={tag.value}
+                                type="button"
+                                className={`tag-card ${tagFilter === tag.value ? 'active' : ''}`}
+                                onClick={() => setTagFilter(tag.value)}
+                              >
+                                {tag.label}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        <button className="soft-button full-width" type="button" onClick={clearFilters}>
+                          Limpar filtros
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
 
