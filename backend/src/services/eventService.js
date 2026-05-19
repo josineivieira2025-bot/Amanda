@@ -10,7 +10,7 @@ function normalizeEventPayload(data) {
 }
 
 export async function listEvents(photographerId, filters = {}) {
-  const query = {};
+  const query = { photographerId };
   if (filters.status) query.status = filters.status;
   if (filters.tag) query.tag = filters.tag;
   if (filters.from || filters.to) {
@@ -32,15 +32,15 @@ export function createEvent(photographerId, data) {
 }
 
 export function updateEvent(photographerId, id, data) {
-  return Event.findByIdAndUpdate(
-    id,
+  return Event.findOneAndUpdate(
+    { _id: id, photographerId },
     { ...normalizeEventPayload(data), updatedBy: photographerId },
     { new: true }
   ).populate('clientId', 'name phone email');
 }
 
 export function deleteEvent(photographerId, id) {
-  return Event.findByIdAndDelete(id);
+  return Event.findOneAndDelete({ _id: id, photographerId });
 }
 
 export function findAvailableEvents(photographerId, from, to) {

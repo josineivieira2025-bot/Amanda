@@ -4,3 +4,4 @@ dist/
 backend/.env
 frontend/.env
 npm-debug.log*
+frontend/vite-dev*.log

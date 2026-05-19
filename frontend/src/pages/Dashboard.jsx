@@ -1,16 +1,16 @@
 import { format, isSameDay } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import {
+  ArrowRight,
   CalendarDays,
   Clock,
   DollarSign,
+  MapPin,
   MessageCircle,
   Sparkles,
   TrendingUp,
   Users,
-  WalletCards,
-  ArrowRight,
-  MapPin
+  WalletCards
 } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -20,12 +20,12 @@ import { EventModal } from '../components/EventModal.jsx';
 const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
 const typeLabels = {
-  aniversario_15: 'Aniversario de 15',
-  aniversario_adulto: 'Aniversario adulto',
-  aniversario_infantil: 'Aniversario infantil',
+  aniversario_15: 'Aniversário de 15',
+  aniversario_adulto: 'Aniversário adulto',
+  aniversario_infantil: 'Aniversário infantil',
   casamento: 'Casamento',
-  cha_revelacao: 'Cha revelacao',
-  cha_de_panela: 'Cha de panela',
+  cha_revelacao: 'Chá revelação',
+  cha_de_panela: 'Chá de panela',
   corporativo: 'Corporativo',
   smash_the_cake: 'Smash the cake',
   newborn: 'Newborn',
@@ -34,13 +34,13 @@ const typeLabels = {
   ensaio_casamento: 'Ensaio de casamento',
   ensaio_adulto: 'Ensaio adulto',
   ensaio_gestante: 'Ensaio gestante',
-  ensaio_familia: 'Ensaio de familia',
+  ensaio_familia: 'Ensaio de família',
   outro: 'Outro'
 };
 
 const statusLabels = {
-  orcamento_pendente: 'Orcamento pendente',
-  orcamento_enviado: 'Orcamento enviado',
+  orcamento_pendente: 'Orçamento pendente',
+  orcamento_enviado: 'Orçamento enviado',
   aguardando_resposta: 'Aguardando resposta',
   cliente_problema: 'Cliente problema',
   agendado: 'Agendado',
@@ -54,7 +54,7 @@ const sourceLabels = {
   instagram: 'Instagram',
   site: 'Site',
   whatsapp: 'WhatsApp',
-  indicacao: 'Indicacao',
+  indicacao: 'Indicação',
   google: 'Google',
   outro: 'Outro'
 };
@@ -133,42 +133,42 @@ export function Dashboard() {
       to: '/painel/agenda',
       icon: CalendarDays,
       title: 'Organizar agenda',
-      text: 'Veja o mes, mova prioridades e confira horarios livres.'
+      text: 'Veja o mês, confira horários livres e antecipe conflitos.'
     },
     {
       to: '/painel/eventos',
       icon: Sparkles,
       title: 'Responder leads',
-      text: 'Aqueça conversas pendentes e converta orcamentos mais rapido.'
+      text: 'Acompanhe orçamentos pendentes e conversas que precisam de retorno.'
     },
     {
       to: '/painel/clientes',
       icon: Users,
       title: 'Cuidar dos clientes',
-      text: 'Acesse historico, preferencias e relacionamento do estudio.'
+      text: 'Acesse histórico, preferências e dados importantes de cada cliente.'
     },
     {
       to: '/painel/financeiro',
       icon: WalletCards,
       title: 'Revisar financeiro',
-      text: 'Acompanhe entradas, ticket medio e caixa do periodo.'
+      text: 'Veja contratos fechados, entradas registradas e saldos a receber.'
     }
   ];
 
   return (
-    <section className="page dashboard-rose-page dashboard-luxe-page">
-      <div className="dashboard-rose-hero dashboard-luxe-hero">
+    <section className="page dashboard-rose-page dashboard-luxe-page dashboard-pro-page">
+      <div className="dashboard-rose-hero dashboard-luxe-hero dashboard-pro-hero">
         <div className="dashboard-luxe-copy">
           <span className="hero-eyebrow rose">{format(new Date(), "MMMM 'de' yyyy", { locale: ptBR })}</span>
           <h1>Painel Mel Fotografia</h1>
           <p>
-            Uma visao linda e inteligente da sua operacao: agenda, leads, clientes e faturamento organizados para voce ganhar tempo e encantar mais.
+            Uma visão clara da operação: agenda, leads, clientes e faturamento organizados para você decidir o próximo passo sem perder tempo.
           </p>
 
           <div className="hero-footer">
-            <span className="hero-chip rose-chip"><Sparkles size={16} /> Operacao organizada</span>
+            <span className="hero-chip rose-chip"><Sparkles size={16} /> Operação organizada</span>
             <span className="hero-chip rose-chip"><DollarSign size={16} /> {money.format(revenue)} recebido</span>
-            <span className="hero-chip rose-chip"><MessageCircle size={16} /> {waiting + pendingBudget} contato(s) pedindo atencao</span>
+            <span className="hero-chip rose-chip"><MessageCircle size={16} /> {waiting + pendingBudget} contato(s) pedindo atenção</span>
           </div>
 
           <div className="dashboard-luxe-glance">
@@ -178,12 +178,12 @@ export function Dashboard() {
               <small>compromisso(s)</small>
             </div>
             <div className="dashboard-glance-card">
-              <span>Confirmacao</span>
+              <span>Confirmação</span>
               <strong>{bookingRate}%</strong>
               <small>agenda futura firme</small>
             </div>
             <div className="dashboard-glance-card">
-              <span>Meta do mes</span>
+              <span>Meta do mês</span>
               <strong>{goalProgress}%</strong>
               <small>do objetivo de {money.format(monthlyGoal)}</small>
             </div>
@@ -191,24 +191,24 @@ export function Dashboard() {
         </div>
 
         <button className="dashboard-next-card dashboard-luxe-next clickable-card" type="button" onClick={() => nextEvent && setSelectedEvent(nextEvent)}>
-          <span>Proximo compromisso</span>
+          <span>Próximo compromisso</span>
           {nextEvent ? (
             <>
-              <strong>{nextEvent.clientId?.name || 'Cliente nao informado'}</strong>
-              <small>{format(new Date(nextEvent.date), "dd/MM 'as' HH:mm", { locale: ptBR })}</small>
+              <strong>{nextEvent.clientId?.name || 'Cliente não informado'}</strong>
+              <small>{format(new Date(nextEvent.date), "dd/MM 'às' HH:mm", { locale: ptBR })}</small>
               <i>{typeLabels[nextEvent.type] || nextEvent.type}</i>
               <div className="dashboard-next-meta">
                 <span><MapPin size={14} /> {nextEvent.location || 'Local a confirmar'}</span>
-                <small>Origem: {sourceLabels[nextEvent.source] || 'Nao informada'}</small>
+                <small>Origem: {sourceLabels[nextEvent.source] || 'Não informada'}</small>
               </div>
             </>
           ) : (
             <>
               <strong>Agenda tranquila</strong>
-              <small>Nenhum proximo evento cadastrado.</small>
+              <small>Nenhum próximo evento cadastrado.</small>
               <div className="dashboard-next-meta">
                 <span><Sparkles size={14} /> Aproveite para cuidar dos leads</span>
-                <small>Seu painel continua prontinho para novos pedidos.</small>
+                <small>Seu painel continua pronto para novos pedidos.</small>
               </div>
             </>
           )}
@@ -225,9 +225,9 @@ export function Dashboard() {
           </>
         ) : (
           <>
-            <DashboardMetric icon={CalendarDays} label="Eventos no mes" value={eventsThisMonth} helper="Registros do periodo" />
+            <DashboardMetric icon={CalendarDays} label="Eventos no mês" value={eventsThisMonth} helper="Registros do período" />
             <DashboardMetric icon={DollarSign} label="Receita mensal" value={money.format(revenue)} helper="Pagamentos recebidos" tone="success" />
-            <DashboardMetric icon={TrendingUp} label="Ticket medio" value={money.format(averageTicket)} helper="Media por evento" />
+            <DashboardMetric icon={TrendingUp} label="Ticket médio" value={money.format(averageTicket)} helper="Média por evento" />
             <DashboardMetric icon={MessageCircle} label="Aguardando resposta" value={waiting} helper="Clientes para follow-up" tone="warning" />
           </>
         )}
@@ -243,8 +243,8 @@ export function Dashboard() {
         <div className="panel luxe-panel">
           <div className="compact-head compact-head-luxe">
             <div>
-              <h2>Proximos eventos</h2>
-              <p>Compromissos mais proximos na agenda com acesso rapido aos detalhes.</p>
+              <h2>Próximos eventos</h2>
+              <p>Compromissos mais próximos na agenda com acesso rápido aos detalhes.</p>
             </div>
             <Link className="mini-link-button" to="/painel/agenda">Abrir agenda</Link>
           </div>
@@ -257,7 +257,7 @@ export function Dashboard() {
                   <span>{format(new Date(event.date), 'MMM', { locale: ptBR })}</span>
                 </div>
                 <div>
-                  <strong>{event.clientId?.name || 'Cliente nao informado'}</strong>
+                  <strong>{event.clientId?.name || 'Cliente não informado'}</strong>
                   <span><Clock size={15} /> {format(new Date(event.date), 'HH:mm')} - {typeLabels[event.type] || event.type}</span>
                 </div>
                 <small className={`badge ${statusTone(event.status)}`}>{statusLabels[event.status] || event.status}</small>
@@ -266,7 +266,7 @@ export function Dashboard() {
             {upcomingEvents.length === 0 && (
               <div className="empty-state">
                 <strong>Nenhum evento futuro</strong>
-                <p>Os proximos compromissos aparecem aqui.</p>
+                <p>Os próximos compromissos aparecem aqui.</p>
               </div>
             )}
           </div>
@@ -277,14 +277,14 @@ export function Dashboard() {
             <div className="compact-head compact-head-luxe">
               <div>
                 <h2>Radar comercial</h2>
-                <p>Uma leitura rapida para decidir onde agir primeiro.</p>
+                <p>Uma leitura rápida para decidir onde agir primeiro.</p>
               </div>
             </div>
 
             <div className="dashboard-radar-list">
               <div className="dashboard-radar-item">
                 <div>
-                  <strong>Orcamentos pendentes</strong>
+                  <strong>Orçamentos pendentes</strong>
                   <span>{pendingBudget} oportunidade(s) esperando resposta</span>
                 </div>
                 <b>{pendingBudget}</b>
@@ -294,7 +294,7 @@ export function Dashboard() {
               <div className="dashboard-radar-item">
                 <div>
                   <strong>Aguardando resposta</strong>
-                  <span>{waiting} conversa(s) mornas para reacender</span>
+                  <span>{waiting} conversa(s) para retomar com cuidado</span>
                 </div>
                 <b>{waiting}</b>
               </div>
@@ -303,7 +303,7 @@ export function Dashboard() {
               <div className="dashboard-radar-item">
                 <div>
                   <strong>Vieram do Instagram</strong>
-                  <span>{instagramLeads} lead(s) no canal que mais aquece desejo</span>
+                  <span>{instagramLeads} lead(s) vindos desse canal</span>
                 </div>
                 <b>{instagramLeads}</b>
               </div>
@@ -315,7 +315,7 @@ export function Dashboard() {
             <span>Dica do dia</span>
             <strong>Capriche no follow-up mais quente</strong>
             <p>
-              Se o cliente ja pediu orcamento e ficou em silencio, envie uma mensagem gentil com disponibilidade, prazo de entrega e um toque afetivo. Esse passo costuma destravar a venda.
+              Se o cliente já pediu orçamento e ficou em silêncio, envie uma mensagem gentil com disponibilidade, prazo de entrega e próximos passos. Esse retorno costuma destravar a venda.
             </p>
           </div>
         </div>

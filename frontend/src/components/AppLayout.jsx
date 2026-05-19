@@ -23,7 +23,7 @@ const links = [
   { to: '/painel/agenda', label: 'Agenda', icon: CalendarDays },
   { to: '/painel/clientes', label: 'Clientes', icon: Users },
   { to: '/painel/eventos', label: 'Eventos', icon: PartyPopper },
-  { to: '/painel/catalogo', label: 'Catalogo', icon: BookOpen },
+  { to: '/painel/catalogo', label: 'Catálogo', icon: BookOpen },
   { to: '/painel/galeria', label: 'Galeria', icon: Camera },
   { to: '/painel/financeiro', label: 'Financeiro', icon: CreditCard }
 ];
@@ -99,7 +99,7 @@ export function AppLayout() {
   const visibleLinks = useMemo(
     () => [
       ...links,
-      ...(user?.role === 'admin' ? [{ to: '/painel/usuarios', label: 'Usuarios', icon: Users }] : [])
+      ...(user?.role === 'admin' ? [{ to: '/painel/usuarios', label: 'Usuários', icon: Users }] : [])
     ],
     [user?.role]
   );
@@ -139,7 +139,7 @@ export function AppLayout() {
 
         <div className="sidebar-note">
           <Sparkles size={15} />
-          <span>Painel boutique</span>
+          <span>Gestão do estúdio</span>
         </div>
 
         <nav>
@@ -153,15 +153,15 @@ export function AppLayout() {
         </nav>
 
         <div className="sidebar-studio-card">
-          <span className="sidebar-studio-label">Studio pulse</span>
+          <span className="sidebar-studio-label">Resumo de hoje</span>
           <strong>{todayEventsCount} compromisso(s) hoje</strong>
           <p>
-            {siteNotifications.length} lead(s) do site aguardando carinho e {upcomingEventsCount} evento(s) no radar.
+            {siteNotifications.length} orçamento(s) do site aguardando resposta e {upcomingEventsCount} evento(s) na agenda futura.
           </p>
           <div className="sidebar-studio-stats">
             <span>
               <b>{siteNotifications.length}</b>
-              Leads
+              Leads do site
             </span>
             <span>
               <b>{upcomingEventsCount}</b>
@@ -186,7 +186,7 @@ export function AppLayout() {
 
           <div className="topbar-copy">
             <span className="eyebrow">Mel Fotografia</span>
-            <strong>{greeting}, {firstName} ✨</strong>
+            <strong>{greeting}, {firstName}</strong>
             <span>
               Hoje é {todayLabel}. {todayEventsCount > 0 ? `Você tem ${todayEventsCount} compromisso(s) no calendário.` : 'Dia livre para organizar o estúdio e vender mais.'}
             </span>
@@ -201,7 +201,7 @@ export function AppLayout() {
             <Link className="topbar-shortcut soft" to="/painel/eventos">Eventos</Link>
             <button
               className={notificationOpen ? 'icon-button active topbar-bell' : 'icon-button topbar-bell'}
-              aria-label="Notificacoes"
+              aria-label="Notificações"
               type="button"
               onClick={() => setNotificationOpen((value) => !value)}
             >
@@ -211,7 +211,7 @@ export function AppLayout() {
             {notificationOpen && (
               <div className="topbar-notifications">
                 <div className="topbar-notifications-head">
-                  <strong>Novos orcamentos do site</strong>
+                  <strong>Novos orçamentos do site</strong>
                   <span>{siteNotifications.length} pendente(s)</span>
                 </div>
 
@@ -246,7 +246,7 @@ export function AppLayout() {
                   ) : (
                     <div className="topbar-notification-empty">
                       <strong>Nenhum novo orçamento do site</strong>
-                      <span>Quando chegar uma nova simulacao pendente, ela aparece aqui.</span>
+                      <span>Quando chegar uma nova simulação pendente, ela aparece aqui.</span>
                     </div>
                   )}
                 </div>
@@ -257,7 +257,7 @@ export function AppLayout() {
         <Outlet />
       </main>
 
-      <nav className="bottom-nav mobile-only" aria-label="Navegacao principal">
+      <nav className="bottom-nav mobile-only" aria-label="Navegação principal">
         {links.slice(0, 5).map((item) => (
           <NavLink key={item.to} to={item.to} end={item.to === '/painel'}>
             <item.icon size={19} />
