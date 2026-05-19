@@ -7,15 +7,20 @@ import { Agenda } from './pages/Agenda.jsx';
 import { Catalog } from './pages/Catalog.jsx';
 import { ClientGallery } from './pages/ClientGallery.jsx';
 import { Clients } from './pages/Clients.jsx';
+import { Contracts } from './pages/Contracts.jsx';
 import { Dashboard } from './pages/Dashboard.jsx';
 import { Events } from './pages/Events.jsx';
 import { Finance } from './pages/Finance.jsx';
 import { Gallery } from './pages/Gallery.jsx';
 import { Login } from './pages/Login.jsx';
+import { Pipeline } from './pages/Pipeline.jsx';
+import { PostEvent } from './pages/PostEvent.jsx';
 import { PublicHome } from './pages/PublicHome.jsx';
 import { PublicRioPage } from './pages/PublicRioPage.jsx';
 import { PublicServicePage } from './pages/PublicServicePage.jsx';
+import { Reports } from './pages/Reports.jsx';
 import { Settings } from './pages/Settings.jsx';
+import { Tasks } from './pages/Tasks.jsx';
 import { Users } from './pages/Users.jsx';
 
 export function App() {
@@ -35,12 +40,17 @@ export function App() {
           }
         >
           <Route index element={<Dashboard />} />
+          <Route path="pipeline" element={<Pipeline />} />
           <Route path="agenda" element={<Agenda />} />
+          <Route path="tarefas" element={<Tasks />} />
           <Route path="clientes" element={<Clients />} />
           <Route path="eventos" element={<Events />} />
+          <Route path="contratos" element={<Contracts />} />
           <Route path="catalogo" element={<Catalog />} />
           <Route path="galeria" element={<Gallery />} />
+          <Route path="pos-evento" element={<PostEvent />} />
           <Route path="financeiro" element={<Finance />} />
+          <Route path="relatorios" element={<Reports />} />
           <Route path="configuracoes" element={<Settings />} />
           <Route path="usuarios" element={<AdminRoute><Users /></AdminRoute>} />
         </Route>
@@ -72,12 +82,17 @@ export function App() {
         }
       >
         <Route index element={<Dashboard />} />
+        <Route path="pipeline" element={<Pipeline />} />
         <Route path="agenda" element={<Agenda />} />
+        <Route path="tarefas" element={<Tasks />} />
         <Route path="clientes" element={<Clients />} />
         <Route path="eventos" element={<Events />} />
+        <Route path="contratos" element={<Contracts />} />
         <Route path="catalogo" element={<Catalog />} />
         <Route path="galeria" element={<Gallery />} />
+        <Route path="pos-evento" element={<PostEvent />} />
         <Route path="financeiro" element={<Finance />} />
+        <Route path="relatorios" element={<Reports />} />
         <Route path="configuracoes" element={<Settings />} />
         <Route path="usuarios" element={<AdminRoute><Users /></AdminRoute>} />
       </Route>

@@ -1,10 +1,15 @@
 import {
+  BarChart3,
   Bell,
   BookOpen,
   CalendarDays,
   Camera,
   CreditCard,
+  FileText,
+  Image,
+  Kanban,
   LayoutDashboard,
+  ListChecks,
   LogOut,
   Menu,
   PartyPopper,
@@ -20,12 +25,17 @@ import { useAuth } from '../context/AuthContext.jsx';
 
 const links = [
   { to: '/painel', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/painel/pipeline', label: 'Pipeline', icon: Kanban },
   { to: '/painel/agenda', label: 'Agenda', icon: CalendarDays },
+  { to: '/painel/tarefas', label: 'Tarefas', icon: ListChecks },
   { to: '/painel/clientes', label: 'Clientes', icon: Users },
   { to: '/painel/eventos', label: 'Eventos', icon: PartyPopper },
+  { to: '/painel/contratos', label: 'Contratos', icon: FileText },
   { to: '/painel/catalogo', label: 'Catálogo', icon: BookOpen },
   { to: '/painel/galeria', label: 'Galeria', icon: Camera },
-  { to: '/painel/financeiro', label: 'Financeiro', icon: CreditCard }
+  { to: '/painel/pos-evento', label: 'Pós-evento', icon: Image },
+  { to: '/painel/financeiro', label: 'Financeiro', icon: CreditCard },
+  { to: '/painel/relatorios', label: 'Relatórios', icon: BarChart3 }
 ];
 
 function storageKey(userId, suffix) {
@@ -73,7 +83,6 @@ export function AppLayout() {
 
   useEffect(() => {
     if (!notificationOpen || !siteNotifications.length || !user?._id) return;
-
     const nextSeen = Array.from(new Set([...seenNotificationIds, ...siteNotifications.map((event) => event._id)]));
     setSeenNotificationIds(nextSeen);
     localStorage.setItem(storageKey(user._id, 'seen_notifications'), JSON.stringify(nextSeen));
@@ -85,14 +94,11 @@ export function AppLayout() {
   }, [dismissedNotificationIds, user?._id]);
 
   useEffect(() => {
-    if (notificationOpen && !siteNotifications.length) {
-      setNotificationOpen(false);
-    }
+    if (notificationOpen && !siteNotifications.length) setNotificationOpen(false);
   }, [notificationOpen, siteNotifications.length]);
 
   function dismissNotification(eventId) {
-    if (!user?._id) return;
-    if (dismissedNotificationIds.includes(eventId)) return;
+    if (!user?._id || dismissedNotificationIds.includes(eventId)) return;
     setDismissedNotificationIds((current) => Array.from(new Set([...current, eventId])));
   }
 
@@ -159,14 +165,8 @@ export function AppLayout() {
             {siteNotifications.length} orçamento(s) do site aguardando resposta e {upcomingEventsCount} evento(s) na agenda futura.
           </p>
           <div className="sidebar-studio-stats">
-            <span>
-              <b>{siteNotifications.length}</b>
-              Leads do site
-            </span>
-            <span>
-              <b>{upcomingEventsCount}</b>
-              Agenda futura
-            </span>
+            <span><b>{siteNotifications.length}</b>Leads do site</span>
+            <span><b>{upcomingEventsCount}</b>Agenda futura</span>
           </div>
         </div>
 
@@ -197,8 +197,8 @@ export function AppLayout() {
           </div>
 
           <div className="topbar-actions">
-            <Link className="topbar-shortcut" to="/painel/agenda">Agenda</Link>
-            <Link className="topbar-shortcut soft" to="/painel/eventos">Eventos</Link>
+            <Link className="topbar-shortcut" to="/painel/pipeline">Pipeline</Link>
+            <Link className="topbar-shortcut soft" to="/painel/agenda">Agenda</Link>
             <button
               className={notificationOpen ? 'icon-button active topbar-bell' : 'icon-button topbar-bell'}
               aria-label="Notificações"
@@ -214,31 +214,18 @@ export function AppLayout() {
                   <strong>Novos orçamentos do site</strong>
                   <span>{siteNotifications.length} pendente(s)</span>
                 </div>
-
                 <div className="topbar-notifications-list">
                   {siteNotifications.length ? (
                     siteNotifications.slice(0, 6).map((event) => (
                       <div key={event._id} className="topbar-notification-card">
-                        <Link
-                          className="topbar-notification-link"
-                          to="/painel/eventos"
-                          onClick={() => setNotificationOpen(false)}
-                        >
+                        <Link className="topbar-notification-link" to="/painel/eventos" onClick={() => setNotificationOpen(false)}>
                           <strong>{event.clientId?.name || 'Cliente sem nome'}</strong>
                           <span>{event.location || 'Local a confirmar'}</span>
                           <small>
-                            Recebido{' '}
-                            {formatDistanceToNow(new Date(event.createdAt || event.date), {
-                              addSuffix: true,
-                              locale: ptBR
-                            })}
+                            Recebido {formatDistanceToNow(new Date(event.createdAt || event.date), { addSuffix: true, locale: ptBR })}
                           </small>
                         </Link>
-                        <button
-                          className="topbar-notification-remove"
-                          type="button"
-                          onClick={() => dismissNotification(event._id)}
-                        >
+                        <button className="topbar-notification-remove" type="button" onClick={() => dismissNotification(event._id)}>
                           Apagar
                         </button>
                       </div>
