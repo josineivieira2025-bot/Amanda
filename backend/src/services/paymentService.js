@@ -4,7 +4,7 @@ import { Payment } from '../models/Payment.js';
 const closedFinancialStatuses = ['confirmado', 'em_andamento', 'finalizado'];
 
 export async function listPayments(photographerId, filters = {}) {
-  const query = { photographerId };
+  const query = {};
   if (filters.eventId) query.eventId = filters.eventId;
   if (filters.month && filters.year) {
     query.paidAt = {
@@ -25,7 +25,7 @@ export async function listPayments(photographerId, filters = {}) {
 }
 
 export async function createPayment(photographerId, data) {
-  const event = await Event.findOne({ _id: data.eventId, photographerId });
+  const event = await Event.findById(data.eventId);
   if (!event) {
     const error = new Error('Evento nao encontrado.');
     error.statusCode = 404;
@@ -42,7 +42,7 @@ export async function createPayment(photographerId, data) {
 }
 
 export function deletePayment(photographerId, id) {
-  return Payment.findOneAndDelete({ _id: id, photographerId });
+  return Payment.findByIdAndDelete(id);
 }
 
 export async function getFinancialSummary(photographerId, month, year) {
@@ -50,15 +50,14 @@ export async function getFinancialSummary(photographerId, month, year) {
   const end = new Date(Number(year), Number(month), 1);
 
   const events = await Event.find({
-    photographerId,
     status: { $in: closedFinancialStatuses },
     date: { $gte: start, $lt: end }
   }).populate('clientId', 'name');
 
   const eventIds = events.map((event) => event._id);
   const [eventPayments, paymentsThisMonth] = await Promise.all([
-    Payment.find({ photographerId, eventId: { $in: eventIds } }),
-    Payment.find({ photographerId, paidAt: { $gte: start, $lt: end } }).populate({
+    Payment.find({ eventId: { $in: eventIds } }),
+    Payment.find({ paidAt: { $gte: start, $lt: end } }).populate({
       path: 'eventId',
       select: 'status'
     })

@@ -9,14 +9,13 @@ export async function getDashboard(photographerId) {
   const end = new Date(now.getFullYear(), now.getMonth() + 1, 1);
 
   const [eventsThisMonth, paymentsThisMonth, upcomingEvents, statusGroups] = await Promise.all([
-    Event.countDocuments({ photographerId, date: { $gte: start, $lt: end } }),
-    Payment.find({ photographerId, paidAt: { $gte: start, $lt: end } }).populate('eventId', 'status'),
-    Event.find({ photographerId, date: { $gte: now } })
+    Event.countDocuments({ date: { $gte: start, $lt: end } }),
+    Payment.find({ paidAt: { $gte: start, $lt: end } }).populate('eventId', 'status'),
+    Event.find({ date: { $gte: now } })
       .populate('clientId', 'name phone email')
       .sort({ date: 1 })
       .limit(5),
     Event.aggregate([
-      { $match: { photographerId } },
       { $group: { _id: '$status', total: { $sum: 1 } } }
     ])
   ]);
