@@ -7876,6 +7876,22 @@ body.panel-app-mode .agenda-compact-card {
   display: none !important;
 }
 
+.page .hero-eyebrow,
+.page .hero-eyebrow.rose,
+.ops-header .hero-eyebrow,
+.agenda-pro-header .hero-eyebrow,
+.reports-hero .hero-eyebrow,
+.module-hero .hero-eyebrow,
+.finance-hero .hero-eyebrow {
+  display: inline-flex !important;
+  width: fit-content;
+  padding: 2px 0 !important;
+  background: transparent !important;
+  color: #4f6255 !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
 .topbar-copy strong {
   font-size: 16px !important;
 }
