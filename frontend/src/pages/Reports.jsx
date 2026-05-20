@@ -1,13 +1,13 @@
-import { BarChart3, CalendarDays, DollarSign, MessageCircle, TrendingUp, Users } from 'lucide-react';
+import { CalendarDays, DollarSign, MessageCircle, TrendingUp, Users } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { api } from '../api/client.js';
 
 const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
 
 const statusLabels = {
-  orcamento_pendente: 'Orçamentos pendentes',
+  orcamento_pendente: 'Orcamentos pendentes',
   orcamento_enviado: 'Orcamentos enviados / aguardando resposta',
-  cliente_problema: 'Clientes sensíveis',
+  cliente_problema: 'Clientes sensiveis',
   agendado: 'Agendados',
   confirmado: 'Confirmados',
   em_andamento: 'Em andamento',
@@ -19,7 +19,7 @@ const sourceLabels = {
   instagram: 'Instagram',
   site: 'Site',
   whatsapp: 'WhatsApp',
-  indicacao: 'Indicação',
+  indicacao: 'Indicacao',
   cliente_antigo: 'Cliente antigo',
   google: 'Google',
   outro: 'Outro'
@@ -47,28 +47,42 @@ function groupCount(items, key) {
   }, {});
 }
 
+function OpsMetric({ icon: Icon, label, value, helper, tone = '' }) {
+  return (
+    <div className={`ops-metric ${tone}`}>
+      <Icon size={18} />
+      <span>{label}</span>
+      <strong>{value}</strong>
+      <small>{helper}</small>
+    </div>
+  );
+}
+
 function BarRow({ label, value, total }) {
   const percent = total > 0 ? Math.round((value / total) * 100) : 0;
   return (
-    <div className="report-bar-row">
+    <div className="ops-bar-row">
       <div>
         <strong>{label}</strong>
         <span>{value} registro(s)</span>
       </div>
-      <div className="report-bar-track"><i style={{ width: `${percent}%` }} /></div>
+      <div className="ops-bar-track"><i style={{ width: `${percent}%` }} /></div>
       <b>{percent}%</b>
     </div>
   );
 }
 
-function ReportMetric({ icon: Icon, label, value, helper, tone = '' }) {
+function OpsSection({ title, text, children }) {
   return (
-    <div className={`report-metric ${tone}`}>
-      <Icon size={20} />
-      <span>{label}</span>
-      <strong>{value}</strong>
-      <small>{helper}</small>
-    </div>
+    <section className="ops-section">
+      <div className="ops-section-head">
+        <div>
+          <h2>{title}</h2>
+          <p>{text}</p>
+        </div>
+      </div>
+      {children}
+    </section>
   );
 }
 
@@ -101,98 +115,100 @@ export function Reports() {
   const statusGroups = useMemo(() => groupCount(events, 'status'), [events]);
   const sourceGroups = useMemo(() => groupCount(events, 'source'), [events]);
   const closedEvents = events.filter((event) => ['agendado', 'confirmado', 'em_andamento', 'finalizado'].includes(event.status));
-  const leads = events.filter((event) => ['orcamento_pendente', 'orcamento_enviado'].includes(normalizeStatus(event.status)));
-  const conversionRate = events.length > 0 ? Math.round((closedEvents.length / events.length) * 100) : 0;
   const pendingFollowUps = events.filter((event) => ['orcamento_pendente', 'orcamento_enviado'].includes(normalizeStatus(event.status))).length;
   const received = summary?.receivedThisMonth || 0;
   const contracted = summary?.total || 0;
+  const conversionRate = events.length > 0 ? Math.round((closedEvents.length / events.length) * 100) : 0;
   const averageClosedTicket = closedEvents.length > 0 ? contracted / closedEvents.length : 0;
   const topSource = Object.entries(sourceGroups).sort((a, b) => b[1] - a[1])[0];
+  const sortedEvents = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
 
   return (
-    <section className="page reports-page">
-      <div className="reports-hero">
+    <section className="page ops-page reports-page">
+      <div className="ops-header">
         <div>
-          <span className="hero-eyebrow rose">Relatórios</span>
-          <h1>Visão gerencial do estúdio</h1>
-          <p>Analise captação, fechamento, receita e gargalos do mês com dados simples de agir.</p>
+          <span className="hero-eyebrow rose">Relatorios</span>
+          <h1>Visao gerencial do estudio</h1>
+          <p>Indicadores, funil e auditoria do periodo em uma tela limpa para decisao rapida.</p>
         </div>
-        <div className="reports-period-card">
-          <span>Período</span>
+        <div className="ops-header-control">
+          <span>Periodo</span>
           <input type="month" value={period} onChange={(event) => setPeriod(event.target.value || currentPeriod())} />
-          <strong>{conversionRate}%</strong>
-          <small>taxa de fechamento do período</small>
         </div>
       </div>
 
-      <div className="report-metrics-grid">
-        <ReportMetric icon={CalendarDays} label="Atendimentos" value={events.length} helper="Eventos e leads cadastrados" />
-        <ReportMetric icon={Users} label="Fechados" value={closedEvents.length} helper="Agendados, confirmados e finalizados" tone="success" />
-        <ReportMetric icon={MessageCircle} label="Follow-up" value={pendingFollowUps} helper="Leads que pedem retorno" tone="warning" />
-        <ReportMetric icon={DollarSign} label="Recebido" value={money.format(received)} helper="Entradas no mês selecionado" tone="success" />
-        <ReportMetric icon={TrendingUp} label="Ticket fechado" value={money.format(averageClosedTicket)} helper="Média por contrato fechado" />
+      <div className="ops-metrics-grid">
+        <OpsMetric icon={CalendarDays} label="Atendimentos" value={events.length} helper="Leads e eventos cadastrados" />
+        <OpsMetric icon={Users} label="Fechados" value={closedEvents.length} helper={`${conversionRate}% de fechamento`} tone="success" />
+        <OpsMetric icon={MessageCircle} label="Follow-up" value={pendingFollowUps} helper="Leads que pedem retorno" tone="warning" />
+        <OpsMetric icon={DollarSign} label="Recebido" value={money.format(received)} helper="Entradas no periodo" tone="success" />
+        <OpsMetric icon={TrendingUp} label="Ticket medio" value={money.format(averageClosedTicket)} helper="Por contrato fechado" />
       </div>
 
-      <div className="reports-grid">
-        <div className="panel report-panel">
-          <div className="compact-head">
-            <div>
-              <h2>Funil por status</h2>
-              <p>Onde estão os atendimentos do período.</p>
-            </div>
-            <BarChart3 size={20} />
-          </div>
-          <div className="report-bar-list">
+      <div className="ops-grid two">
+        <OpsSection title="Funil por status" text="Distribuicao operacional dos atendimentos.">
+          <div className="ops-bar-list">
             {Object.entries(statusGroups).map(([status, count]) => (
               <BarRow key={status} label={statusLabels[status] || status} value={count} total={events.length} />
             ))}
-            {!events.length && !loading && (
-              <div className="empty-state">
-                <strong>Nenhum dado no período</strong>
-                <p>Cadastre eventos ou altere o mês para ver os relatórios.</p>
-              </div>
-            )}
+            {!events.length && !loading && <div className="ops-empty">Nenhum dado no periodo selecionado.</div>}
           </div>
-        </div>
+        </OpsSection>
 
-        <div className="panel report-panel">
-          <div className="compact-head">
-            <div>
-              <h2>Origem dos leads</h2>
-              <p>Canais que mais trouxeram atendimentos.</p>
-            </div>
-          </div>
-          <div className="report-bar-list">
+        <OpsSection title="Origem dos leads" text="Canais que trouxeram demanda no periodo.">
+          <div className="ops-bar-list">
             {Object.entries(sourceGroups).map(([source, count]) => (
               <BarRow key={source} label={sourceLabels[source] || source} value={count} total={events.length} />
             ))}
+            {!events.length && !loading && <div className="ops-empty">Nenhum canal registrado no periodo.</div>}
           </div>
-        </div>
-
-        <div className="panel report-panel report-insights">
-          <div className="compact-head">
-            <div>
-              <h2>Próximas ações</h2>
-              <p>Sugestões geradas a partir dos dados do mês.</p>
-            </div>
-          </div>
-
-          <div className="report-insight-list">
-            <article>
-              <strong>Priorize retornos comerciais</strong>
-              <p>{pendingFollowUps} lead(s) ainda precisam de follow-up. Comece por quem já recebeu orçamento.</p>
-            </article>
-            <article>
-              <strong>Reforce o canal que mais converte</strong>
-              <p>{topSource ? `${sourceLabels[topSource[0]] || topSource[0]} trouxe ${topSource[1]} atendimento(s).` : 'Ainda não há canal dominante neste período.'}</p>
-            </article>
-            <article>
-              <strong>Use o financeiro como checklist</strong>
-              <p>{money.format(summary?.pending || 0)} ainda aparece como saldo a receber em contratos fechados.</p>
-            </article>
-          </div>
-        </div>
+        </OpsSection>
       </div>
+
+      <OpsSection title="Atendimentos do periodo" text="Tabela gerencial para conferir status, origem e valor.">
+        <div className="ops-table-wrap">
+          <table className="ops-table">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Data</th>
+                <th>Origem</th>
+                <th>Status</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortedEvents.map((event) => (
+                <tr key={event._id}>
+                  <td>{event.clientId?.name || 'Cliente sem nome'}</td>
+                  <td>{event.date ? new Date(event.date).toLocaleDateString('pt-BR') : 'Sem data'}</td>
+                  <td>{sourceLabels[event.source] || event.source || 'Origem nao informada'}</td>
+                  <td>{statusLabels[normalizeStatus(event.status)] || event.status}</td>
+                  <td>{money.format(Number(event.price || 0))}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {!events.length && !loading && <div className="ops-empty">Nenhum atendimento no periodo selecionado.</div>}
+        </div>
+      </OpsSection>
+
+      <OpsSection title="Proximas acoes" text="Leitura rapida para agir sem abrir varias telas.">
+        <div className="ops-insight-row">
+          <article>
+            <strong>Retornos comerciais</strong>
+            <p>{pendingFollowUps} lead(s) precisam de follow-up. Comece por quem ja recebeu orcamento.</p>
+          </article>
+          <article>
+            <strong>Canal mais forte</strong>
+            <p>{topSource ? `${sourceLabels[topSource[0]] || topSource[0]} trouxe ${topSource[1]} atendimento(s).` : 'Ainda nao ha canal dominante neste periodo.'}</p>
+          </article>
+          <article>
+            <strong>Saldo a receber</strong>
+            <p>{money.format(summary?.pending || 0)} ainda aparece como saldo aberto em contratos fechados.</p>
+          </article>
+        </div>
+      </OpsSection>
     </section>
   );
 }

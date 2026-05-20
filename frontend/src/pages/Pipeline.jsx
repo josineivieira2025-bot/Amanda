@@ -102,15 +102,20 @@ export function Pipeline() {
             <div className="pipeline-card-list">
               {(grouped[stage.value] || []).map((event) => (
                 <article className="pipeline-card" key={event._id}>
-                  <strong>{event.clientId?.name || 'Cliente sem nome'}</strong>
-                  <span>{typeLabels[event.type] || event.type || 'Atendimento'}</span>
-                  <small>{event.date ? new Date(event.date).toLocaleDateString('pt-BR') : 'Data a confirmar'}</small>
+                  <div className="pipeline-card-main">
+                    <strong>{event.clientId?.name || 'Cliente sem nome'}</strong>
+                    <span>{typeLabels[event.type] || event.type || 'Atendimento'}</span>
+                  </div>
+                  <small><CalendarDays size={14} /> {event.date ? new Date(event.date).toLocaleDateString('pt-BR') : 'Data a confirmar'}</small>
                   <a className="mini-link-button" href={whatsappUrl(event, nextMessage(event))} target="_blank" rel="noreferrer">
                     <Send size={15} />
                     WhatsApp
                   </a>
                 </article>
               ))}
+              {(grouped[stage.value] || []).length === 0 && (
+                <div className="pipeline-empty">Sem atendimentos nessa etapa</div>
+              )}
             </div>
           </section>
         ))}

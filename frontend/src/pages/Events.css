@@ -1051,3 +1051,201 @@
   border-color: rgba(43, 76, 55, 0.12);
   color: #24352c;
 }
+
+/* Professional CRM treatment for the operational events screen. */
+body.panel-app-mode .events-page {
+  background: #f5f6f3;
+  padding: 18px 0 32px;
+}
+
+body.panel-app-mode .events-shell {
+  width: min(1480px, 100%);
+}
+
+body.panel-app-mode .events-hero {
+  margin-bottom: 14px;
+  padding: 20px 22px;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid rgba(43, 76, 55, 0.1);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+body.panel-app-mode .events-hero__glow {
+  display: none;
+}
+
+body.panel-app-mode .events-hero__eyebrow,
+body.panel-app-mode .section-kicker,
+body.panel-app-mode .modal-kicker {
+  padding: 0;
+  margin-bottom: 10px;
+  border-radius: 0;
+  background: transparent;
+  color: #596a5d;
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body.panel-app-mode .events-hero__head {
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+body.panel-app-mode .events-hero h1 {
+  font-size: clamp(1.65rem, 2.4vw, 2.2rem);
+}
+
+body.panel-app-mode .events-hero p {
+  max-width: 760px;
+  line-height: 1.5;
+}
+
+body.panel-app-mode .hero-stats {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+body.panel-app-mode .hero-stat {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f7f8f5;
+  border: 1px solid rgba(43, 76, 55, 0.08);
+  box-shadow: none;
+}
+
+body.panel-app-mode .hero-stat strong {
+  font-size: 1.45rem;
+}
+
+body.panel-app-mode .events-main,
+body.panel-app-mode .events-sidebar {
+  gap: 12px;
+}
+
+body.panel-app-mode .surface-panel {
+  padding: 16px;
+  border-radius: 14px;
+  background: #ffffff;
+  border: 1px solid rgba(43, 76, 55, 0.1);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+body.panel-app-mode .section-head {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(43, 76, 55, 0.08);
+}
+
+body.panel-app-mode .section-head h2 {
+  font-size: 1.05rem;
+}
+
+body.panel-app-mode .event-types-panel {
+  padding-bottom: 14px;
+}
+
+body.panel-app-mode .type-filter-grid {
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  max-height: 136px;
+  gap: 8px;
+}
+
+body.panel-app-mode .type-filter-card,
+body.panel-app-mode .status-filter-card,
+body.panel-app-mode .tag-card {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #ffffff;
+  border-color: rgba(43, 76, 55, 0.1);
+  box-shadow: none;
+}
+
+body.panel-app-mode .type-filter-card:hover,
+body.panel-app-mode .status-filter-card:hover,
+body.panel-app-mode .tag-card:hover,
+body.panel-app-mode .premium-lead-card:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+body.panel-app-mode .type-filter-card.active,
+body.panel-app-mode .status-filter-card.active,
+body.panel-app-mode .tag-card.active {
+  background: #31543b;
+}
+
+body.panel-app-mode .premium-lead-list {
+  gap: 8px;
+}
+
+body.panel-app-mode .premium-lead-card {
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #ffffff;
+  border-color: rgba(43, 76, 55, 0.1);
+  box-shadow: none;
+}
+
+body.panel-app-mode .lead-card__accent {
+  width: 3px;
+  background: #8aa58d;
+}
+
+body.panel-app-mode .lead-card-top {
+  margin-bottom: 10px;
+}
+
+body.panel-app-mode .lead-card-title-wrap h3 {
+  font-size: 1rem;
+}
+
+body.panel-app-mode .event-type-pill,
+body.panel-app-mode .event-tag-pill,
+body.panel-app-mode .badge,
+body.panel-app-mode .filter-pill {
+  border-radius: 999px;
+  padding: 6px 9px;
+  font-size: 12px;
+}
+
+body.panel-app-mode .premium-meta {
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 6px 12px;
+  margin-bottom: 10px;
+}
+
+body.panel-app-mode .premium-meta span {
+  font-size: 0.84rem;
+}
+
+body.panel-app-mode .premium-notes {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #f8faf6;
+  color: var(--muted);
+}
+
+body.panel-app-mode .premium-actions {
+  gap: 8px;
+}
+
+body.panel-app-mode .filter-popover {
+  border-radius: 14px;
+  box-shadow: 0 18px 50px rgba(33, 54, 39, 0.14);
+}
+
+body.panel-app-mode .event-modal,
+body.panel-app-mode .modal-card {
+  border-radius: 14px;
+  box-shadow: none;
+}
+
+body.panel-app-mode .premium-preview {
+  display: none;
+}

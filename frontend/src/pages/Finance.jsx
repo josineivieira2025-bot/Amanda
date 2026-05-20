@@ -1,14 +1,4 @@
-import {
-  Banknote,
-  CalendarDays,
-  CheckCircle2,
-  CreditCard,
-  DollarSign,
-  Receipt,
-  Trash2,
-  Wallet,
-  WalletCards
-} from 'lucide-react';
+import { Banknote, CreditCard, DollarSign, Receipt, Trash2, Wallet } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { api } from '../api/client.js';
 import { FormField } from '../components/FormField.jsx';
@@ -64,6 +54,17 @@ function eventTitle(event) {
   return `${typeLabels[event.type] || event.type || 'Evento'} - ${event.clientId?.name || 'Cliente sem nome'}`;
 }
 
+function OpsMetric({ icon: Icon, label, value, helper, tone = '' }) {
+  return (
+    <div className={`ops-metric ${tone}`}>
+      <Icon size={18} />
+      <span>{label}</span>
+      <strong>{value}</strong>
+      <small>{helper}</small>
+    </div>
+  );
+}
+
 export function Finance() {
   const [events, setEvents] = useState([]);
   const [payments, setPayments] = useState([]);
@@ -109,7 +110,6 @@ export function Finance() {
   const total = summary?.total || 0;
   const pending = summary?.pending || 0;
   const receivedThisMonth = summary?.receivedThisMonth || 0;
-  const percent = total > 0 ? Math.min(Math.round((paid / total) * 100), 100) : 0;
 
   const selectedEvent = useMemo(
     () => events.find((event) => event._id === form.eventId),
@@ -164,22 +164,14 @@ export function Finance() {
   }
 
   return (
-    <section className="page finance-page finance-pro-page">
-      <div className="finance-hero finance-pro-hero">
+    <section className="page ops-page finance-page">
+      <div className="ops-header">
         <div>
           <span className="hero-eyebrow rose">Financeiro</span>
           <h1>Caixa dos eventos fechados</h1>
-          <p>
-            Aqui entram somente eventos com status Confirmado, Em andamento ou Finalizado.
-            Orcamentos pendentes e enviados ficam fora do financeiro ate o contrato fechar.
-          </p>
-          <div className="hero-footer">
-            <span className="hero-chip rose-chip"><CheckCircle2 size={16} /> {eventBalances.length} fechado(s) no periodo</span>
-            <span className="hero-chip rose-chip"><WalletCards size={16} /> {money.format(receivedThisMonth)} recebido no mes</span>
-          </div>
+          <p>Somente contratos confirmados, em andamento ou finalizados entram no financeiro.</p>
         </div>
-
-        <div className="finance-progress-card finance-period-card">
+        <div className="ops-header-control">
           <span>Periodo</span>
           <input
             type="month"
@@ -187,183 +179,139 @@ export function Finance() {
             onChange={(event) => setPeriod(event.target.value || currentPeriod())}
             aria-label="Selecionar mes financeiro"
           />
-          <strong>{percent}%</strong>
-          <div className="finance-progress"><i style={{ width: `${percent}%` }} /></div>
-          <small>{money.format(paid)} recebido de {money.format(total)} contratado</small>
         </div>
       </div>
 
-      <div className="finance-metrics finance-pro-metrics">
-        <div className="finance-metric">
-          <DollarSign size={20} />
-          <span>Contratado fechado</span>
-          <strong>{money.format(total)}</strong>
-          <small>Soma dos eventos fechados no periodo</small>
-        </div>
-        <div className="finance-metric success">
-          <Wallet size={20} />
-          <span>Recebido desses eventos</span>
-          <strong>{money.format(paid)}</strong>
-          <small>Entradas registradas nesses contratos</small>
-        </div>
-        <div className="finance-metric warning">
-          <Receipt size={20} />
-          <span>A receber</span>
-          <strong>{money.format(pending)}</strong>
-          <small>Saldo pendente dos eventos fechados</small>
-        </div>
-        <div className="finance-metric accent">
-          <Banknote size={20} />
-          <span>Entrou no mes</span>
-          <strong>{money.format(receivedThisMonth)}</strong>
-          <small>Pagamentos recebidos neste periodo</small>
-        </div>
+      <div className="ops-metrics-grid four">
+        <OpsMetric icon={DollarSign} label="Contratado" value={money.format(total)} helper="Total fechado no periodo" />
+        <OpsMetric icon={Wallet} label="Recebido" value={money.format(paid)} helper="Entradas desses contratos" tone="success" />
+        <OpsMetric icon={Receipt} label="A receber" value={money.format(pending)} helper="Saldo pendente" tone="warning" />
+        <OpsMetric icon={Banknote} label="Entrou no mes" value={money.format(receivedThisMonth)} helper="Pagamentos recebidos" />
       </div>
 
-      <div className="finance-workspace">
-        <form className="panel form-panel finance-payment-panel" onSubmit={submit}>
-          <div className="compact-head">
+      <div className="ops-workspace finance-ledger">
+        <section className="ops-section finance-ledger-main">
+          <div className="ops-section-head">
             <div>
-              <h2>Novo pagamento</h2>
-              <p>Registre entradas apenas em contratos fechados.</p>
+              <h2>Eventos fechados</h2>
+              <p>Tabela de contratos do periodo com saldo e progresso de pagamento.</p>
             </div>
-            <div className="section-icon"><CreditCard size={18} /></div>
           </div>
 
-          <FormField label="Evento fechado">
-            <select required value={form.eventId} onChange={(e) => setForm({ ...form, eventId: e.target.value })}>
-              <option value="">Selecione</option>
-              {events.map((event) => (
-                <option key={event._id} value={event._id}>
-                  {eventTitle(event)}
-                </option>
-              ))}
-            </select>
-          </FormField>
+          <div className="ops-table-wrap">
+            <table className="ops-table">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Evento</th>
+                  <th>Status</th>
+                  <th>Contrato</th>
+                  <th>Pago</th>
+                  <th>Saldo</th>
+                  <th>%</th>
+                </tr>
+              </thead>
+              <tbody>
+                {eventBalances.map((event) => (
+                  <tr key={event._id}>
+                    <td>{event.clientId?.name || 'Cliente sem nome'}</td>
+                    <td>{typeLabels[event.type] || event.type || 'Evento'}</td>
+                    <td>{statusLabels[event.status] || event.status}</td>
+                    <td>{money.format(event.price || 0)}</td>
+                    <td>{money.format(event.paidValue)}</td>
+                    <td>{money.format(event.pendingValue)}</td>
+                    <td>{event.progress}%</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {!eventBalances.length && !loading && (
+              <div className="ops-empty">Nenhum evento fechado no periodo selecionado.</div>
+            )}
+          </div>
+        </section>
 
-          {selectedEvent && (
-            <div className="finance-selected-event finance-selected-event-pro">
+        <aside className="ops-inspector">
+          <form className="ops-section ops-form-panel" onSubmit={submit}>
+            <div className="ops-section-head">
               <div>
-                <span>Valor do contrato</span>
-                <strong>{money.format(selectedEvent.price || 0)}</strong>
+                <h2>Registrar pagamento</h2>
+                <p>Lancamento rapido em contrato fechado.</p>
               </div>
-              <div>
-                <span>Ja pago</span>
-                <strong>{money.format(selectedPaid)}</strong>
-              </div>
-              <div>
-                <span>Falta receber</span>
-                <strong>{money.format(selectedPending)}</strong>
-              </div>
+              <CreditCard size={18} />
             </div>
-          )}
 
-          <FormField label="Valor recebido">
-            <input
-              type="number"
-              min="0"
-              step="0.01"
-              inputMode="decimal"
-              value={form.amount}
-              onChange={(e) => setForm({ ...form, amount: e.target.value })}
-              placeholder="0,00"
-            />
-          </FormField>
-
-          <div className="form-duo">
-            <FormField label="Forma">
-              <select value={form.method} onChange={(e) => setForm({ ...form, method: e.target.value })}>
-                {methods.map((method) => <option key={method.value} value={method.value}>{method.label}</option>)}
+            <FormField label="Evento fechado">
+              <select required value={form.eventId} onChange={(e) => setForm({ ...form, eventId: e.target.value })}>
+                <option value="">Selecione</option>
+                {events.map((event) => (
+                  <option key={event._id} value={event._id}>{eventTitle(event)}</option>
+                ))}
               </select>
             </FormField>
-            <FormField label="Pago em">
-              <input type="date" value={form.paidAt} onChange={(e) => setForm({ ...form, paidAt: e.target.value })} />
+
+            {selectedEvent && (
+              <div className="ops-mini-ledger">
+                <span>Contrato <strong>{money.format(selectedEvent.price || 0)}</strong></span>
+                <span>Pago <strong>{money.format(selectedPaid)}</strong></span>
+                <span>Saldo <strong>{money.format(selectedPending)}</strong></span>
+              </div>
+            )}
+
+            <FormField label="Valor recebido">
+              <input
+                type="number"
+                min="0"
+                step="0.01"
+                inputMode="decimal"
+                value={form.amount}
+                onChange={(e) => setForm({ ...form, amount: e.target.value })}
+                placeholder="0,00"
+              />
             </FormField>
-          </div>
 
-          <FormField label="Observacao">
-            <textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} placeholder="Ex.: entrada, restante, parcelamento..." />
-          </FormField>
-
-          <button className="primary-button" disabled={!events.length}>Registrar pagamento</button>
-        </form>
-
-        <div className="finance-side-stack">
-          <div className="panel finance-balance-panel">
-            <div className="compact-head">
-              <div>
-                <h2>Saldos por evento</h2>
-                <p>Somente contratos fechados do periodo selecionado.</p>
-              </div>
-              <CalendarDays size={20} />
+            <div className="form-duo">
+              <FormField label="Forma">
+                <select value={form.method} onChange={(e) => setForm({ ...form, method: e.target.value })}>
+                  {methods.map((method) => <option key={method.value} value={method.value}>{method.label}</option>)}
+                </select>
+              </FormField>
+              <FormField label="Pago em">
+                <input type="date" value={form.paidAt} onChange={(e) => setForm({ ...form, paidAt: e.target.value })} />
+              </FormField>
             </div>
 
-            <div className="finance-balance-list">
-              {loading ? (
-                <div className="empty-state">
-                  <strong>Carregando financeiro</strong>
-                  <p>Buscando contratos e pagamentos.</p>
-                </div>
-              ) : eventBalances.length ? (
-                eventBalances.map((event) => (
-                  <article className="finance-balance-card" key={event._id}>
-                    <div className="finance-balance-head">
-                      <div>
-                        <strong>{event.clientId?.name || 'Cliente sem nome'}</strong>
-                        <span>{typeLabels[event.type] || event.type} - {statusLabels[event.status] || event.status}</span>
-                      </div>
-                      <b>{money.format(event.price || 0)}</b>
-                    </div>
-                    <div className="finance-balance-progress">
-                      <i style={{ width: `${event.progress}%` }} />
-                    </div>
-                    <div className="finance-balance-foot">
-                      <span>Pago: {money.format(event.paidValue)}</span>
-                      <span>Falta: {money.format(event.pendingValue)}</span>
-                    </div>
-                  </article>
-                ))
-              ) : (
-                <div className="empty-state">
-                  <strong>Nenhum evento fechado nesse mes</strong>
-                  <p>Quando um atendimento virar Confirmado, Em andamento ou Finalizado, ele aparece aqui.</p>
-                </div>
-              )}
-            </div>
-          </div>
+            <FormField label="Observacao">
+              <textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} placeholder="Entrada, restante, parcelamento..." />
+            </FormField>
 
-          <div className="panel">
-            <div className="compact-head">
+            <button className="primary-button" disabled={!events.length}>Registrar pagamento</button>
+          </form>
+
+          <section className="ops-section">
+            <div className="ops-section-head">
               <div>
-                <h2>Pagamentos do periodo</h2>
-                <p>Historico de entradas registradas no mes selecionado.</p>
+                <h2>Pagamentos</h2>
+                <p>Entradas registradas no periodo.</p>
               </div>
             </div>
-
-            <div className="payment-list finance-payment-list">
+            <div className="ops-list">
               {payments.map((payment) => (
-                <article className="payment-card finance-payment-card" key={payment._id}>
+                <div className="ops-list-row" key={payment._id}>
                   <div>
-                    <span>{payment.eventId?.clientId?.name || 'Cliente sem nome'}</span>
-                    <strong>{money.format(payment.amount)}</strong>
-                    <small>
-                      {methodLabels[payment.method] || payment.method} - {new Date(payment.paidAt).toLocaleDateString('pt-BR')}
-                    </small>
+                    <strong>{payment.eventId?.clientId?.name || 'Cliente sem nome'}</strong>
+                    <span>{methodLabels[payment.method] || payment.method} - {new Date(payment.paidAt).toLocaleDateString('pt-BR')}</span>
                   </div>
+                  <b>{money.format(payment.amount)}</b>
                   <button className="icon-button danger-button" type="button" onClick={() => deletePayment(payment)} aria-label="Excluir pagamento">
                     <Trash2 size={16} />
                   </button>
-                </article>
-              ))}
-              {payments.length === 0 && (
-                <div className="empty-state">
-                  <strong>Nenhum pagamento registrado nesse periodo</strong>
-                  <p>Registre uma entrada ou altere o mes para consultar pagamentos antigos.</p>
                 </div>
-              )}
+              ))}
+              {!payments.length && <div className="ops-empty">Nenhum pagamento registrado.</div>}
             </div>
-          </div>
-        </div>
+          </section>
+        </aside>
       </div>
     </section>
   );
