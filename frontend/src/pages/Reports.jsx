@@ -6,8 +6,7 @@ const money = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL
 
 const statusLabels = {
   orcamento_pendente: 'Orçamentos pendentes',
-  orcamento_enviado: 'Orçamentos enviados',
-  aguardando_resposta: 'Aguardando resposta',
+  orcamento_enviado: 'Orcamentos enviados / aguardando resposta',
   cliente_problema: 'Clientes sensíveis',
   agendado: 'Agendados',
   confirmado: 'Confirmados',
@@ -36,9 +35,13 @@ function parsePeriod(period) {
   return { year, month };
 }
 
+function normalizeStatus(status = '') {
+  return status === 'aguardando_resposta' ? 'orcamento_enviado' : status;
+}
+
 function groupCount(items, key) {
   return items.reduce((groups, item) => {
-    const value = item[key] || 'outro';
+    const value = key === 'status' ? normalizeStatus(item[key]) : item[key] || 'outro';
     groups[value] = (groups[value] || 0) + 1;
     return groups;
   }, {});
@@ -98,9 +101,9 @@ export function Reports() {
   const statusGroups = useMemo(() => groupCount(events, 'status'), [events]);
   const sourceGroups = useMemo(() => groupCount(events, 'source'), [events]);
   const closedEvents = events.filter((event) => ['agendado', 'confirmado', 'em_andamento', 'finalizado'].includes(event.status));
-  const leads = events.filter((event) => ['orcamento_pendente', 'orcamento_enviado', 'aguardando_resposta'].includes(event.status));
+  const leads = events.filter((event) => ['orcamento_pendente', 'orcamento_enviado'].includes(normalizeStatus(event.status)));
   const conversionRate = events.length > 0 ? Math.round((closedEvents.length / events.length) * 100) : 0;
-  const pendingFollowUps = events.filter((event) => ['orcamento_pendente', 'aguardando_resposta'].includes(event.status)).length;
+  const pendingFollowUps = events.filter((event) => ['orcamento_pendente', 'orcamento_enviado'].includes(normalizeStatus(event.status))).length;
   const received = summary?.receivedThisMonth || 0;
   const contracted = summary?.total || 0;
   const averageClosedTicket = closedEvents.length > 0 ? contracted / closedEvents.length : 0;

@@ -53,8 +53,7 @@ const eventTypes = [
 
 const statuses = [
   { value: 'orcamento_pendente', label: 'Orçamento pendente' },
-  { value: 'orcamento_enviado', label: 'Orçamento enviado' },
-  { value: 'aguardando_resposta', label: 'Aguardando resposta' },
+  { value: 'orcamento_enviado', label: 'Orcamento enviado / aguardando resposta' },
   { value: 'cliente_problema', label: 'Cliente problema' },
   { value: 'agendado', label: 'Agendado' },
   { value: 'confirmado', label: 'Confirmado' },
@@ -84,6 +83,7 @@ const eventTags = [
 ];
 
 const labels = Object.fromEntries([...eventTypes, ...statuses, ...sources, ...eventTags].map((item) => [item.value, item.label]));
+labels.aguardando_resposta = labels.orcamento_enviado;
 
 const initial = {
   clientId: '',
@@ -100,6 +100,10 @@ const initial = {
 
 function toDatetimeLocal(date) {
   return format(date, "yyyy-MM-dd'T'HH:mm");
+}
+
+function normalizeStatus(status = '') {
+  return status === 'aguardando_resposta' ? 'orcamento_enviado' : status;
 }
 
 function statusClass(status = '') {
@@ -127,7 +131,8 @@ export function Events() {
 
   const statusCounts = useMemo(() => {
     return events.reduce((counts, event) => {
-      counts[event.status] = (counts[event.status] || 0) + 1;
+      const status = normalizeStatus(event.status);
+      counts[status] = (counts[status] || 0) + 1;
       return counts;
     }, { all: events.length });
   }, [events]);
@@ -141,7 +146,7 @@ export function Events() {
 
   const filteredEvents = useMemo(() => {
     return events
-      .filter((event) => (statusFilter ? event.status === statusFilter : true))
+      .filter((event) => (statusFilter ? normalizeStatus(event.status) === statusFilter : true))
       .filter((event) => (tagFilter ? event.tag === tagFilter : true))
       .filter((event) => (typeFilter ? event.type === typeFilter : true));
   }, [events, statusFilter, tagFilter, typeFilter]);
@@ -219,7 +224,7 @@ export function Events() {
       clientId: event.clientId?._id || event.clientId || '',
       type: event.type || initial.type,
       source: event.source || 'instagram',
-      status: event.status || 'orcamento_pendente',
+      status: normalizeStatus(event.status) || 'orcamento_pendente',
       tag: event.tag || '',
       date: event.date ? toDatetimeLocal(new Date(event.date)) : '',
       followUpAt: event.followUpAt ? toDatetimeLocal(new Date(event.followUpAt)) : '',
@@ -504,7 +509,7 @@ export function Events() {
                       </div>
 
                       <span className={`badge ${statusClass(event.status)}`}>
-                        {labels[event.status] || event.status}
+                        {labels[normalizeStatus(event.status)] || event.status}
                       </span>
                     </div>
 

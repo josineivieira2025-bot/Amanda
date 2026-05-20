@@ -3,6 +3,7 @@ import { Event } from '../models/Event.js';
 function normalizeEventPayload(data) {
   return {
     ...data,
+    status: data.status === 'aguardando_resposta' ? 'orcamento_enviado' : data.status,
     endDate: data.endDate || undefined,
     followUpAt: data.followUpAt || undefined,
     budgetSentAt: data.budgetSentAt || undefined
@@ -11,7 +12,11 @@ function normalizeEventPayload(data) {
 
 export async function listEvents(photographerId, filters = {}) {
   const query = {};
-  if (filters.status) query.status = filters.status;
+  if (filters.status) {
+    query.status = filters.status === 'orcamento_enviado'
+      ? { $in: ['orcamento_enviado', 'aguardando_resposta'] }
+      : filters.status;
+  }
   if (filters.tag) query.tag = filters.tag;
   if (filters.from || filters.to) {
     query.date = {};

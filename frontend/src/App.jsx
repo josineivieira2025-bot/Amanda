@@ -8,7 +8,6 @@ import { Catalog } from './pages/Catalog.jsx';
 import { ClientGallery } from './pages/ClientGallery.jsx';
 import { Clients } from './pages/Clients.jsx';
 import { Contracts } from './pages/Contracts.jsx';
-import { Dashboard } from './pages/Dashboard.jsx';
 import { Events } from './pages/Events.jsx';
 import { Finance } from './pages/Finance.jsx';
 import { Gallery } from './pages/Gallery.jsx';
@@ -39,7 +38,7 @@ export function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Dashboard />} />
+          <Route index element={<Reports />} />
           <Route path="pipeline" element={<Pipeline />} />
           <Route path="agenda" element={<Agenda />} />
           <Route path="tarefas" element={<Tasks />} />
@@ -81,7 +80,7 @@ export function App() {
           </ProtectedRoute>
         }
       >
-        <Route index element={<Dashboard />} />
+        <Route index element={<Reports />} />
         <Route path="pipeline" element={<Pipeline />} />
         <Route path="agenda" element={<Agenda />} />
         <Route path="tarefas" element={<Tasks />} />

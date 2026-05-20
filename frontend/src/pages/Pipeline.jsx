@@ -4,8 +4,7 @@ import { api } from '../api/client.js';
 
 const stages = [
   { value: 'orcamento_pendente', label: 'Novo lead', helper: 'Chegou e ainda precisa de resposta' },
-  { value: 'orcamento_enviado', label: 'Orçamento enviado', helper: 'Proposta enviada para o cliente' },
-  { value: 'aguardando_resposta', label: 'Follow-up', helper: 'Precisa de retorno comercial' },
+  { value: 'orcamento_enviado', label: 'Orcamento enviado', helper: 'Proposta enviada; aguardando resposta do cliente' },
   { value: 'agendado', label: 'Agendado', helper: 'Data reservada na agenda' },
   { value: 'confirmado', label: 'Confirmado', helper: 'Contrato fechado' },
   { value: 'finalizado', label: 'Finalizado', helper: 'Evento concluído' }
@@ -27,6 +26,10 @@ function formatPhone(value = '') {
   return digits;
 }
 
+function normalizeStatus(status = '') {
+  return status === 'aguardando_resposta' ? 'orcamento_enviado' : status;
+}
+
 function whatsappUrl(event, text) {
   const phone = formatPhone(event.clientId?.phone);
   const query = new URLSearchParams({
@@ -41,7 +44,7 @@ function nextMessage(event) {
   if (event.status === 'orcamento_pendente') {
     return `Oi, ${name}! Recebi seu pedido de orçamento e já vou te ajudar com as opções de ensaio/fotografia. Qual melhor horário para falarmos?`;
   }
-  if (event.status === 'orcamento_enviado' || event.status === 'aguardando_resposta') {
+  if (normalizeStatus(event.status) === 'orcamento_enviado') {
     return `Oi, ${name}! Passando para saber se conseguiu ver o orçamento. Posso tirar dúvidas ou ajustar a proposta para sua data.`;
   }
   return `Oi, ${name}! Passando para confirmar os detalhes do nosso atendimento e deixar tudo organizado para a data.`;
@@ -56,12 +59,12 @@ export function Pipeline() {
 
   const grouped = useMemo(() => {
     return stages.reduce((groups, stage) => {
-      groups[stage.value] = events.filter((event) => event.status === stage.value);
+      groups[stage.value] = events.filter((event) => normalizeStatus(event.status) === stage.value);
       return groups;
     }, {});
   }, [events]);
 
-  const openLeads = (grouped.orcamento_pendente?.length || 0) + (grouped.orcamento_enviado?.length || 0) + (grouped.aguardando_resposta?.length || 0);
+  const openLeads = (grouped.orcamento_pendente?.length || 0) + (grouped.orcamento_enviado?.length || 0);
   const closed = (grouped.agendado?.length || 0) + (grouped.confirmado?.length || 0) + (grouped.finalizado?.length || 0);
   const conversion = events.length ? Math.round((closed / events.length) * 100) : 0;
 

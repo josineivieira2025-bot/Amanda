@@ -8,7 +8,6 @@ import {
   FileText,
   Image,
   Kanban,
-  LayoutDashboard,
   ListChecks,
   LogOut,
   Menu,
@@ -24,7 +23,7 @@ import { api } from '../api/client.js';
 import { useAuth } from '../context/AuthContext.jsx';
 
 const links = [
-  { to: '/painel', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/painel', label: 'Relatórios', icon: BarChart3 },
   { to: '/painel/pipeline', label: 'Pipeline', icon: Kanban },
   { to: '/painel/agenda', label: 'Agenda', icon: CalendarDays },
   { to: '/painel/tarefas', label: 'Tarefas', icon: ListChecks },
@@ -34,8 +33,7 @@ const links = [
   { to: '/painel/catalogo', label: 'Catálogo', icon: BookOpen },
   { to: '/painel/galeria', label: 'Galeria', icon: Camera },
   { to: '/painel/pos-evento', label: 'Pós-evento', icon: Image },
-  { to: '/painel/financeiro', label: 'Financeiro', icon: CreditCard },
-  { to: '/painel/relatorios', label: 'Relatórios', icon: BarChart3 }
+  { to: '/painel/financeiro', label: 'Financeiro', icon: CreditCard }
 ];
 
 function storageKey(userId, suffix) {

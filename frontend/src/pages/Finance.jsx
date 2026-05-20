@@ -171,7 +171,7 @@ export function Finance() {
           <h1>Caixa dos eventos fechados</h1>
           <p>
             Aqui entram somente eventos com status Confirmado, Em andamento ou Finalizado.
-            Orcamentos pendentes e aguardando resposta ficam fora do financeiro.
+            Orcamentos pendentes e enviados ficam fora do financeiro ate o contrato fechar.
           </p>
           <div className="hero-footer">
             <span className="hero-chip rose-chip"><CheckCircle2 size={16} /> {eventBalances.length} fechado(s) no periodo</span>

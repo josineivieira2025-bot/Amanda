@@ -32,8 +32,7 @@ const eventTypes = [
 
 const statuses = [
   { value: 'orcamento_pendente', label: 'Orcamento pendente' },
-  { value: 'orcamento_enviado', label: 'Orcamento enviado' },
-  { value: 'aguardando_resposta', label: 'Aguardando resposta' },
+  { value: 'orcamento_enviado', label: 'Orcamento enviado / aguardando resposta' },
   { value: 'cliente_problema', label: 'Cliente problema' },
   { value: 'agendado', label: 'Agendado' },
   { value: 'confirmado', label: 'Confirmado' },
@@ -61,7 +60,7 @@ function eventToForm(event) {
     clientId: event.clientId?._id || event.clientId || '',
     type: event.type || 'aniversario_infantil',
     source: event.source || 'instagram',
-    status: event.status || 'orcamento_pendente',
+    status: event.status === 'aguardando_resposta' ? 'orcamento_enviado' : event.status || 'orcamento_pendente',
     date: toDatetimeLocal(event.date),
     followUpAt: toDatetimeLocal(event.followUpAt),
     location: event.location || '',
@@ -192,4 +191,3 @@ export function EventModal({ event, open, onClose, onSaved }) {
     </div>
   );
 }
-

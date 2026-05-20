@@ -18,8 +18,7 @@ import { EventModal } from '../components/EventModal.jsx';
 
 const statusLabels = {
   orcamento_pendente: 'Orçamento pendente',
-  orcamento_enviado: 'Orçamento enviado',
-  aguardando_resposta: 'Aguardando resposta',
+  orcamento_enviado: 'Orcamento enviado / aguardando resposta',
   cliente_problema: 'Cliente problema',
   agendado: 'Agendado',
   confirmado: 'Confirmado',
@@ -62,6 +61,10 @@ function isBlockedEvent(event) {
 
 function isClosedEvent(event) {
   return ['agendado', 'confirmado', 'em_andamento', 'finalizado'].includes(event?.status);
+}
+
+function normalizeStatus(status = '') {
+  return status === 'aguardando_resposta' ? 'orcamento_enviado' : status;
 }
 
 function statusTone(status = '') {
@@ -113,7 +116,7 @@ export function Agenda() {
   const filteredEvents = useMemo(() => {
     const term = normalizeText(search);
     return periodEvents
-      .filter((event) => (statusFilter ? event.status === statusFilter : true))
+      .filter((event) => (statusFilter ? normalizeStatus(event.status) === statusFilter : true))
       .filter((event) => {
         if (!term) return true;
         return normalizeText(`${event.clientId?.name || ''} ${event.location || ''} ${event.type || ''}`).includes(term);
@@ -133,7 +136,7 @@ export function Agenda() {
   const selectedDayEvents = selectedDay?.events || [];
   const closedCount = periodEvents.filter(isClosedEvent).length;
   const blockedCount = periodEvents.filter(isBlockedEvent).length;
-  const leadCount = periodEvents.filter((event) => ['orcamento_pendente', 'orcamento_enviado', 'aguardando_resposta'].includes(event.status)).length;
+  const leadCount = periodEvents.filter((event) => ['orcamento_pendente', 'orcamento_enviado'].includes(normalizeStatus(event.status))).length;
   const periodLabel = mode === 'month'
     ? format(date, "MMMM 'de' yyyy", { locale: ptBR })
     : `Semana de ${format(date, 'dd/MM', { locale: ptBR })}`;
@@ -250,7 +253,7 @@ export function Agenda() {
                   <div>
                     <strong>{event.clientId?.name || 'Cliente sem nome'}</strong>
                     <span>{format(new Date(event.date), 'HH:mm')} - {typeLabels[event.type] || event.type}</span>
-                    <small className={`badge ${statusTone(event.status)}`}>{statusLabels[event.status] || event.status}</small>
+                    <small className={`badge ${statusTone(event.status)}`}>{statusLabels[normalizeStatus(event.status)] || event.status}</small>
                   </div>
                 </button>
               ))}
@@ -285,7 +288,7 @@ export function Agenda() {
                   <span><CalendarDays size={15} /> {typeLabels[event.type] || event.type}</span>
                   <span><Clock size={15} /> {format(new Date(event.date), 'HH:mm')} {event.endDate ? `- ${format(new Date(event.endDate), 'HH:mm')}` : ''}</span>
                   <span><MapPin size={15} /> {event.location || 'Local a confirmar'}</span>
-                  <small className={`badge ${statusTone(event.status)}`}>{statusLabels[event.status] || event.status}</small>
+                  <small className={`badge ${statusTone(event.status)}`}>{statusLabels[normalizeStatus(event.status)] || event.status}</small>
                 </button>
               ))}
               {!selectedDayEvents.length && (
