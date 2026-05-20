@@ -1035,7 +1035,19 @@
 }
 
 
-/* Hide only the large budget preview card in the event modal. */
+/* Remove the pink budget preview card and keep the budget actions visible. */
+.premium-preview {
+  background: #fff;
+  border: 1px solid rgba(43, 76, 55, 0.12);
+  box-shadow: 0 10px 30px rgba(33, 54, 39, 0.08);
+}
+
 .premium-budget-card {
-  display: none;
+  display: none !important;
+}
+
+.budget-message {
+  background: #f8faf6;
+  border-color: rgba(43, 76, 55, 0.12);
+  color: #24352c;
 }
