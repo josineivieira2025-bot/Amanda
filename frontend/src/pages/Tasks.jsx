@@ -1,14 +1,14 @@
-import { CheckCircle2, Clock, ListChecks, Save } from 'lucide-react';
+import { ListChecks } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { api } from '../api/client.js';
 
 const taskTemplates = [
-  'Enviar orçamento',
+  'Enviar orcamento',
   'Fazer follow-up',
   'Confirmar pagamento de entrada',
   'Separar contrato',
-  'Confirmar local e horário',
-  'Editar prévia',
+  'Confirmar local e horario',
+  'Editar previa',
   'Enviar galeria',
   'Entregar arquivos finais'
 ];
@@ -20,9 +20,18 @@ function taskKey(eventId, task) {
 export function Tasks() {
   const [events, setEvents] = useState([]);
   const [done, setDone] = useState({});
+  const [selectedId, setSelectedId] = useState('');
 
   useEffect(() => {
-    api('/events').then(setEvents).catch(console.error);
+    api('/events')
+      .then((items) => {
+        const active = items
+          .filter((event) => event.status !== 'cancelado')
+          .sort((a, b) => new Date(a.date) - new Date(b.date));
+        setEvents(active);
+        setSelectedId(active[0]?._id || '');
+      })
+      .catch(console.error);
     try {
       setDone(JSON.parse(localStorage.getItem('photo_erp_tasks') || '{}'));
     } catch {
@@ -37,70 +46,90 @@ export function Tasks() {
     localStorage.setItem('photo_erp_tasks', JSON.stringify(next));
   }
 
-  const activeEvents = useMemo(
-    () => events
-      .filter((event) => event.status !== 'cancelado')
-      .sort((a, b) => new Date(a.date) - new Date(b.date))
-      .slice(0, 12),
-    [events]
-  );
-
-  const totalTasks = activeEvents.length * taskTemplates.length;
-  const doneCount = activeEvents.reduce((sum, event) => (
+  const selectedEvent = useMemo(() => events.find((event) => event._id === selectedId) || events[0], [events, selectedId]);
+  const totalTasks = events.length * taskTemplates.length;
+  const doneCount = events.reduce((sum, event) => (
     sum + taskTemplates.filter((task) => done[taskKey(event._id, task)]).length
   ), 0);
 
   return (
-    <section className="page tasks-page">
-      <div className="module-hero">
+    <section className="page ops-page">
+      <div className="ops-header">
         <div>
           <span className="hero-eyebrow rose">Tarefas</span>
           <h1>Checklist operacional</h1>
-          <p>Controle as etapas de orçamento, contrato, pagamento, edição e entrega por atendimento.</p>
+          <p>Controle pendencias de atendimento, contrato, pagamento, edicao e entrega.</p>
         </div>
-        <div className="module-hero-card">
-          <span>Concluído</span>
+        <div className="ops-header-control">
+          <span>Concluido</span>
           <strong>{totalTasks ? Math.round((doneCount / totalTasks) * 100) : 0}%</strong>
-          <small>{doneCount} de {totalTasks} tarefas marcadas</small>
         </div>
       </div>
 
-      <div className="tasks-grid">
-        {activeEvents.map((event) => {
-          const eventDone = taskTemplates.filter((task) => done[taskKey(event._id, task)]).length;
-          return (
-            <article className="task-event-card" key={event._id}>
-              <div className="task-event-head">
-                <div>
-                  <strong>{event.clientId?.name || 'Cliente sem nome'}</strong>
-                  <span>{event.date ? new Date(event.date).toLocaleDateString('pt-BR') : 'Data a confirmar'}</span>
-                </div>
-                <b>{eventDone}/{taskTemplates.length}</b>
+      <div className="ops-workspace">
+        <section className="ops-section">
+          <div className="ops-section-head">
+            <div>
+              <h2>Atendimentos ativos</h2>
+              <p>Selecione uma linha para revisar o checklist.</p>
+            </div>
+          </div>
+          <div className="ops-table-wrap">
+            <table className="ops-table">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Data</th>
+                  <th>Status</th>
+                  <th>Progresso</th>
+                </tr>
+              </thead>
+              <tbody>
+                {events.map((event) => {
+                  const finished = taskTemplates.filter((task) => done[taskKey(event._id, task)]).length;
+                  return (
+                    <tr key={event._id} className={selectedEvent?._id === event._id ? 'selected-row' : ''} onClick={() => setSelectedId(event._id)}>
+                      <td>{event.clientId?.name || 'Cliente sem nome'}</td>
+                      <td>{event.date ? new Date(event.date).toLocaleDateString('pt-BR') : 'Sem data'}</td>
+                      <td>{event.status}</td>
+                      <td>{finished}/{taskTemplates.length}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            {!events.length && <div className="ops-empty">Nenhum atendimento ativo.</div>}
+          </div>
+        </section>
+
+        <aside className="ops-inspector">
+          <section className="ops-section">
+            <div className="ops-section-head">
+              <div>
+                <h2>Checklist</h2>
+                <p>{selectedEvent?.clientId?.name || 'Selecione um atendimento'}</p>
               </div>
-              <div className="task-list">
+              <ListChecks size={18} />
+            </div>
+            {selectedEvent ? (
+              <div className="ops-check-list">
                 {taskTemplates.map((task) => (
-                  <label className="task-check" key={task}>
+                  <label className="ops-check-row" key={task}>
                     <input
                       type="checkbox"
-                      checked={Boolean(done[taskKey(event._id, task)])}
-                      onChange={() => toggle(event._id, task)}
+                      checked={Boolean(done[taskKey(selectedEvent._id, task)])}
+                      onChange={() => toggle(selectedEvent._id, task)}
                     />
                     <span>{task}</span>
                   </label>
                 ))}
               </div>
-            </article>
-          );
-        })}
+            ) : (
+              <div className="ops-empty">Sem checklist selecionado.</div>
+            )}
+          </section>
+        </aside>
       </div>
-
-      {!activeEvents.length && (
-        <div className="empty-state">
-          <ListChecks size={24} />
-          <strong>Nenhum atendimento ativo</strong>
-          <p>Quando houver eventos ou leads, os checklists aparecem aqui.</p>
-        </div>
-      )}
     </section>
   );
 }

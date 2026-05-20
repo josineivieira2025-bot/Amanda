@@ -272,8 +272,8 @@ export function Catalog() {
   }
 
   return (
-    <section className="page">
-      <div className="page-title row-title">
+    <section className="page ops-page">
+      <div className="ops-header">
         <div>
           <h1>Catalogo</h1>
           <p>Edite servicos, pacotes e extras do site publico.</p>
@@ -286,9 +286,9 @@ export function Catalog() {
 
       {(message || error) && <p className={error ? 'error settings-alert' : 'success settings-alert'}>{error || message}</p>}
 
-      <div className="catalog-grid">
-        <div className="panel catalog-sidebar">
-          <div className="compact-head">
+      <div className="ops-workspace catalog-grid">
+        <aside className="ops-section catalog-sidebar">
+          <div className="ops-section-head">
             <div>
               <h2>Servicos do site</h2>
               <p>Escolha um servico para editar valores e descricoes curtas.</p>
@@ -326,12 +326,12 @@ export function Catalog() {
               </button>
             ))}
           </div>
-        </div>
+        </aside>
 
         {selectedService && (
           <div className="catalog-editor">
-            <div className="panel form-panel">
-              <div className="compact-head">
+            <div className="ops-section form-panel">
+              <div className="ops-section-head">
                 <div>
                   <h2><BookOpen size={18} /> Dados do servico</h2>
                   <p>Essas informacoes alimentam o catalogo publico e o simulador.</p>
@@ -357,8 +357,8 @@ export function Catalog() {
             </div>
 
             <div className="catalog-columns">
-              <div className="panel">
-                <div className="compact-head">
+              <div className="ops-section">
+                <div className="ops-section-head">
                   <div>
                     <h2><Package size={18} /> Pacotes</h2>
                     <p>Edite nome, valor, duracao, prazo de entrega e os itens mostrados no simulador.</p>
@@ -371,7 +371,7 @@ export function Catalog() {
 
                 <div className="catalog-card-list">
                   {selectedService.packages.map((item) => (
-                    <div className="catalog-card" key={item.id}>
+                    <div className="catalog-card ops-editor-row" key={item.id}>
                       <div className="catalog-card-head">
                         <strong>{item.name}</strong>
                         <div className="catalog-card-actions">
@@ -429,8 +429,8 @@ export function Catalog() {
                 </div>
               </div>
 
-              <div className="panel">
-                <div className="compact-head">
+              <div className="ops-section">
+                <div className="ops-section-head">
                   <div>
                     <h2><Tag size={18} /> Extras</h2>
                     <p>Edite os complementos que aparecem no simulador publico.</p>
@@ -443,7 +443,7 @@ export function Catalog() {
 
                 <div className="catalog-card-list">
                   {selectedService.extras.map((item) => (
-                    <div className="catalog-card" key={item.id}>
+                    <div className="catalog-card ops-editor-row" key={item.id}>
                       <div className="catalog-card-head">
                         <strong>{item.name}</strong>
                         <div className="catalog-card-actions">
@@ -477,7 +477,7 @@ export function Catalog() {
               </div>
             </div>
 
-            <div className="panel catalog-highlight">
+            <div className="ops-section catalog-highlight">
               <span><Sparkles size={16} /> Publicacao do site</span>
               <strong>Esses valores passam a alimentar a simulacao publica.</strong>
               <p>Quando voce salva aqui, os novos pacotes e extras ficam disponiveis para os clientes no site publico e para os orcamentos que entrarem pelo simulador.</p>

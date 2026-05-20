@@ -9,20 +9,20 @@ function buildContract(event) {
   const date = event.date ? new Date(event.date).toLocaleDateString('pt-BR') : 'DATA A DEFINIR';
   const value = money.format(event.price || 0);
 
-  return `CONTRATO DE PRESTAÇÃO DE SERVIÇOS FOTOGRÁFICOS
+  return `CONTRATO DE PRESTACAO DE SERVICOS FOTOGRAFICOS
 
 CONTRATANTE: ${client}
 CONTRATADA: Mel Fotografia
-SERVIÇO: ${event.type || 'Serviço fotográfico'}
+SERVICO: ${event.type || 'Servico fotografico'}
 DATA: ${date}
 LOCAL: ${event.location || 'A confirmar'}
 VALOR: ${value}
 
-1. A CONTRATADA realizará a cobertura fotográfica do serviço descrito acima.
-2. A reserva da data ocorre mediante confirmação do atendimento e pagamento de entrada, quando aplicável.
-3. Prazos de seleção, edição e entrega serão alinhados pelo atendimento.
-4. Alterações de data dependem de disponibilidade da agenda.
-5. Este texto é um modelo inicial e pode ser revisado antes do envio ao cliente.
+1. A CONTRATADA realizara a cobertura fotografica do servico descrito acima.
+2. A reserva da data ocorre mediante confirmacao do atendimento e pagamento de entrada, quando aplicavel.
+3. Prazos de selecao, edicao e entrega serao alinhados pelo atendimento.
+4. Alteracoes de data dependem de disponibilidade da agenda.
+5. Este texto e um modelo inicial e pode ser revisado antes do envio ao cliente.
 
 Assinatura do cliente: ______________________________
 Assinatura da contratada: ___________________________`;
@@ -43,16 +43,18 @@ export function Contracts() {
   useEffect(() => {
     api('/events')
       .then((items) => {
-        const closed = items.filter((event) => ['agendado', 'confirmado', 'em_andamento', 'finalizado'].includes(event.status));
+        const closed = items
+          .filter((event) => ['agendado', 'confirmado', 'em_andamento', 'finalizado'].includes(event.status))
+          .sort((a, b) => new Date(a.date) - new Date(b.date));
         setEvents(closed);
         setSelectedId(closed[0]?._id || '');
       })
       .catch(console.error);
   }, []);
 
-  const selectedEvent = useMemo(() => events.find((event) => event._id === selectedId), [events, selectedId]);
+  const selectedEvent = useMemo(() => events.find((event) => event._id === selectedId) || events[0], [events, selectedId]);
   const contractText = selectedEvent ? buildContract(selectedEvent) : '';
-  const whatsappText = selectedEvent ? `Olá! Segue o modelo de contrato para conferirmos os dados:\n\n${contractText}` : '';
+  const whatsappText = selectedEvent ? `Ola! Segue o modelo de contrato para conferirmos os dados:\n\n${contractText}` : '';
   const phone = formatPhone(selectedEvent?.clientId?.phone);
   const whatsappUrl = `https://api.whatsapp.com/send?${new URLSearchParams({ ...(phone ? { phone } : {}), text: whatsappText })}`;
 
@@ -63,55 +65,63 @@ export function Contracts() {
   }
 
   return (
-    <section className="page contracts-page">
-      <div className="module-hero">
+    <section className="page ops-page">
+      <div className="ops-header">
         <div>
           <span className="hero-eyebrow rose">Contratos</span>
-          <h1>Gerador de contrato</h1>
-          <p>Gere um modelo inicial com dados do evento para revisar e enviar ao cliente.</p>
+          <h1>Contratos de eventos</h1>
+          <p>Selecione um evento fechado, revise o texto e envie para conferencia do cliente.</p>
         </div>
-        <div className="module-hero-card">
-          <span>Contratos possíveis</span>
+        <div className="ops-header-control">
+          <span>Disponiveis</span>
           <strong>{events.length}</strong>
-          <small>eventos agendados, confirmados ou finalizados</small>
         </div>
       </div>
 
-      <div className="contracts-grid">
-        <div className="panel">
-          <div className="compact-head">
+      <div className="ops-workspace contracts-workspace">
+        <section className="ops-section">
+          <div className="ops-section-head">
             <div>
-              <h2>Evento</h2>
-              <p>Escolha o atendimento para gerar o documento.</p>
+              <h2>Eventos elegiveis</h2>
+              <p>Agendados, confirmados, em andamento ou finalizados.</p>
             </div>
-            <FileText size={20} />
           </div>
-          <select value={selectedId} onChange={(event) => setSelectedId(event.target.value)}>
-            <option value="">Selecione</option>
-            {events.map((event) => (
-              <option key={event._id} value={event._id}>
-                {event.clientId?.name || 'Cliente sem nome'} - {event.date ? new Date(event.date).toLocaleDateString('pt-BR') : 'Sem data'}
-              </option>
-            ))}
-          </select>
+          <div className="ops-table-wrap">
+            <table className="ops-table">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Data</th>
+                  <th>Status</th>
+                  <th>Valor</th>
+                </tr>
+              </thead>
+              <tbody>
+                {events.map((event) => (
+                  <tr key={event._id} className={selectedEvent?._id === event._id ? 'selected-row' : ''} onClick={() => setSelectedId(event._id)}>
+                    <td>{event.clientId?.name || 'Cliente sem nome'}</td>
+                    <td>{event.date ? new Date(event.date).toLocaleDateString('pt-BR') : 'Sem data'}</td>
+                    <td>{event.status}</td>
+                    <td>{money.format(event.price || 0)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {!events.length && <div className="ops-empty">Nenhum evento elegivel para contrato.</div>}
+          </div>
+        </section>
 
-          {selectedEvent && (
-            <div className="contract-summary">
-              <span>Cliente</span>
-              <strong>{selectedEvent.clientId?.name || 'Cliente sem nome'}</strong>
-              <span>Valor</span>
-              <strong>{money.format(selectedEvent.price || 0)}</strong>
+        <aside className="ops-inspector contract-inspector">
+          <section className="ops-section">
+            <div className="ops-section-head">
+              <div>
+                <h2>Previa do contrato</h2>
+                <p>{selectedEvent?.clientId?.name || 'Selecione um evento'}</p>
+              </div>
+              <FileText size={18} />
             </div>
-          )}
-        </div>
-
-        <div className="panel contract-preview-panel">
-          <div className="compact-head">
-            <div>
-              <h2>Prévia do contrato</h2>
-              <p>Texto editável fora do sistema após copiar.</p>
-            </div>
-            <div className="toolbar">
+            <pre className="ops-document-preview">{contractText || 'Selecione um evento para gerar o contrato.'}</pre>
+            <div className="ops-actions-row">
               <button className="ghost-button" type="button" disabled={!contractText} onClick={copyContract}>
                 <Copy size={16} />
                 {copied ? 'Copiado' : 'Copiar'}
@@ -121,9 +131,8 @@ export function Contracts() {
                 WhatsApp
               </a>
             </div>
-          </div>
-          <pre className="contract-preview">{contractText || 'Selecione um evento para gerar o contrato.'}</pre>
-        </div>
+          </section>
+        </aside>
       </div>
     </section>
   );

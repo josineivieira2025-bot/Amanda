@@ -7,15 +7,15 @@ const stages = [
   { value: 'orcamento_enviado', label: 'Orcamento enviado', helper: 'Proposta enviada; aguardando resposta do cliente' },
   { value: 'agendado', label: 'Agendado', helper: 'Data reservada na agenda' },
   { value: 'confirmado', label: 'Confirmado', helper: 'Contrato fechado' },
-  { value: 'finalizado', label: 'Finalizado', helper: 'Evento concluído' }
+  { value: 'finalizado', label: 'Finalizado', helper: 'Evento concluÃ­do' }
 ];
 
 const typeLabels = {
-  aniversario_infantil: 'Aniversário infantil',
+  aniversario_infantil: 'AniversÃ¡rio infantil',
   casamento: 'Casamento',
   ensaio_gestante: 'Ensaio gestante',
   ensaio_casal: 'Ensaio casal',
-  ensaio_familia: 'Ensaio família',
+  ensaio_familia: 'Ensaio famÃ­lia',
   outro: 'Outro'
 };
 
@@ -42,10 +42,10 @@ function whatsappUrl(event, text) {
 function nextMessage(event) {
   const name = event.clientId?.name?.split(' ')[0] || 'tudo bem';
   if (event.status === 'orcamento_pendente') {
-    return `Oi, ${name}! Recebi seu pedido de orçamento e já vou te ajudar com as opções de ensaio/fotografia. Qual melhor horário para falarmos?`;
+    return `Oi, ${name}! Recebi seu pedido de orÃ§amento e jÃ¡ vou te ajudar com as opÃ§Ãµes de ensaio/fotografia. Qual melhor horÃ¡rio para falarmos?`;
   }
   if (normalizeStatus(event.status) === 'orcamento_enviado') {
-    return `Oi, ${name}! Passando para saber se conseguiu ver o orçamento. Posso tirar dúvidas ou ajustar a proposta para sua data.`;
+    return `Oi, ${name}! Passando para saber se conseguiu ver o orÃ§amento. Posso tirar dÃºvidas ou ajustar a proposta para sua data.`;
   }
   return `Oi, ${name}! Passando para confirmar os detalhes do nosso atendimento e deixar tudo organizado para a data.`;
 }
@@ -69,21 +69,21 @@ export function Pipeline() {
   const conversion = events.length ? Math.round((closed / events.length) * 100) : 0;
 
   return (
-    <section className="page pipeline-page">
-      <div className="module-hero">
+    <section className="page ops-page pipeline-page">
+      <div className="ops-header">
         <div>
           <span className="hero-eyebrow rose">CRM</span>
           <h1>Pipeline comercial</h1>
-          <p>Veja cada atendimento por etapa e aja rápido nos leads que ainda precisam de resposta.</p>
+          <p>Veja cada atendimento por etapa e aja rÃ¡pido nos leads que ainda precisam de resposta.</p>
         </div>
-        <div className="module-hero-card">
-          <span>Conversão</span>
+        <div className="ops-header-control">
+          <span>ConversÃ£o</span>
           <strong>{conversion}%</strong>
           <small>{closed} fechado(s) de {events.length} atendimento(s)</small>
         </div>
       </div>
 
-      <div className="module-metrics three">
+      <div className="ops-metrics-grid three">
         <div><MessageCircle size={20} /><span>Leads abertos</span><strong>{openLeads}</strong></div>
         <div><TrendingUp size={20} /><span>Fechados</span><strong>{closed}</strong></div>
         <div><CalendarDays size={20} /><span>Total no funil</span><strong>{events.length}</strong></div>

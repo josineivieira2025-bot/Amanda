@@ -73,78 +73,30 @@ export function Users() {
   if (user.role !== 'admin') return <Navigate to="/painel" replace />;
 
   return (
-    <section className="page">
-      <div className="page-title">
-        <h1>Usuarios</h1>
-        <p>Crie, liste e exclua contas de acesso. Apenas administradores veem esta tela.</p>
+    <section className="page ops-page">
+      <div className="ops-header">
+        <div>
+          <span className="hero-eyebrow rose">Usuarios</span>
+          <h1>Acessos do sistema</h1>
+          <p>Crie, liste e exclua contas. Apenas administradores veem esta tela.</p>
+        </div>
       </div>
 
       {(message || error) && <p className={error ? 'error' : 'success'}>{error || message}</p>}
 
-      <div className="panel user-management-grid">
-        <form className="panel form-panel" onSubmit={createUser}>
-          <h2>Criar novo usuario</h2>
-
-          <FormField label="Nome completo">
-            <div className="input-icon">
-              <User size={18} />
-              <input
-                required
-                value={form.name}
-                onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))}
-              />
+      <div className="ops-workspace users-workspace">
+        <section className="ops-section">
+          <div className="ops-section-head">
+            <div>
+              <h2>Usuarios cadastrados</h2>
+              <p>Contas com acesso ao painel.</p>
             </div>
-          </FormField>
-
-          <FormField label="Estudio">
-            <div className="input-icon">
-              <Camera size={18} />
-              <input
-                value={form.studioName}
-                onChange={(event) => setForm((current) => ({ ...current, studioName: event.target.value }))}
-              />
-            </div>
-          </FormField>
-
-          <FormField label="Email">
-            <input
-              type="email"
-              required
-              value={form.email}
-              onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))}
-            />
-          </FormField>
-
-          <FormField label="Senha">
-            <input
-              type="password"
-              minLength="6"
-              required
-              value={form.password}
-              onChange={(event) => setForm((current) => ({ ...current, password: event.target.value }))}
-            />
-          </FormField>
-
-          <FormField label="Perfil de acesso">
-            <select value={form.role} onChange={(event) => setForm((current) => ({ ...current, role: event.target.value }))}>
-              <option value="photographer">Usuario comum</option>
-              <option value="admin">Administrador</option>
-            </select>
-          </FormField>
-
-          <button className="primary-button" type="submit" disabled={saving}>
-            <Plus size={18} />
-            Criar usuario
-          </button>
-        </form>
-
-        <div className="panel">
-          <h2>Usuarios cadastrados</h2>
+          </div>
           {loading ? (
-            <p>Carregando usuarios...</p>
+            <div className="ops-empty">Carregando usuarios...</div>
           ) : (
-            <div className="user-table-wrapper">
-              <table className="user-table">
+            <div className="ops-table-wrap">
+              <table className="ops-table">
                 <thead>
                   <tr>
                     <th>Nome</th>
@@ -162,9 +114,8 @@ export function Users() {
                       <td>{item.role}</td>
                       <td>{new Date(item.createdAt).toLocaleDateString('pt-BR')}</td>
                       <td>
-                        <button className="ghost-button danger" type="button" onClick={() => removeUser(item._id)}>
+                        <button className="icon-button danger-button" type="button" onClick={() => removeUser(item._id)} aria-label="Excluir usuario">
                           <Trash2 size={16} />
-                          Excluir
                         </button>
                       </td>
                     </tr>
@@ -173,7 +124,53 @@ export function Users() {
               </table>
             </div>
           )}
-        </div>
+        </section>
+
+        <aside className="ops-inspector">
+          <form className="ops-section" onSubmit={createUser}>
+            <div className="ops-section-head">
+              <div>
+                <h2>Criar usuario</h2>
+                <p>Novo acesso ao painel.</p>
+              </div>
+              <Plus size={18} />
+            </div>
+
+            <FormField label="Nome completo">
+              <div className="input-icon">
+                <User size={18} />
+                <input required value={form.name} onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))} />
+              </div>
+            </FormField>
+
+            <FormField label="Estudio">
+              <div className="input-icon">
+                <Camera size={18} />
+                <input value={form.studioName} onChange={(event) => setForm((current) => ({ ...current, studioName: event.target.value }))} />
+              </div>
+            </FormField>
+
+            <FormField label="Email">
+              <input type="email" required value={form.email} onChange={(event) => setForm((current) => ({ ...current, email: event.target.value }))} />
+            </FormField>
+
+            <FormField label="Senha">
+              <input type="password" minLength="6" required value={form.password} onChange={(event) => setForm((current) => ({ ...current, password: event.target.value }))} />
+            </FormField>
+
+            <FormField label="Perfil de acesso">
+              <select value={form.role} onChange={(event) => setForm((current) => ({ ...current, role: event.target.value }))}>
+                <option value="photographer">Usuario comum</option>
+                <option value="admin">Administrador</option>
+              </select>
+            </FormField>
+
+            <button className="primary-button" type="submit" disabled={saving}>
+              <Plus size={18} />
+              {saving ? 'Criando...' : 'Criar usuario'}
+            </button>
+          </form>
+        </aside>
       </div>
     </section>
   );
